@@ -12,7 +12,7 @@ export default function Home() {
         <title>Ency | Your Personal Research Assisstant</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
+      <div style={{ backgroundImage: "url('./home/landing-page.svg')" }} className="bg-no-repeat h-screen bg-cover bg-center">
         <Navbar isLoggedIn={false} />
         <div className="w-full flex justify-center mt-20">
           <section className="max-w-6xl w-full mx-10">
