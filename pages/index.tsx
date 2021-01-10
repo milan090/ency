@@ -16,14 +16,14 @@ export default function Home() {
         <Navbar isLoggedIn={false} />
         <div className="w-full flex justify-center mt-20">
           <section className="max-w-6xl w-full mx-10">
-            <h1 className="text-6xl font-bold leading-tight">
+            <h1 className="text-6xl font-bold" style={{ lineHeight: "1.12" }}>
               The <br /> Virtual <br /> Assistant <br /> You Need.
             </h1>
             <p className="text-gray-500 ml-2">
               Summarise, Narrate, Personalise <br /> Get things done with Ency
             </p>
 
-            <div className="mt-12 ml-2 flex flex-row items-center">
+            <div className="mt-10 ml-2 flex flex-row items-center">
               {/* Get Started Button */}
               <span className="mr-4">
                 <CustomButton>Get Started</CustomButton>

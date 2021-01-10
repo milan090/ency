@@ -3892,6 +3892,11 @@ supports-color@^7.1.0:
   dependencies:
     has-flag "^4.0.0"
 
+tailwind-override@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/tailwind-override/-/tailwind-override-0.0.7.tgz#71add1c3706ce5746bb7b30b7365585254f16bf2"
+  integrity sha512-M27RVfnMBCDobji47LLPfQjz9F+YD25/9FxXtcB3ox+uk1Zou1pJBirMTLfNyhaUAIQRLIROG6c0yI+rEhlpeg==
+
 tailwindcss@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-2.0.2.tgz#28e1573d29dd4547b26782facb05bcfaa92be366"

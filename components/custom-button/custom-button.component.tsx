@@ -1,6 +1,8 @@
 import React from "react";
 import Link from "next/link";
 
+import { overrideTailwindClasses } from "tailwind-override";
+
 type Props = {
   href?: string;
   className?: string;
@@ -18,8 +20,10 @@ const CustomButtonBody: React.FC<CustomButtonBodyProps> = ({
 }) => {
   return (
     <button
-      className={`bg-primary rounded-lg text-white font-semibold px-4 py-1.5
-      transition-colors duration-300 ease-out focus:outline-none ${className} `}
+      className={overrideTailwindClasses(
+        `bg-primary rounded-lg text-white font-semibold px-4 py-1.5
+        transition-colors duration-300 ease-out focus:outline-none ${className}`
+      )}
     >
       <span>{children}</span>
     </button>
