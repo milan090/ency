@@ -65,9 +65,14 @@ export default function SignIn() {
                 <CustomButton
                   className="w-full bg-white"
                   bgColor="white"
+                  // purgecss: bg-white hover:bg-white
                   color="primary"
+                  // purgecss: text-primary
                   transitionBgColor="primary"
+                  // purgecss: hover:bg-primary
                   transitionColor="white"
+                  // purgecss: hover:text-white
+
                 >
                   <span>
                     <img src="./other/google-icon.svg" alt="googles logo" width="24px" className="inline-block mr-3 bg-white p-0.5 rounded"/>
