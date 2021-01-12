@@ -19,7 +19,7 @@ export default function SignIn() {
       </Head>
       <div
         style={{ backgroundImage: "url('./home/landing-page.svg')" }}
-        className="bg-no-repeat h-full bg-cover bg-center"
+        className="bg-no-repeat h-screen bg-cover bg-center"
       >
         <Navbar />
         <div className="mt-10 w-full flex justify-center">

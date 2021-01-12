@@ -4,7 +4,7 @@ import CustomButton from "../components/custom-button/custom-button.component";
 import CustomInput from "../components/custom-input/custom-input.component";
 import Navbar from "../components/navbar/navbar.component";
 
-export default function SignIn() {
+export default function SignUp() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -20,7 +20,7 @@ export default function SignIn() {
             </Head>
             <div
                 style={{ backgroundImage: "url('./home/landing-page.svg')" }}
-                className="bg-no-repeat h-full bg-cover bg-center"
+                className="bg-no-repeat h-screen bg-cover bg-center"
             >
                 <Navbar />
                 <div className="mt-10 w-full flex justify-center">
