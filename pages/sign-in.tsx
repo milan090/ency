@@ -67,7 +67,7 @@ export default function SignIn() {
                   transitionBgColor="primary"
                   // purgecss: hover:bg-primary
                   transitionColor="white"
-                  // purgecss: hover:text-white
+                // purgecss: hover:text-white
 
                 >
                   <span>
