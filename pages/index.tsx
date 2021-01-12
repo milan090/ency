@@ -14,6 +14,7 @@ export default function Home() {
       </Head>
       <div style={{ backgroundImage: "url('./home/landing-page.svg')" }} className="bg-no-repeat h-screen bg-cover bg-center">
         <Navbar isLoggedIn={false} />
+        
         <div className="w-full flex justify-center mt-20">
           <section className="max-w-6xl w-full mx-10">
             <h1 className="text-6xl font-bold" style={{ lineHeight: "1.12" }}>
