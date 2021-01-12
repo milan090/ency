@@ -11,12 +11,11 @@ interface CustomButtonBodyProps {
   transitionColor?: string;
   transitionBgColor?: string;
   borderColor?: string;
-};
+}
 
 interface Props extends CustomButtonBodyProps {
   href?: string;
-};
-
+}
 
 const CustomButtonBody: React.FC<CustomButtonBodyProps> = ({
   className,
@@ -25,10 +24,11 @@ const CustomButtonBody: React.FC<CustomButtonBodyProps> = ({
   bgColor,
   transitionColor,
   transitionBgColor,
-  borderColor
+  borderColor,
 }) => {
   return (
     <button
+    // purgecss: bg-primary text-white border-primary hover:text-primary hover:bg-white
       className={overrideTailwindClasses(
         `bg-${bgColor || "primary"} rounded-lg text-${color || "white"} font-semibold px-4 py-1.5
         border-2 border-solid border-${borderColor || "primary"}

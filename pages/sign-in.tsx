@@ -19,7 +19,7 @@ export default function SignIn() {
       </Head>
       <div
         style={{ backgroundImage: "url('./home/landing-page.svg')" }}
-        className="bg-no-repeat h-screen bg-cover bg-center"
+        className="bg-no-repeat min-h-screen h-full bg-cover bg-center"
       >
         <Navbar />
         <div className="mt-10 w-full flex justify-center">
@@ -65,9 +65,14 @@ export default function SignIn() {
                 <CustomButton
                   className="w-full bg-white mb-10"
                   bgColor="white"
+                  // purgecss: bg-white hover:bg-white
                   color="primary"
+                  // purgecss: text-primary
                   transitionBgColor="primary"
+                  // purgecss: hover:bg-primary
                   transitionColor="white"
+                // purgecss: hover:text-white
+
                 >
                   <span>
                     <img src="./other/google-icon.svg" alt="googles logo" width="24px" className="inline-block mr-3 bg-white p-0.5 rounded" />
