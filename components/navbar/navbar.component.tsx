@@ -5,7 +5,7 @@ import NavLink from "./nav-link.component";
 import CustomButton from "../custom-button/custom-button.component";
 
 type Props = {
-  isLoggedIn: boolean;
+  isLoggedIn?: boolean;
 };
 
 const Navbar: React.FC<Props> = ({ isLoggedIn }) => {
@@ -30,7 +30,7 @@ const Navbar: React.FC<Props> = ({ isLoggedIn }) => {
         </div>
         <div className="flex flex-row items-center">
           <CustomButton
-            href={isLoggedIn ? "/dashboard" : "/signin"}
+            href={isLoggedIn ? "/dashboard" : "/sign-in"}
             className="bg-accent text-black hover:text-primary"
           >
             {isLoggedIn ? "Go To Dashboard" : "Sign-in"}
