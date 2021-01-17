@@ -1,12 +1,18 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
 import CustomButton from "../components/custom-button/custom-button.component";
 import CustomInput from "../components/custom-input/custom-input.component";
 import Navbar from "../components/navbar/navbar.component";
 
-export default function SignIn() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+interface FormInputs {
+  email: string;
+  password: string;
+}
+
+export default function SignIn(): JSX.Element {
+  const { register, handleSubmit, errors } = useForm<FormInputs>();
+  const onSubmit = (data: FormInputs): void => console.log(data);
 
   return (
     <div>
@@ -30,28 +36,20 @@ export default function SignIn() {
                   type="email"
                   name="email"
                   placeHolder="Enter Your Email"
-                  onChange={setEmail}
-                  formValidate={(value) => {
-                    if (!value) return "Invalid Value enterd";
-                    if (!value.includes("@"))
-                      return "Not a valid email. You are missing an @ character";
-                  }}
+                  error={errors.email?.message}
+                  fref={register({
+                    required: "Field is required",
+                  })}
                 />
                 <CustomInput
                   label="Your Password"
                   type="password"
                   name="password"
                   placeHolder="Enter Your Password"
-                  onChange={setPassword}
-                  formValidate={(value) => {
-                    if (!value) return "Invalid Value Entered";
-                    if (value.length < 6)
-                      return "Password should be atleast 6 characters or longer";
-                    if (!/[0-9]/.test(value))
-                      return "Password should contain atleast one number";
-                    if (!/[a-z]/i.test(value))
-                      return "Password should contain atleast one Alphabet";
-                  }}
+                  error={errors.password?.message}
+                  fref={register({
+                    required: "Field is required",
+                  })}
                 />
 
                 <CustomButton className="w-full">Sign In</CustomButton>
@@ -67,11 +65,16 @@ export default function SignIn() {
                   transitionBgColor="primary"
                   // purgecss: hover:bg-primary
                   transitionColor="white"
-                // purgecss: hover:text-white
-
+                  // purgecss: hover:text-white
+                  onClick={handleSubmit(onSubmit)}
                 >
                   <span>
-                    <img src="./other/google-icon.svg" alt="googles logo" width="24px" className="inline-block mr-3 bg-white p-0.5 rounded" />
+                    <img
+                      src="./other/google-icon.svg"
+                      alt="googles logo"
+                      width="24px"
+                      className="inline-block mr-3 bg-white p-0.5 rounded"
+                    />
                     Sign In With Google
                   </span>
                 </CustomButton>

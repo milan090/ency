@@ -1,17 +1,19 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
 import CustomButton from "../components/custom-button/custom-button.component";
 import CustomInput from "../components/custom-input/custom-input.component";
 import Navbar from "../components/navbar/navbar.component";
 
-export default function SignIn() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+interface FormInputs {
+  email: string;
+  password: string;
+  cpassword: string;
+}
 
-  useEffect(() => {
-    console.log(email);
-  }, [email]);
+export default function SignIn(): JSX.Element {
+  const { register, handleSubmit, errors, watch } = useForm<FormInputs>();
+  const onSubmit = (data: FormInputs): void => console.log(data);
 
   return (
     <div>
@@ -29,45 +31,57 @@ export default function SignIn() {
               <h1 className="text-4xl font-bold pb-2">Sign Up</h1>
               <p className="text-gray-500">Create an account</p>
 
-              <div className="mt-8">
+              <div className="mt-8" onSubmit={handleSubmit(onSubmit)}>
                 <CustomInput
                   label="Your Email"
                   type="email"
                   name="email"
                   placeHolder="Enter Your Email"
-                  onChange={setEmail}
-                  formValidate={(value) => {
-                    if (!value) return "Invalid Value enterd";
-                    if (!value.includes("@"))
-                      return "Not a valid email. You are missing an @ character";
-                  }}
+                  error={errors.email?.message}
+                  fref={register({
+                    required: "Field is required",
+                    pattern: {
+                      value: /@/,
+                      message: "Invalid email",
+                    },
+                  })}
                 />
                 <CustomInput
                   label="Password"
                   type="password"
                   name="password"
                   placeHolder="Enter Your Password"
-                  onChange={setPassword}
-                  formValidate={(value) => {
-                    if (!value) return "Invalid Value Entered";
-                    if (value.length < 6)
-                      return "Password should be atleast 6 characters or longer";
-                    if (!/[0-9]/.test(value))
-                      return "Password should contain atleast one number";
-                    if (!/[a-z]/i.test(value))
-                      return "Password should contain atleast one Alphabet";
-                  }}
+                  error={errors.password?.message}
+                  fref={register({
+                    required: "Field is required",
+                    min: {
+                      value: 6,
+                      message: "Password should be atleast 6 characters or longer (max 20)",
+                    },
+                    max: {
+                      value: 20,
+                      message: "Password should be atleast 6 characters or longer (max 20)",
+                    },
+                    validate: {
+                      hasLetters: (value) =>
+                        /[a-z]/i.test(value) || "Password should containe atleast on Alphabet",
+                      hasNumbers: (value) =>
+                        /[0-9]/.test(value) || "Password should contain atleast one Number",
+                    },
+                  })}
                 />
                 <CustomInput
                   label="Confirm Password"
                   type="password"
-                  name="confirm-password"
+                  name="cpassword"
                   placeHolder="Enter Your Password Again"
-                  onChange={setConfirmPassword}
-                  formValidate={(value) => {
-                    if (!value) return "Please Enter Your Password Again";
-                    if (value !== password) return "Password Doesn't Match";
-                  }}
+                  error={errors.cpassword?.message}
+                  fref={register({
+                    required: "Field is required",
+                    validate: {
+                      matchesPass: (value) => watch("password") === value || "Passwords dont match",
+                    },
+                  })}
                 />
 
                 <CustomButton className="w-full">Sign Up</CustomButton>
@@ -75,11 +89,13 @@ export default function SignIn() {
                 <p className="text-center w-full my-4">or</p>
 
                 <CustomButton
+                  // purge-css dynmic classes already defined in ./sign-in.tsx
                   className="w-full bg-white mb-10"
                   bgColor="white"
                   color="primary"
                   transitionBgColor="primary"
                   transitionColor="white"
+                  onClick={handleSubmit(onSubmit)}
                 >
                   <span>
                     <img
