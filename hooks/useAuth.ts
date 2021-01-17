@@ -1,15 +1,26 @@
 import { useEffect, useState } from "react";
-import { db, auth } from "config/firebase";
-import { IUser, SignInFunction, SignUpFunction, UseAuth } from "types/common";
+import { db, auth, googleAuthProvider } from "config/firebase";
+import {
+  IUser,
+  SignInFunction,
+  SignInWithGoogle,
+  SignOutFunction,
+  SignUpFunction,
+  UseAuth,
+} from "types/common.types";
+import { SignInFormInputs, SignUpFormInputs } from "types/forms.types";
 
 export const useAuthProvider = (): UseAuth => {
   const [user, setUser] = useState<IUser>({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         setUser({ email: user.email || undefined, uid: user.uid });
+        getUserAdditionalData(user);
       }
+      setIsLoading(false);
     });
   }, []);
 
@@ -27,25 +38,40 @@ export const useAuthProvider = (): UseAuth => {
       });
   };
 
-  const signUp: SignUpFunction = ({ email, password }) => {
+  const signInWithGoogle: SignInWithGoogle = () => {
     return auth
-      .createUserWithEmailAndPassword(email, password)
+      .signInWithPopup(googleAuthProvider)
       .then((res) => {
-        auth.currentUser?.sendEmailVerification();
-        return createUser({ email, uid: res.user?.uid });
+        if (!res.user) throw new Error("Something went wrong");
+        const { uid, displayName, email } = res.user;
+        console.log({ uid, displayName, email });
+        return createUser({ uid, name: displayName || undefined, email: email || undefined });
       })
       .catch((error) => {
         return { error };
       });
   };
 
-  const signIn: SignInFunction = ({ email, password }) => {
+  const signUp: SignUpFunction = ({ email, password, name }: SignUpFormInputs) => {
+    return auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((res) => {
+        auth.currentUser?.sendEmailVerification();
+        return createUser({ email, uid: res.user?.uid, name });
+      })
+      .catch((error) => {
+        return { error };
+      });
+  };
+
+  const signIn: SignInFunction = ({ email, password }: SignInFormInputs) => {
     return auth
       .signInWithEmailAndPassword(email, password)
       .then((res) => {
         if (!res.user) throw Error("Something went wrong");
         const { email, uid } = res.user;
         setUser({ email: email || undefined, uid });
+        getUserAdditionalData(res.user);
         return res.user;
       })
       .catch((error) => {
@@ -53,21 +79,27 @@ export const useAuthProvider = (): UseAuth => {
       });
   };
 
-  // const getUserAdditionalData = (user: firebase.User) => {
-  //   return db
-  //     .collection("users")
-  //     .doc(user.uid)
-  //     .get()
-  //     .then((userData) => {
-  //       if (userData.data()) {
-  //         setUser(userData.data());
-  //       }
-  //     });
-  // };
+  const signOut: SignOutFunction = () => {
+    return auth.signOut().then(() => setUser({}));
+  };
+
+  const getUserAdditionalData = (user: any): void => {
+    db.collection("users")
+      .doc(user.uid)
+      .get()
+      .then((userData) => {
+        if (userData.data()) {
+          console.log(userData.data());
+        }
+      });
+  };
 
   return {
     user,
     signUp,
     signIn,
+    signOut,
+    signInWithGoogle,
+    isLoading,
   };
 };

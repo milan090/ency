@@ -17,9 +17,7 @@ const NavLink: React.FC<Props> = ({ isActive, href, children, className }) => {
         <a
           className={overrideTailwindClasses(
             `font-bold text-base hover:text-black transition-colors duration-200 ease-in-out ${
-              isActive
-                ? "text-black border-solid border-b-4 border-primary"
-                : "text-gray-500"
+              isActive ? "text-black border-solid border-b-4 border-primary" : "text-gray-500"
             }
            ${className}`
           )}

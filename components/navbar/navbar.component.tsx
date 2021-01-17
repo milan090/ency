@@ -3,14 +3,16 @@ import Link from "next/link";
 
 import NavLink from "./nav-link.component";
 import CustomButton from "../custom-button/custom-button.component";
+import { useAuth } from "hooks/useAuth.provider";
 
 type Props = {
   isLoggedIn?: boolean;
 };
 
-const Navbar: React.FC<Props> = ({ isLoggedIn }) => {
+const Navbar: React.FC<Props> = () => {
+  const { user } = useAuth();
   return (
-    <nav className="w-full flex justify-center items-center pt-6 pb-4 box-border">
+    <nav className="w-full flex justify-center items-center pb-4 box-border">
       <div className="flex flex-row max-w-8xl w-full justify-between mx-5">
         <div className="flex flex-row items-center">
           <Link href="/">
@@ -29,7 +31,7 @@ const Navbar: React.FC<Props> = ({ isLoggedIn }) => {
           </NavLink>
         </div>
         <div className="flex flex-row items-center">
-          {isLoggedIn ? (
+          {user.uid ? (
             <CustomButton
               href="/dashboard"
               className="bg-accent text-black hover:text-primary mr-4"

@@ -1,20 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SideBar from "../../components/sidebar/sidebar.component";
 import RightBar from "../../components/right-bar/right-bar.component";
 import getDate from "../../utils/getDate";
 import AddButton from "../../components/add-button/add-button.component";
 import ResearchCard from "../../components/research-card/research-card.component";
+import { useRouter } from "next/router";
+import { useAuth } from "hooks/useAuth.provider";
 
 export default function Dashboard(): JSX.Element {
-  console.log(getDate());
+  const router = useRouter();
+  const { user, isLoading } = useAuth();
+
+  useEffect(() => {
+    if (!user.uid && !isLoading) {
+      router.push("/sign-in");
+    }
+  }, [isLoading, router, user]);
+
   return (
-    <div className="bg-gray-200 flex justify-between h-screen overflow-y-hidden">
+    <div className="bg-gray-200 flex justify-between min-h-screen overflow-y-hidden">
       <SideBar />
       <div className="block w-24"></div>
       <div className="p-8 px-12 w-full">
         <div className="text-md text-gray-500 mb-3">{getDate()}</div>
         <div className="text-3xl font-bold mb-8">
-          Good Morning, Saptarshi!
+          Good Morning, {user.name}!
           <div className="float-right">
             <AddButton />
           </div>

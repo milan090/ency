@@ -1,5 +1,6 @@
 export interface SignUpFormInputs {
   email: string;
+  name: string;
   password: string;
   cpassword: string;
 }

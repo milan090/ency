@@ -38,7 +38,7 @@ const CustomInput: React.FC<Props> = ({
           `
         )}
       />
-      <p className="text-red-600 text-xs ml-1 mt-1 h-4">{error || " "}</p>
+      <p className="text-red-600 text-xs ml-1 mt-1 h-1">{error || " "}</p>
     </div>
   );
 };
