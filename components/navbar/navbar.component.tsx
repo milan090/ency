@@ -29,12 +29,26 @@ const Navbar: React.FC<Props> = ({ isLoggedIn }) => {
           </NavLink>
         </div>
         <div className="flex flex-row items-center">
-          <CustomButton
-            href={isLoggedIn ? "/dashboard" : "/sign-in"}
-            className="bg-accent text-black hover:text-primary"
-          >
-            {isLoggedIn ? "Go To Dashboard" : "Sign-in"}
-          </CustomButton>
+          {isLoggedIn ? (
+            <CustomButton
+              href="/dashboard"
+              className="bg-accent text-black hover:text-primary mr-4"
+            >
+              Dashboard
+            </CustomButton>
+          ) : (
+            <div>
+              <CustomButton
+                href="/sign-in"
+                className="bg-accent text-black hover:text-primary mr-4"
+              >
+                Sign-in
+              </CustomButton>
+              <CustomButton href="/sign-up" className="bg-accent text-black hover:text-primary">
+                Sign-up
+              </CustomButton>
+            </div>
+          )}
         </div>
       </div>
     </nav>

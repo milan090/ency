@@ -1,19 +1,33 @@
 import Head from "next/head";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import CustomButton from "../components/custom-button/custom-button.component";
-import CustomInput from "../components/custom-input/custom-input.component";
-import Navbar from "../components/navbar/navbar.component";
+import CustomButton from "components/custom-button/custom-button.component";
+import CustomInput from "components/custom-input/custom-input.component";
+import Navbar from "components/navbar/navbar.component";
 
-interface FormInputs {
-  email: string;
-  password: string;
-  cpassword: string;
-}
+const emailValidateRegex = /@/;
+
+import { SignUpFormInputs } from "types/forms";
+import { useAuth } from "hooks/useAuth.provider";
+import { useRouter } from "next/router";
 
 export default function SignIn(): JSX.Element {
-  const { register, handleSubmit, errors, watch } = useForm<FormInputs>();
-  const onSubmit = (data: FormInputs): void => console.log(data);
+  const { register, handleSubmit, errors, watch } = useForm<SignUpFormInputs>();
+  const { signUp, user } = useAuth();
+
+  const router = useRouter();
+
+  const onSubmit = (formInput: SignUpFormInputs): void => {
+    signUp(formInput).then((res) => {
+      console.log(res);
+    });
+  };
+
+  useEffect(() => {
+    if (user.uid) {
+      router.push("/dashboard");
+    }
+  }, [user, router]);
 
   return (
     <div>
@@ -41,7 +55,7 @@ export default function SignIn(): JSX.Element {
                   fref={register({
                     required: "Field is required",
                     pattern: {
-                      value: /@/,
+                      value: emailValidateRegex,
                       message: "Invalid email",
                     },
                   })}
@@ -84,7 +98,9 @@ export default function SignIn(): JSX.Element {
                   })}
                 />
 
-                <CustomButton className="w-full">Sign Up</CustomButton>
+                <CustomButton className="w-full" onClick={handleSubmit(onSubmit)}>
+                  Sign Up
+                </CustomButton>
 
                 <p className="text-center w-full my-4">or</p>
 
@@ -95,7 +111,6 @@ export default function SignIn(): JSX.Element {
                   color="primary"
                   transitionBgColor="primary"
                   transitionColor="white"
-                  onClick={handleSubmit(onSubmit)}
                 >
                   <span>
                     <img

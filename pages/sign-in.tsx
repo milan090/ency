@@ -1,5 +1,7 @@
+import { useAuth } from "hooks/useAuth.provider";
 import Head from "next/head";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import CustomButton from "../components/custom-button/custom-button.component";
 import CustomInput from "../components/custom-input/custom-input.component";
@@ -12,7 +14,19 @@ interface FormInputs {
 
 export default function SignIn(): JSX.Element {
   const { register, handleSubmit, errors } = useForm<FormInputs>();
-  const onSubmit = (data: FormInputs): void => console.log(data);
+
+  const router = useRouter();
+  const { signIn, user } = useAuth();
+
+  const onSubmit = (formInput: FormInputs): void => {
+    signIn(formInput).then((res) => console.log(res));
+  };
+
+  useEffect(() => {
+    if (user.uid) {
+      router.push("/dashboard");
+    }
+  }, [user, router]);
 
   return (
     <div>
@@ -52,7 +66,9 @@ export default function SignIn(): JSX.Element {
                   })}
                 />
 
-                <CustomButton className="w-full">Sign In</CustomButton>
+                <CustomButton className="w-full" onClick={handleSubmit(onSubmit)}>
+                  Sign In
+                </CustomButton>
 
                 <p className="text-center w-full my-4">or</p>
 
@@ -66,7 +82,6 @@ export default function SignIn(): JSX.Element {
                   // purgecss: hover:bg-primary
                   transitionColor="white"
                   // purgecss: hover:text-white
-                  onClick={handleSubmit(onSubmit)}
                 >
                   <span>
                     <img
