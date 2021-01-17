@@ -12,9 +12,13 @@ const GoogleSignInButton: React.FC = () => {
       // purge-css dynmic classes already defined in ./sign-in.tsx
       className="w-full bg-white border"
       bgColor="white"
+      // purge-css: bg-white
       color="primary"
+      // purge-css: text-primary
       transitionBgColor="primary"
+      // purge-css: hover:text-primary
       transitionColor="white"
+      // purge-css: hover:text-white
       onClick={handleClick}
     >
       <span>
