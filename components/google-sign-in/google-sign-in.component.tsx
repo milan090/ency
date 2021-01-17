@@ -16,7 +16,7 @@ const GoogleSignInButton: React.FC = () => {
       color="primary"
       // purge-css: text-primary
       transitionBgColor="primary"
-      // purge-css: hover:text-primary
+      // purge-css: hover:bg-primary
       transitionColor="white"
       // purge-css: hover:text-white
       onClick={handleClick}
