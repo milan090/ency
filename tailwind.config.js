@@ -19,7 +19,9 @@ module.exports = {
     }),
   },
   variants: {
-    extend: {},
+    extend: {
+      display: ["focus", "hover", "group-focus", "group-hover"]
+    },
   },
   plugins: [],
 };

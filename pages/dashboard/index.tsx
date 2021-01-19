@@ -35,7 +35,7 @@ export default function Dashboard(): JSX.Element {
             />
           </div>
         </div>
-        <div className="p-10 h-full max-h-4/5 overflow-auto bg-white rounded-xl w-full break-all pb-20">
+        <div className="p-10 h-full max-h-4/5 bg-white rounded-xl w-full break-all pb-20">
           <ProjectsPreview />
         </div>
       </div>
