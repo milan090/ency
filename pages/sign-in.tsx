@@ -8,19 +8,15 @@ import CustomButton from "../components/custom-button/custom-button.component";
 import CustomInput from "../components/custom-input/custom-input.component";
 import Navbar from "../components/navbar/navbar.component";
 import GoogleSignInButton from "components/google-sign-in/google-sign-in.component";
-
-interface FormInputs {
-  email: string;
-  password: string;
-}
+import { SignInFormInputs } from "types/forms.types";
 
 export default function SignIn(): JSX.Element {
-  const { register, handleSubmit, errors } = useForm<FormInputs>();
+  const { register, handleSubmit, errors } = useForm<SignInFormInputs>();
 
   const router = useRouter();
   const { signIn, user } = useAuth();
 
-  const onSubmit = (formInput: FormInputs): void => {
+  const onSubmit = (formInput: SignInFormInputs): void => {
     signIn(formInput).then((res) => console.log(res));
   };
 
@@ -45,7 +41,7 @@ export default function SignIn(): JSX.Element {
             <h1 className="text-4xl font-bold pb-2">Sign In</h1>
             <p className="text-gray-500">Enter Your Account details</p>
 
-            <div className="mt-8">
+            <form className="mt-8" noValidate>
               <CustomInput
                 label="Your Email"
                 type="email"
@@ -70,20 +66,19 @@ export default function SignIn(): JSX.Element {
               <CustomButton className="w-full mt-2" onClick={handleSubmit(onSubmit)}>
                 Sign In
               </CustomButton>
+            </form>
+            <p className="text-center w-full my-2">or</p>
 
-              <p className="text-center w-full my-2">or</p>
+            <span className="mb-5 block">
+              <GoogleSignInButton />
+            </span>
 
-              <span className="mb-5 block">
-                <GoogleSignInButton />
-              </span>
-
-              <p className="text-center">
-                Dont have an account?{" "}
-                <Link href="/sign-up">
-                  <a className="text-blue-500 hover:underline">Sign Up</a>
-                </Link>
-              </p>
-            </div>
+            <p className="text-center">
+              Dont have an account?{" "}
+              <Link href="/sign-up">
+                <a className="text-blue-500 hover:underline">Sign Up</a>
+              </Link>
+            </p>
           </div>
         </div>
       </div>

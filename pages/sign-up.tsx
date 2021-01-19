@@ -45,7 +45,7 @@ export default function SignIn(): JSX.Element {
           <div className="max-w-md w-full bg-white rounded-md shadow-2xl pt-10 px-7 pb-8 mb-10">
             <h1 className="text-4xl font-bold pb-2">Sign Up</h1>
 
-            <div className="mt-6" onSubmit={handleSubmit(onSubmit)}>
+            <form className="mt-6" onSubmit={handleSubmit(onSubmit)} noValidate>
               <CustomInput
                 label="Your Email"
                 type="email"
@@ -119,24 +119,23 @@ export default function SignIn(): JSX.Element {
                   },
                 })}
               />
-
               <CustomButton className="w-full mt-2" onClick={handleSubmit(onSubmit)}>
                 Sign Up
               </CustomButton>
+            </form>
 
-              <p className="text-center w-full my-2">or</p>
+            <p className="text-center w-full my-2">or</p>
 
-              <span className="mb-5 block">
-                <GoogleSignInButton />
-              </span>
+            <span className="mb-5 block">
+              <GoogleSignInButton />
+            </span>
 
-              <p className="text-center">
-                Already have an account?{" "}
-                <Link href="/sign-in">
-                  <a className="text-blue-500 hover:underline">Sign In</a>
-                </Link>
-              </p>
-            </div>
+            <p className="text-center">
+              Already have an account?{" "}
+              <Link href="/sign-in">
+                <a className="text-blue-500 hover:underline">Sign In</a>
+              </Link>
+            </p>
           </div>
         </div>
       </div>

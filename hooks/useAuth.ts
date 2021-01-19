@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import firebase from "firebase";
 import { db, auth, googleAuthProvider } from "config/firebase";
 import {
   IUser,
@@ -24,7 +25,7 @@ export const useAuthProvider = (): UseAuth => {
     });
   }, []);
 
-  const createUser = (user: IUser): Promise<IUser | { error: any }> => {
+  const createUser = (user: IUser): Promise<IUser | { error: Error }> => {
     return db
       .collection("users")
       .doc(user.uid)
@@ -44,7 +45,6 @@ export const useAuthProvider = (): UseAuth => {
       .then((res) => {
         if (!res.user) throw new Error("Something went wrong");
         const { uid, displayName, email } = res.user;
-        console.log({ uid, displayName, email });
         return createUser({ uid, name: displayName || undefined, email: email || undefined });
       })
       .catch((error) => {
@@ -83,13 +83,13 @@ export const useAuthProvider = (): UseAuth => {
     return auth.signOut().then(() => setUser({}));
   };
 
-  const getUserAdditionalData = (user: any): void => {
+  const getUserAdditionalData = (user: firebase.User): void => {
     db.collection("users")
       .doc(user.uid)
       .get()
       .then((userData) => {
         if (userData.data()) {
-          console.log(userData.data());
+          setUser(userData.data() as IUser);
         }
       });
   };

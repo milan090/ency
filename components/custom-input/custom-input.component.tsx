@@ -2,14 +2,26 @@ import React from "react";
 
 import { overrideTailwindClasses } from "tailwind-override";
 
+// Labels should be larger than placeholder
+// If label is sm, placeholder should be xs
+const placeholderTextSize = {
+  xs: "xs",
+  sm: "xs",
+  base: "sm",
+  lg: "base",
+  xl: "lg",
+  "2xl": "xl",
+};
+
 type Props = {
   label: string;
   placeHolder: string;
   type: "text" | "password" | "email";
   name: string;
-  error: string | undefined;
+  error?: string | undefined;
   className?: string;
-  fref: any;
+  fref?: any;
+  textSize?: "xs" | "sm" | "base" | "lg" | "xl" | "2xl";
 };
 
 const CustomInput: React.FC<Props> = ({
@@ -20,10 +32,12 @@ const CustomInput: React.FC<Props> = ({
   error,
   className,
   fref,
+  textSize,
 }) => {
   return (
     <div className="mb-4">
-      <label htmlFor={name} className="mb-1 block">
+      {/* purge-css: text-xs text-sm text-lg text-base text-xl text-2xl */}
+      <label htmlFor={name} className={`mb-1 block font-normal text-${textSize || "xl"}`}>
         {label}
       </label>
       <input
@@ -33,12 +47,15 @@ const CustomInput: React.FC<Props> = ({
         placeholder={placeHolder}
         id={name}
         className={overrideTailwindClasses(
-          `px-3 py-1.5 border-2 border-solid border-gray-400 rounded-md focus:outline-none w-full ${className}
+          `px-3 py-1.5 border-2 border-solid border-gray-400 rounded-md focus:outline-none text-${
+            textSize ? placeholderTextSize[textSize] : "base"
+          } w-full ${className}
           ${error ? "border-red-600" : ""}
           `
         )}
       />
-      <p className="text-red-600 text-xs ml-1 mt-1 h-1">{error || " "}</p>
+
+      <p className="text-red-600 text-sm ml-1 mt-1 h-1">{error || " "}</p>
     </div>
   );
 };
