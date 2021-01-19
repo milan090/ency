@@ -35,7 +35,7 @@ const DeleteProjectModal: React.FC<Props> = ({ isHidden, setIsHidden, name, id: 
     >
       <div className="w-96">
         <div className="flex justify-center mt-10">
-          {/* purge-css: text-white bg-red-500 border-red-500 hover:text-red-500 */}
+          {/* purge-css: text-white bg-blue-500 border-blue-500 hover:text-blue-500 */}
           <CustomButton
             color="white"
             bgColor="blue-500"
