@@ -30,14 +30,6 @@ const ModalContainer: React.FC<Props> = ({ isHidden, setIsHidden, children, titl
     };
   }, []);
 
-  // useEffect(() => {
-  //   if (isHidden) {
-  //     document.removeEventListener("mousedown", handleClick);
-  //   } else {
-  //     document.addEventListener("mousedown", handleClick);
-  //   }
-  // }, [isHidden]);
-
   if (isHidden) {
     return <div ref={ref}></div>;
   }

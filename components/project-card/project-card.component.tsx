@@ -5,12 +5,13 @@ import { Transition } from "@tailwindui/react";
 import DeleteProjectModal from "components/delete-project-modal/delete-project-modal.component";
 
 interface Props {
+  id: string;
   name: string;
   description?: string;
   lastUpdated: Date;
 }
 
-const ProjectCard: React.FC<Props> = ({ name, description, lastUpdated, ...props }) => {
+const ProjectCard: React.FC<Props> = ({ name, description, lastUpdated, id, ...props }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [deleteProjectModalIsHidden, setDeleteProjectModalIsHidden] = useState(true);
   const container = useRef(null);
@@ -75,7 +76,7 @@ const ProjectCard: React.FC<Props> = ({ name, description, lastUpdated, ...props
                 </li>
                 <li className="cursor-pointer">
                   <button
-                    className="hover:bg-gray-200 py-2 px-4 block whitespace-no-wrap w-full text-left"
+                    className="hover:bg-gray-200 py-2 px-4 block whitespace-no-wrap w-full text-left outline-none focus:outline-none focus:bg-gray-300"
                     onClick={() => setDeleteProjectModalIsHidden(false)}
                   >
                     Delete
@@ -88,6 +89,7 @@ const ProjectCard: React.FC<Props> = ({ name, description, lastUpdated, ...props
                 isHidden={deleteProjectModalIsHidden}
                 setIsHidden={setDeleteProjectModalIsHidden}
                 name={name}
+                id={id}
               />
             </div>
           </div>

@@ -1,14 +1,32 @@
 import CustomButton from "components/custom-button/custom-button.component";
 import ModalContainer from "components/modal-container/modal-container.component";
+import { db } from "config/firebase";
+import { useAuth } from "hooks/useAuth.provider";
 import React from "react";
 
 type Props = {
+  id: string;
   name: string; // Projects name
   isHidden: boolean;
   setIsHidden: (newState: boolean) => void;
 };
 
-const DeleteProjectModal: React.FC<Props> = ({ isHidden, setIsHidden, name }) => {
+const DeleteProjectModal: React.FC<Props> = ({ isHidden, setIsHidden, name, id: projectId }) => {
+  const { user } = useAuth();
+  const handleDeleteConfirm = (): void => {
+    const userRef = db.collection("users").doc(user.uid);
+    const projectRef = userRef.collection("projects").doc(projectId);
+
+    projectRef
+      .delete()
+      .then(() => {
+        setIsHidden(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <ModalContainer
       isHidden={isHidden}
@@ -35,6 +53,7 @@ const DeleteProjectModal: React.FC<Props> = ({ isHidden, setIsHidden, name }) =>
             borderColor="red-500"
             transitionColor="red-500"
             className="float-right"
+            onClick={handleDeleteConfirm}
           >
             Delete
           </CustomButton>

@@ -79,8 +79,8 @@ const ProjectsPreview: React.FC = () => {
         </div>
       ) : (
         <div className="flex flex-wrap gap-y-5 lg:gap-x-5 sm:gap-x-1 mt-5">
-          {projects?.map(({ id, ...projectProps }) => (
-            <ProjectCard key={id} {...projectProps} />
+          {projects?.map(({ ...projectProps }) => (
+            <ProjectCard key={projectProps.id} {...projectProps} />
           ))}
         </div>
       )}
