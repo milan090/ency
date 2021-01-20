@@ -107,6 +107,7 @@ const ContentBlockEditor: React.FC<Props> = ({ contentBlock, projectRef }) => {
         batch.update(doc.ref, { index: doc.data().index + 1 });
       });
       await batch.commit();
+      setIsOpen(false);
     } catch (error) {
       console.log(error);
       alert("Oops something went wrong");
@@ -118,12 +119,12 @@ const ContentBlockEditor: React.FC<Props> = ({ contentBlock, projectRef }) => {
       if (autoSaveTimeout) {
         clearTimeout(autoSaveTimeout);
       }
-      if (process.env.NODE_ENV === "production") {
-        console.log("Saving");
-        projectRef.collection("contentBlocks").doc(contentBlock.id).update({
-          value: value,
-        });
-      }
+      // if (process.env.NODE_ENV === "production") {
+      //   console.log("Saving");
+      //   projectRef.collection("contentBlocks").doc(contentBlock.id).update({
+      //     value: value,
+      //   });
+      // }
     };
   }, []);
 

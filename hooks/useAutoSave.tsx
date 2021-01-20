@@ -16,13 +16,11 @@ export function AutoSaveProvider(props: { children: React.ReactNode }): JSX.Elem
 
   const addItemToSave = (item: string): void => {
     if (!notSaved.includes(item)) {
-      console.log("Adding");
       setNotSaved([...notSaved, item]);
     }
   };
 
   const removeItemToSave = (item: string): void => {
-    console.log("removing");
     setNotSaved(notSaved.filter((notSavedItem) => notSavedItem !== item));
   };
 
