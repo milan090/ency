@@ -2,7 +2,7 @@ import ProjectCard from "components/project-card/project-card.component";
 import { db } from "config/firebase";
 import { useAuth } from "hooks/useAuth.provider";
 import React, { useEffect, useState } from "react";
-import { ProjectDoc, ProjectPreview } from "types/project,types";
+import { ProjectPreviewDoc, ProjectPreview } from "types/project,types";
 
 const ProjectsPreview: React.FC = () => {
   const [projects, setProjects] = useState<ProjectPreview[]>([]);
@@ -10,16 +10,16 @@ const ProjectsPreview: React.FC = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    if (!user.uid) return;
     setIsLoading(true);
+    if (!user.uid) return;
     const projectRef = db.collection("users").doc(user.uid).collection("projects");
-    projectRef
+
+    const unsubscribeProject = projectRef
       .orderBy("lastUpdated", "desc")
-      .get()
-      .then((querySnapshot) => {
+      .onSnapshot((querySnapshot) => {
         const projectPreviews: Array<ProjectPreview> = [];
         querySnapshot.forEach((doc) => {
-          const data = doc.data() as ProjectDoc;
+          const data = doc.data() as ProjectPreviewDoc;
           projectPreviews.push({
             id: doc.id,
             name: data.name,
@@ -30,27 +30,11 @@ const ProjectsPreview: React.FC = () => {
 
         setProjects(projectPreviews);
         setIsLoading(false);
-      })
-      .catch((error) => {
-        console.log("Error getting projects", error);
       });
 
-    projectRef.orderBy("lastUpdated", "desc").onSnapshot((querySnapshot) => {
-      console.log("Projects fetched =", querySnapshot.docs.length);
-      const projectPreviews: Array<ProjectPreview> = [];
-      querySnapshot.forEach((doc) => {
-        const data = doc.data() as ProjectDoc;
-        projectPreviews.push({
-          id: doc.id,
-          name: data.name,
-          description: data.description,
-          lastUpdated: data.lastUpdated.toDate(),
-        });
-      });
-
-      setProjects(projectPreviews);
-      setIsLoading(false);
-    });
+    return () => {
+      unsubscribeProject();
+    };
   }, [user.uid]);
 
   useEffect(() => {
@@ -67,9 +51,9 @@ const ProjectsPreview: React.FC = () => {
         <hr className="w-10 border-none bg-primary h-1 mt-0.5" />
       </div>
       {projects.length === 0 ? (
-        <div className="mx-auto pt-20">
+        <div className="">
           {projects.length === 0 && (
-            <div className="flex items-center">
+            <div className="flex items-center justify-center mt-20">
               <img src="./dashboard/create-project.svg" alt="" width="180px" />
               <span className="text-3xl font-bold text-gray-500">
                 Create Your <br /> First Project

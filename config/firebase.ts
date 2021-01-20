@@ -24,5 +24,6 @@ export const db = firebase.firestore();
 export const now = firebase.firestore.Timestamp.now();
 export const storage = firebase.storage();
 export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+export const firestore = firebase.firestore;
 // googleAuthProvider.setCustomParameters
 console.log(app.name ? "Firebase Mode Activated!" : "Firebase not working :(");

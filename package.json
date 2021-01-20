@@ -12,7 +12,9 @@
   "dependencies": {
     "@tailwindui/react": "^0.1.1",
     "autoprefixer": "^10.2.1",
+    "axios": "^0.21.1",
     "firebase": "^8.2.3",
+    "firebase-admin": "^9.4.2",
     "next": "10.0.5",
     "node-sass": "^5.0.0",
     "postcss": "^8.2.4",

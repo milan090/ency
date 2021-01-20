@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { MoreVertical } from "react-feather";
 import CustomButton from "../custom-button/custom-button.component";
 import { Transition } from "@tailwindui/react";
 import DeleteProjectModal from "components/delete-project-modal/delete-project-modal.component";
+import Dropdown from "components/dropdown/dropdown.component";
 
 interface Props {
   id: string;
@@ -12,13 +14,14 @@ interface Props {
 }
 
 const ProjectCard: React.FC<Props> = ({ name, description, lastUpdated, id, ...props }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // Dropdown
   const [deleteProjectModalIsHidden, setDeleteProjectModalIsHidden] = useState(true);
   const container = useRef(null);
 
   useEffect(() => {
     function handleOutsideClick(event: MouseEvent): void {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if (!isOpen) return;
       if (!(container.current as any).contains(event.target)) {
         if (!isOpen) return;
         setIsOpen(false);
@@ -26,7 +29,9 @@ const ProjectCard: React.FC<Props> = ({ name, description, lastUpdated, id, ...p
     }
 
     window.addEventListener("click", handleOutsideClick);
-    return () => window.removeEventListener("click", handleOutsideClick);
+    return () => {
+      window.removeEventListener("click", handleOutsideClick);
+    };
   }, [isOpen, container]);
 
   return (
@@ -47,11 +52,15 @@ const ProjectCard: React.FC<Props> = ({ name, description, lastUpdated, id, ...p
         } group-hover:block group-focus:block transition-opacity duration-200 ease-out mt-24`}
       >
         <div className="flex items-center justify-between">
-          <CustomButton className="float-right text-sm">Continue</CustomButton>
+          <Link href={`dashboard/project/${id}`}>
+            <span>
+              <CustomButton className="float-right text-sm">Coninue</CustomButton>
+            </span>
+          </Link>
 
           <div className={`inline-block relative`} ref={container}>
             <button className={`focus:outline-none outline-none`} onClick={() => setIsOpen(true)}>
-              <MoreVertical className="float-right cursor-pointer" />
+              <MoreVertical className="float-right cursor-pointer mt-1" />
             </button>
             {/* Dropdown */}
             <Transition
@@ -63,7 +72,7 @@ const ProjectCard: React.FC<Props> = ({ name, description, lastUpdated, id, ...p
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <ul className={`absolute bg-white w-40 rounded-md z-10 shadow-md`}>
+              <Dropdown show={true} className="w-40">
                 <li className="cursor-pointer">
                   <span className="hover:bg-gray-200 py-2 px-4 block whitespace-no-wrap">
                     Share
@@ -82,7 +91,7 @@ const ProjectCard: React.FC<Props> = ({ name, description, lastUpdated, id, ...p
                     Delete
                   </button>
                 </li>
-              </ul>
+              </Dropdown>
             </Transition>
             <div>
               <DeleteProjectModal

@@ -1,8 +1,8 @@
 import CustomButton from "components/custom-button/custom-button.component";
 import ModalContainer from "components/modal-container/modal-container.component";
-import { db } from "config/firebase";
-import { useAuth } from "hooks/useAuth.provider";
+import axios from "axios";
 import React from "react";
+import { auth } from "config/firebase";
 
 type Props = {
   id: string;
@@ -12,19 +12,29 @@ type Props = {
 };
 
 const DeleteProjectModal: React.FC<Props> = ({ isHidden, setIsHidden, name, id: projectId }) => {
-  const { user } = useAuth();
-  const handleDeleteConfirm = (): void => {
-    const userRef = db.collection("users").doc(user.uid);
-    const projectRef = userRef.collection("projects").doc(projectId);
-
-    projectRef
-      .delete()
-      .then(() => {
+  const handleDeleteConfirm = async (): Promise<void> => {
+    const userIdToken = await auth.currentUser?.getIdToken();
+    try {
+      const res = await axios.post(
+        "/api/project/delete",
+        {
+          projectId: projectId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${userIdToken}`,
+          },
+        }
+      );
+      if (res.data.success) {
+        console.log(res.data);
         setIsHidden(true);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      } else {
+        alert("Oops something went wrong");
+      }
+    } catch (error) {
+      console.log(error.response.data);
+    }
   };
 
   return (

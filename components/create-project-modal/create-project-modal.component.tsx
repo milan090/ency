@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { db } from "config/firebase";
 import { useAuth } from "hooks/useAuth.provider";
 import firebase from "firebase";
+import { useRouter } from "next/router";
 
 type Props = {
   isHidden: boolean;
@@ -19,19 +20,19 @@ type CreateProjectFormInputs = {
 const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
   const { register, handleSubmit, errors } = useForm<CreateProjectFormInputs>();
   const { user } = useAuth();
+  const router = useRouter();
 
   const onSubmit = (data: CreateProjectFormInputs): void => {
     if (!user.uid) return alert("Oops somethign went wrong! Try again in few minutes");
     const userRef = db.collection("users").doc(user.uid);
-    userRef
-      .collection("projects")
-      .doc()
+    const projectRef = userRef.collection("projects").doc();
+    projectRef
       .set({
         name: data.name,
         lastUpdated: firebase.firestore.Timestamp.fromDate(new Date()),
       })
       .then(() => {
-        setIsHidden(true);
+        router.push(`/dashboard/project/${projectRef.id}`);
       })
       .catch((error) => {
         console.log(error);

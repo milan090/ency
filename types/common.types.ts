@@ -27,3 +27,11 @@ export interface UseAuth {
   signInWithGoogle: SignInWithGoogle;
   isLoading: boolean;
 }
+
+export interface UseAutoSave {
+  notSaved: string[];
+  addItemToSave: (item: string) => void;
+  removeItemToSave: (item: string) => void;
+}
+
+export type FirebaseDocRef = firebase.firestore.DocumentReference<firebase.firestore.DocumentData>;

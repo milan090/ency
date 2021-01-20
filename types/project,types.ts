@@ -7,12 +7,23 @@ export interface ProjectPreview {
   lastUpdated: Date;
 }
 
-export interface Project extends ProjectPreview {
-  createdAt: Date;
-}
-
-export interface ProjectDoc extends firebase.firestore.DocumentData {
+export interface ProjectPreviewDoc extends firebase.firestore.DocumentData {
   name: string;
   description: string;
   lastUpdated: firebase.firestore.Timestamp;
+}
+
+export type ContentBlockType = "heading1" | "heading2" | "paragraph" | "image" | "video" | "link";
+
+export interface ContentBlock {
+  id: string;
+  type: ContentBlockType;
+  value: string;
+  index: number;
+}
+
+export interface ContentBlockDoc extends firebase.firestore.DocumentData {
+  type: ContentBlockType;
+  value: string;
+  index: number;
 }
