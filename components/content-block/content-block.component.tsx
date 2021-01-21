@@ -14,6 +14,7 @@ type Props = {
 
 const ContentBlockEditor: React.FC<Props> = ({ contentBlock, projectRef }) => {
   const [isOpen, setIsOpen] = useState(false); // Dropdown
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const container = useRef(null);
 
@@ -34,6 +35,7 @@ const ContentBlockEditor: React.FC<Props> = ({ contentBlock, projectRef }) => {
   }, [isOpen, container]);
 
   const handleDelete = async (): Promise<void> => {
+    setIsDeleting(true);
     const contentBlocksRef = projectRef.collection("contentBlocks");
     const itemToDeleteRef = contentBlocksRef.doc(contentBlock.id);
     contentBlocksRef
@@ -52,8 +54,10 @@ const ContentBlockEditor: React.FC<Props> = ({ contentBlock, projectRef }) => {
           .commit()
           .then(() => {
             setIsOpen(false);
+            setIsDeleting(false);
           })
           .catch((error) => {
+            setIsDeleting(false);
             console.log(error);
             alert("Oops something went wrong");
           });
@@ -89,13 +93,10 @@ const ContentBlockEditor: React.FC<Props> = ({ contentBlock, projectRef }) => {
   };
 
   return (
-    <div
-      className="bg-white w-full rounded-sm border-l-4 border-black mb-5 flex group"
-      ref={container}
-    >
+    <div className="bg-white w-full rounded-sm border-l-4 border-black mb-5 flex group">
       <ContentBlockInput contentBlock={contentBlock} projectRef={projectRef} />
 
-      <div className="px-5 pt-2">
+      <div className="px-5 pt-2 inline-block relative" ref={container}>
         <button
           className={`outline-none cursor-pointer focus:outline-none ${
             !isOpen && "hidden"
@@ -106,7 +107,7 @@ const ContentBlockEditor: React.FC<Props> = ({ contentBlock, projectRef }) => {
         >
           <MoreVertical size="18px" className="outline-none" />
         </button>
-        <Dropdown show={isOpen} className="shadow-xl w-50">
+        <Dropdown show={isOpen} className="shadow-xl w-52 right-2">
           <li className="cursor-pointer">
             <button
               className="hover:bg-gray-200 py-2 px-4 block whitespace-no-wrap w-full text-left outline-none focus:outline-none focus:bg-gray-300 border-b border-gray-300"
@@ -120,7 +121,11 @@ const ContentBlockEditor: React.FC<Props> = ({ contentBlock, projectRef }) => {
               className="hover:bg-gray-200 py-2 px-4 block whitespace-no-wrap w-full text-left outline-none focus:outline-none focus:bg-gray-300"
               onClick={() => handleDelete()}
             >
-              Delete
+              {isDeleting ? (
+                <svg className="animate-spin h-5 w-5 mr-3 " viewBox="0 0 24 24"></svg>
+              ) : (
+                "Delete"
+              )}
             </button>
           </li>
         </Dropdown>
