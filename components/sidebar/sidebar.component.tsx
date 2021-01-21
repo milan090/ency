@@ -6,8 +6,8 @@ import { useAuth } from "hooks/useAuth.provider";
 const SideBar: React.FC = () => {
   const { signOut } = useAuth();
   return (
-    <div className="w-20">
-      <div className="fixed left-0 h-screen w-20 px-2 py-2 bg-white shadow-lg">
+    <div className="w-24">
+      <div className="left-0 h-screen px-2 py-2 bg-white shadow-lg block">
         <Link href="/dashboard">
           <img src="/brand-logo.svg" width="70" alt="" className="cursor-pointer" />
         </Link>

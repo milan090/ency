@@ -12,6 +12,7 @@ import { db } from "config/firebase";
 import BlocksEditor from "components/blocks-editor/blocks-editor.component";
 import { FirebaseDocRef } from "types/common.types";
 import { useAutoSave } from "hooks/useAutoSave";
+import ProjectSidebar from "components/project-sidebar/project-sidebar.component";
 
 export default function ProjectPage(): JSX.Element {
   const router = useRouter();
@@ -85,9 +86,9 @@ export default function ProjectPage(): JSX.Element {
   }, [user]);
 
   return (
-    <div className="bg-gray-200 flex min-h-screen">
+    <div className="bg-gray-200 flex mix-h-screen overflow-hidden">
       <SideBar />
-      <div className="mx-10 w-full mt-8">
+      <div className="px-10 w-full pt-8 pb-20 overflow-y-scroll max-h-screen">
         <div>
           <div>
             {project?.id && (
@@ -105,6 +106,7 @@ export default function ProjectPage(): JSX.Element {
         </div>
         <div>{projectRef && <BlocksEditor blocks={contentBlocks} projectRef={projectRef} />}</div>
       </div>
+      <ProjectSidebar />
     </div>
   );
 }

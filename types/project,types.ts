@@ -13,7 +13,14 @@ export interface ProjectPreviewDoc extends firebase.firestore.DocumentData {
   lastUpdated: firebase.firestore.Timestamp;
 }
 
-export type ContentBlockType = "heading1" | "heading2" | "paragraph" | "image" | "video" | "link";
+export type ContentBlockType =
+  | "heading1"
+  | "heading2"
+  | "paragraph"
+  | "image"
+  | "video"
+  | "link"
+  | "list";
 
 export interface ContentBlock {
   id: string;
