@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CustomInput from "components/custom-input/custom-input.component";
 import ModalContainer from "components/modal-container/modal-container.component";
 import CustomButton from "components/custom-button/custom-button.component";
@@ -7,6 +7,7 @@ import { db } from "config/firebase";
 import { useAuth } from "hooks/useAuth.provider";
 import firebase from "firebase";
 import { useRouter } from "next/router";
+import LoadingSpinner from "components/loading-spinner/loading-spinner.component";
 
 type Props = {
   isHidden: boolean;
@@ -19,11 +20,14 @@ type CreateProjectFormInputs = {
 
 const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
   const { register, handleSubmit, errors } = useForm<CreateProjectFormInputs>();
+  const [isCreating, setIsCreating] = useState(false);
   const { user } = useAuth();
   const router = useRouter();
 
   const onSubmit = (data: CreateProjectFormInputs): void => {
     if (!user.uid) return alert("Oops somethign went wrong! Try again in few minutes");
+    if (isCreating) return;
+    setIsCreating(true);
     const userRef = db.collection("users").doc(user.uid);
     const projectRef = userRef.collection("projects").doc();
     projectRef
@@ -35,6 +39,7 @@ const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
         router.push(`/dashboard/project/${projectRef.id}`);
       })
       .catch((error) => {
+        setIsCreating(true);
         console.log(error);
       });
   };
@@ -52,9 +57,17 @@ const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
             placeHolder="Enter Project Name"
             type="text"
             textSize="base"
+            // eslint-disable-next-line jsx-a11y/no-autofocus
+            autoFocus
           />
           <CustomButton className="float-right mt-3" onClick={handleSubmit(onSubmit)}>
-            Create
+            {isCreating ? (
+              <div className="w-full flex justify-center">
+                <LoadingSpinner />
+              </div>
+            ) : (
+              "Create"
+            )}
           </CustomButton>
         </form>
       </ModalContainer>

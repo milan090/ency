@@ -1,8 +1,9 @@
 import CustomButton from "components/custom-button/custom-button.component";
 import ModalContainer from "components/modal-container/modal-container.component";
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { auth } from "config/firebase";
+import LoadingSpinner from "components/loading-spinner/loading-spinner.component";
 
 type Props = {
   id: string;
@@ -12,7 +13,11 @@ type Props = {
 };
 
 const DeleteProjectModal: React.FC<Props> = ({ isHidden, setIsHidden, name, id: projectId }) => {
+  const [isDeleting, setIsDeleting] = useState(false);
+
   const handleDeleteConfirm = async (): Promise<void> => {
+    setIsDeleting(true);
+
     const userIdToken = await auth.currentUser?.getIdToken();
     try {
       const res = await axios.post(
@@ -33,6 +38,7 @@ const DeleteProjectModal: React.FC<Props> = ({ isHidden, setIsHidden, name, id: 
         alert("Oops something went wrong");
       }
     } catch (error) {
+      setIsDeleting(false);
       console.log(error.response.data);
     }
   };
@@ -51,7 +57,7 @@ const DeleteProjectModal: React.FC<Props> = ({ isHidden, setIsHidden, name, id: 
             bgColor="blue-500"
             borderColor="blue-500"
             transitionColor="blue-500"
-            className="float-right mr-5"
+            className="float-right mr-5 w-24"
             onClick={() => setIsHidden(true)}
           >
             Cancel
@@ -62,10 +68,16 @@ const DeleteProjectModal: React.FC<Props> = ({ isHidden, setIsHidden, name, id: 
             bgColor="red-500"
             borderColor="red-500"
             transitionColor="red-500"
-            className="float-right"
+            className="float-right w-24"
             onClick={handleDeleteConfirm}
           >
-            Delete
+            {isDeleting ? (
+              <div className="w-full flex justify-center">
+                <LoadingSpinner />
+              </div>
+            ) : (
+              "Delete"
+            )}
           </CustomButton>
         </div>
       </div>

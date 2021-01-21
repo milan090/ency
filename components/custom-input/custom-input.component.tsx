@@ -22,6 +22,7 @@ type Props = {
   className?: string;
   fref?: any;
   textSize?: "xs" | "sm" | "base" | "lg" | "xl" | "2xl";
+  [prop: string]: any;
 };
 
 const CustomInput: React.FC<Props> = ({
@@ -33,6 +34,7 @@ const CustomInput: React.FC<Props> = ({
   className,
   fref,
   textSize,
+  ...props
 }) => {
   return (
     <div className="mb-4">
@@ -41,6 +43,9 @@ const CustomInput: React.FC<Props> = ({
         {label}
       </label>
       <input
+        {...props}
+        // eslint-disable-next-line jsx-a11y/no-autofocus
+        autoFocus
         name={name}
         ref={fref}
         type={type}

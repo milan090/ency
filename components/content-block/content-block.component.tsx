@@ -6,6 +6,8 @@ import { MoreVertical } from "react-feather";
 import { FirebaseDocRef } from "types/common.types";
 import { ContentBlock, ContentBlockDoc } from "types/project,types";
 import ContentBlockInput from "components/content-block-input/content-block-input.component";
+import LoadingSpinner from "components/loading-spinner/loading-spinner.component";
+import { useAutoSave } from "hooks/useAutoSave";
 
 type Props = {
   contentBlock: ContentBlock;
@@ -15,8 +17,15 @@ type Props = {
 const ContentBlockEditor: React.FC<Props> = ({ contentBlock, projectRef }) => {
   const [isOpen, setIsOpen] = useState(false); // Dropdown
   const [isDeleting, setIsDeleting] = useState(false);
+  const { removeItemToSave } = useAutoSave();
 
   const container = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      removeItemToSave(contentBlock.id);
+    };
+  }, []);
 
   useEffect(() => {
     function handleOutsideClick(event: MouseEvent): void {
@@ -122,7 +131,9 @@ const ContentBlockEditor: React.FC<Props> = ({ contentBlock, projectRef }) => {
               onClick={() => handleDelete()}
             >
               {isDeleting ? (
-                <svg className="animate-spin h-5 w-5 mr-3 " viewBox="0 0 24 24"></svg>
+                <div className="w-full flex justify-center">
+                  <LoadingSpinner />
+                </div>
               ) : (
                 "Delete"
               )}
