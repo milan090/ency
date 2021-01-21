@@ -95,7 +95,7 @@ const ContentBlockEditor: React.FC<Props> = ({ contentBlock, projectRef }) => {
     >
       <ContentBlockInput contentBlock={contentBlock} projectRef={projectRef} />
 
-      <div className="w-5 pt-2">
+      <div className="px-5 pt-2">
         <button
           className={`outline-none cursor-pointer focus:outline-none ${
             !isOpen && "hidden"
@@ -106,7 +106,7 @@ const ContentBlockEditor: React.FC<Props> = ({ contentBlock, projectRef }) => {
         >
           <MoreVertical size="18px" className="outline-none" />
         </button>
-        <Dropdown show={isOpen} className="right-12 shadow-xl w-50">
+        <Dropdown show={isOpen} className="shadow-xl w-50">
           <li className="cursor-pointer">
             <button
               className="hover:bg-gray-200 py-2 px-4 block whitespace-no-wrap w-full text-left outline-none focus:outline-none focus:bg-gray-300 border-b border-gray-300"

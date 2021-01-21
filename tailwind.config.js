@@ -16,12 +16,13 @@ module.exports = {
     stroke: (theme) => ({
       primary: theme("colors.primary"),
       accent: theme("colors.accent"),
+      white: theme("colors.white"),
+      "blue-500": theme("colors.blue.500")
     }),
   },
   variants: {
     extend: {
       display: ["focus", "hover", "group-focus", "group-hover"],
-      
     },
   },
   plugins: [],

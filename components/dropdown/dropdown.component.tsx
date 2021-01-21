@@ -9,7 +9,7 @@ type Props = {
 const Dropdown: React.FC<Props> = ({ show, children, className }) => {
   return (
     <ul
-      className={`absolute bg-gray-50 overflow-hidden rounded-md z-10 shadow-md ${className} ${
+      className={`absolute bg-gray-50 overflow-hidden w-50 rounded-md z-10 shadow-md ${className} ${
         !show && "hidden"
       }`}
     >
