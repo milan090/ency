@@ -11,9 +11,8 @@ import {
 import { db } from "config/firebase";
 import BlocksEditor from "components/blocks-editor/blocks-editor.component";
 import { FirebaseDocRef } from "types/common.types";
-import { useAutoSave } from "hooks/useAutoSave";
 import ProjectSidebar from "components/project-sidebar/project-sidebar.component";
-import { Check, UploadCloud } from "react-feather";
+import AutoSaveIndicator from "components/autosave-indicator/autosave-indicator.component";
 
 export default function ProjectPage(): JSX.Element {
   const router = useRouter();
@@ -22,7 +21,6 @@ export default function ProjectPage(): JSX.Element {
   const [project, setProject] = useState<ProjectPreview>();
   const [contentBlocks, setContentBlocks] = useState<ContentBlock[]>([]);
   const [projectRef, setProjectRef] = useState<FirebaseDocRef>();
-  const { notSaved } = useAutoSave();
 
   const handleProjectNameChange = (newValue: string): void => {
     projectRef
@@ -100,21 +98,7 @@ export default function ProjectPage(): JSX.Element {
                 onChange={(e) => handleProjectNameChange(e.target.value)}
               />
             )}
-            <div className="float-right">
-              <span>
-                {notSaved.length === 0 ? (
-                  <span className="flex items-center justify-center">
-                    <Check className="mr-1 bg-transparent rounded-full stroke-primary" />{" "}
-                    <span>Saved!</span>
-                  </span>
-                ) : (
-                  <span className="flex items-center justify-center animate-pulse">
-                    <UploadCloud className="mr-2 bg-transparent rounded-full stroke-primary" />{" "}
-                    <span>Autosaving...</span>
-                  </span>
-                )}
-              </span>
-            </div>
+            <AutoSaveIndicator />
           </div>
         </div>
         <div>{projectRef && <BlocksEditor blocks={contentBlocks} projectRef={projectRef} />}</div>
