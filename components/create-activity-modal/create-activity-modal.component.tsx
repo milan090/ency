@@ -36,6 +36,7 @@ const CreateActivityModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
       .doc()
       .set(newActivity)
       .then(() => {
+        setIsCreating(false);
         setIsHidden(true);
       })
       .catch((error) => {

@@ -36,7 +36,11 @@ const ActivityCard: React.FC<Props> = ({ activity }) => {
               {activity.isCompleted && <Check size="18px" />}
             </button>
           </div>
-          <span className={`ml-2 w-56 ${activity.isCompleted && "line-through text-gray-600"}`}>
+          <span
+            className={`ml-2 w-56 break-words ${
+              activity.isCompleted && "line-through text-gray-600"
+            }`}
+          >
             {activity.name}
           </span>
         </div>
