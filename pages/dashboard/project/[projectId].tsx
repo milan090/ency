@@ -10,9 +10,9 @@ import {
 } from "types/project,types";
 import { db } from "config/firebase";
 import BlocksEditor from "components/blocks-editor/blocks-editor.component";
-import { FirebaseDocRef } from "types/common.types";
 import ProjectSidebar from "components/project-sidebar/project-sidebar.component";
 import AutoSaveIndicator from "components/autosave-indicator/autosave-indicator.component";
+import { useProject } from "hooks/useProject";
 
 export default function ProjectPage(): JSX.Element {
   const router = useRouter();
@@ -20,7 +20,7 @@ export default function ProjectPage(): JSX.Element {
   const { user, isLoading } = useAuth();
   const [project, setProject] = useState<ProjectPreview>();
   const [contentBlocks, setContentBlocks] = useState<ContentBlock[]>([]);
-  const [projectRef, setProjectRef] = useState<FirebaseDocRef>();
+  const { projectRef, setProjectRef } = useProject();
 
   const handleProjectNameChange = (newValue: string): void => {
     projectRef

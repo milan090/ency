@@ -1,4 +1,6 @@
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/firestore";
+import { FirebaseDocRef } from "./common.types";
 
 export interface ProjectPreview {
   id: string;
@@ -33,4 +35,17 @@ export interface ContentBlockDoc extends firebase.firestore.DocumentData {
   type: ContentBlockType;
   value: string;
   index: number;
+}
+
+export interface Activity {
+  name: string;
+  isCompleted: boolean;
+  createdAt: Date;
+  ref: FirebaseDocRef;
+}
+
+export interface ActivityDoc {
+  name: string;
+  isCompleted: boolean;
+  createdAt: firebase.firestore.Timestamp;
 }

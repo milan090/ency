@@ -12,17 +12,22 @@ module.exports = {
         "9xl": "96rem",
         "10xl": "104rem",
       },
+      borderWidth: {
+        3: "3px"
+      }
     },
     stroke: (theme) => ({
       primary: theme("colors.primary"),
       accent: theme("colors.accent"),
       white: theme("colors.white"),
-      "blue-500": theme("colors.blue.500")
+      "blue-500": theme("colors.blue.500"),
+      "red-500": theme("colors.red.500")
     }),
   },
   variants: {
     extend: {
       display: ["focus", "hover", "group-focus", "group-hover"],
+      stroke: ["hover"]
     },
   },
   plugins: [],
