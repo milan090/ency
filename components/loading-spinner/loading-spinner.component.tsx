@@ -1,7 +1,12 @@
 import React from "react";
 
-const LoadingSpinner: React.FC = () => (
-  <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+type Props = {
+  size?: number;
+};
+
+const LoadingSpinner: React.FC<Props> = ({ size }) => (
+  // w-5 h-5
+  <svg className={`animate-spin mr-3 w-${size || "5"} h-${size || "5"}`} viewBox="0 0 24 24">
     <circle
       className="opacity-25"
       style={{

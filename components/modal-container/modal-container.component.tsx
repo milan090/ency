@@ -38,7 +38,7 @@ const ModalContainer: React.FC<Props> = ({ isHidden, setIsHidden, children, titl
       <div
         className={`fixed left-0 top-0 w-full h-full bg-black bg-opacity-20 flex justify-center items-center z-10`}
       >
-        <div className="fixed top-52 bg-white rounded-xl py-3 px-6 max-w-lg" ref={ref}>
+        <div className="fixed top-52 bg-white rounded-xl py-3 px-6 max-w-xl" ref={ref}>
           <div className="flex flex-row justify-center w-full mb-5 relative">
             <h2 className="text-center text-xl font-semibold break-normal w-60">{title}</h2>
             <XCircle

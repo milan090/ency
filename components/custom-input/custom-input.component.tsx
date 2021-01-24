@@ -14,7 +14,7 @@ const placeholderTextSize = {
 };
 
 type Props = {
-  label: string;
+  label?: string;
   placeHolder: string;
   type: "text" | "password" | "email";
   name: string;

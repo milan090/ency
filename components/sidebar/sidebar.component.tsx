@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Home, Book, Clipboard, LogOut } from "react-feather";
+import { Home, LogOut, Search } from "react-feather";
 import { useAuth } from "hooks/useAuth.provider";
 
 const SideBar: React.FC = () => {
@@ -18,14 +18,9 @@ const SideBar: React.FC = () => {
                 <Home size="30" className="mx-auto" />
               </div>
             </Link>
-            <Link href="#">
+            <Link href="/dashboard/summarize">
               <div className="transition-all duration-300 ease-in-out cursor-pointer rounded-full hover:shadow-xl w-12 h-12 mx-auto">
-                <Book size="30" className="mx-auto" />
-              </div>
-            </Link>
-            <Link href="#">
-              <div className="transition-all duration-300 ease-in-out cursor-pointer rounded-full hover:shadow-xl w-12 h-12 mx-auto">
-                <Clipboard size="30" className="mx-auto" />
+                <Search size="30" className="mx-auto" />
               </div>
             </Link>
           </div>
