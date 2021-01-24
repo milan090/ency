@@ -25,7 +25,7 @@ export default async function SummarizeUrl(
       });
     }
 
-    const response = await axios.post(`${process.env.AI_API_URL}/summarise-url`, {
+    const response = await axios.post(`${process.env.AI_API_URL}/summarize-url`, {
       url: url,
       length: 5,
     });

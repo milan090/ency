@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CustomInput from "components/custom-input/custom-input.component";
 import ModalContainer from "components/modal-container/modal-container.component";
 import CustomButton from "components/custom-button/custom-button.component";
@@ -21,8 +21,13 @@ type CreateProjectFormInputs = {
 const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
   const { register, handleSubmit, errors } = useForm<CreateProjectFormInputs>();
   const [isCreating, setIsCreating] = useState(false);
+  const [AITipsEnabled, setAITipsEnabled] = useState(true);
   const { user } = useAuth();
   const router = useRouter();
+
+  useEffect(() => {
+    console.log(AITipsEnabled);
+  }, [AITipsEnabled]);
 
   const onSubmit = (data: CreateProjectFormInputs): void => {
     if (!user.uid) return alert("Oops somethign went wrong! Try again in few minutes");
@@ -60,6 +65,16 @@ const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
             // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus
           />
+          <div>
+            <input
+              type="checkbox"
+              id="aiTips"
+              className="mr-2 cursor-pointer"
+              defaultChecked
+              onChange={(e) => setAITipsEnabled(e.target.checked)}
+            />
+            <label htmlFor="aiTips">Suggest </label>
+          </div>
           <CustomButton className="float-right mt-3" onClick={handleSubmit(onSubmit)}>
             {isCreating ? (
               <div className="w-full flex justify-center">
