@@ -5,8 +5,7 @@ import SummarizeForm from "components/summarize-form/summarize-form.component";
 import React, { useState } from "react";
 import { ArrowLeft } from "react-feather";
 import { SummarizeMode } from "types/summarise.types";
-import axios from "axios";
-import { auth } from "config/firebase";
+import { summarizeText, summarizeUrl } from "utils/aiApi";
 
 const SummariseTextUrl: React.FC = () => {
   const [mode, setMode] = useState<SummarizeMode>(null);
@@ -25,23 +24,11 @@ const SummariseTextUrl: React.FC = () => {
     const apiValue = value || newValue;
     const apiMode = mode || newMode;
     if (!apiValue) return alert("No value entered");
-
+    console.log(process.env.NEXT_PUBLIC_AI_API_URL);
     if (apiMode === "url") {
       try {
         setIsLoading(true);
-        const userIdToken = await auth.currentUser?.getIdToken();
-        const res = await axios.post(
-          "/api/summarize/url",
-          {
-            url: apiValue,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${userIdToken}`,
-            },
-          }
-        );
-        const data = res.data;
+        const data = await summarizeUrl(apiValue);
         setSummarizedValue(data.output);
       } catch (error) {
         console.error(error);
@@ -51,19 +38,7 @@ const SummariseTextUrl: React.FC = () => {
     } else if (apiMode === "text") {
       try {
         setIsLoading(true);
-        const userIdToken = await auth.currentUser?.getIdToken();
-        const res = await axios.post(
-          "/api/summarize/text",
-          {
-            text: value || apiValue,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${userIdToken}`,
-            },
-          }
-        );
-        const data = res.data;
+        const data = await summarizeText(apiValue);
         setSummarizedValue(data.output);
       } catch (error) {
         console.error(error);
