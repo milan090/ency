@@ -5,7 +5,8 @@ import CustomButton from "components/custom-button/custom-button.component";
 import { useForm } from "react-hook-form";
 import { db } from "config/firebase";
 import { useAuth } from "hooks/useAuth.provider";
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/firestore";
 import { useRouter } from "next/router";
 import LoadingSpinner from "components/loading-spinner/loading-spinner.component";
 

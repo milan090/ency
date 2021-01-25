@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import firebase from "firebase";
+import firebase from "firebase/app";
 import { db, auth, googleAuthProvider } from "config/firebase";
 import {
   IUser,

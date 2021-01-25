@@ -1,5 +1,5 @@
 import { SignInFormInputs, SignUpFormInputs } from "./forms.types";
-import firebase from "firebase";
+import firebase from "firebase/app";
 
 export interface IUser {
   name?: string;
