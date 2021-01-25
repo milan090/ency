@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import SideBar from "components/sidebar/sidebar.component";
+import AppBar from "components/appbar/appbar.component";
 import { useAuth } from "hooks/useAuth.provider";
 import {
   ContentBlock,
@@ -86,7 +86,7 @@ export default function ProjectPage(): JSX.Element {
 
   return (
     <div className="bg-gray-200 flex mix-h-screen overflow-hidden">
-      <SideBar />
+      <AppBar />
       <div className="px-10 w-full pt-8 pb-20 overflow-y-scroll max-h-screen">
         <div>
           <div>

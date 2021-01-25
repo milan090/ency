@@ -24,7 +24,7 @@ const SummariseTextUrl: React.FC = () => {
     const apiValue = value || newValue;
     const apiMode = mode || newMode;
     if (!apiValue) return alert("No value entered");
-    console.log(process.env.NEXT_PUBLIC_AI_API_URL);
+    setSummarizedValue("");
     if (apiMode === "url") {
       try {
         setIsLoading(true);
@@ -150,15 +150,15 @@ const EditValue: React.FC<EditValueProps> = ({ mode, onChange, value, handleSubm
   if (mode === "url") {
     return (
       <div className="mt-5 mb-16">
-        <h2 className="text-lg text-gray-500 mb-5">Summarize Text</h2>
-        <div className="flex">
+        <h2 className="text-lg text-gray-500 mb-5">Summarize Webpage</h2>
+        <div className="flex items-start">
           <input
             type="text"
             value={value}
             onChange={(e) => onChange(e.target.value)}
             className="w-full max-w-2xl px-3 py-1 outline-none"
           />
-          <CustomButton className="h-10 mx-5" onClick={handleSubmit}>
+          <CustomButton className="mx-5" onClick={handleSubmit}>
             Summarize Again
           </CustomButton>
         </div>
@@ -168,7 +168,7 @@ const EditValue: React.FC<EditValueProps> = ({ mode, onChange, value, handleSubm
   return (
     <div className="mt-5 mb-16">
       <h2 className="text-lg text-gray-500 mb-5">Summarize Text</h2>
-      <div className="flex">
+      <div className="flex items-start">
         <textarea
           cols={45}
           rows={5}
@@ -177,7 +177,7 @@ const EditValue: React.FC<EditValueProps> = ({ mode, onChange, value, handleSubm
           value={value}
           onChange={(e) => onChange(e.target.value)}
         />
-        <CustomButton className="h-10 mx-5" onClick={handleSubmit}>
+        <CustomButton className="mx-5" onClick={handleSubmit}>
           Summarize Again
         </CustomButton>
       </div>

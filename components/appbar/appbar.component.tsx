@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Home, LogOut, Search } from "react-feather";
 import { useAuth } from "hooks/useAuth.provider";
 
-const SideBar: React.FC = () => {
+const AppBar: React.FC = () => {
   const { signOut } = useAuth();
   return (
     <div className="w-24">
@@ -38,4 +38,4 @@ const SideBar: React.FC = () => {
   );
 };
 
-export default SideBar;
+export default AppBar;

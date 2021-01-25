@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import SideBar from "../../components/sidebar/sidebar.component";
+import AppBar from "../../components/appbar/appbar.component";
 import RightBar from "../../components/right-bar/right-bar.component";
 import getDate from "../../utils/getDate";
 import AddButton from "../../components/add-button/add-button.component";
@@ -21,7 +21,7 @@ export default function Dashboard(): JSX.Element {
 
   return (
     <div className="bg-gray-200 flex justify-between min-h-screen overflow-y-hidden">
-      <SideBar />
+      <AppBar />
       <div className="py-8 w-full px-10 max-h-screen overflow-y-scroll">
         <div className="text-md text-gray-500 mb-3">{getDate()}</div>
         <div className="mb-8 flex justify-between">

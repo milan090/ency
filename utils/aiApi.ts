@@ -19,6 +19,7 @@ export const summarizeUrl = async (url: string): Promise<SummarizeUrl> => {
     }
   );
   const data = res.data;
+  console.log(data);
   return { output: data.output };
 };
 
@@ -31,7 +32,7 @@ export const summarizeText = async (text: string): Promise<SummarizeUrl> => {
   const res = await axios.post(
     `${process.env.NEXT_PUBLIC_AI_API_URL}/summarize-text`,
     {
-      url: text,
+      text: text,
     },
     {
       headers: {
@@ -40,5 +41,6 @@ export const summarizeText = async (text: string): Promise<SummarizeUrl> => {
     }
   );
   const data = res.data;
+  console.log(data);
   return { output: data.output };
 };
