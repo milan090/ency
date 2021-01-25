@@ -11,10 +11,6 @@ const ActivitiesSection: React.FC = () => {
   const { projectRef } = useProject();
 
   useEffect(() => {
-    console.log(createActivityModalIsHidden);
-  }, [createActivityModalIsHidden]);
-
-  useEffect(() => {
     const unsubscribe = projectRef
       ?.collection("activities")
       .orderBy("createdAt", "asc")

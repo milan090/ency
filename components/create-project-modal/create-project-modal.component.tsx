@@ -9,6 +9,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import { useRouter } from "next/router";
 import LoadingSpinner from "components/loading-spinner/loading-spinner.component";
+import { createDefaultActivites, getAITips } from "utils/createProject";
 
 type Props = {
   isHidden: boolean;
@@ -30,24 +31,28 @@ const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
     console.log(AITipsEnabled);
   }, [AITipsEnabled]);
 
-  const onSubmit = (data: CreateProjectFormInputs): void => {
+  const onSubmit = async (data: CreateProjectFormInputs): Promise<void> => {
     if (!user.uid) return alert("Oops somethign went wrong! Try again in few minutes");
     if (isCreating) return;
     setIsCreating(true);
     const userRef = db.collection("users").doc(user.uid);
     const projectRef = userRef.collection("projects").doc();
-    projectRef
-      .set({
+    try {
+      await projectRef.set({
         name: data.name,
         lastUpdated: firebase.firestore.Timestamp.fromDate(new Date()),
-      })
-      .then(() => {
-        router.push(`/dashboard/project/${projectRef.id}`);
-      })
-      .catch((error) => {
-        setIsCreating(true);
-        console.log(error);
       });
+      await createDefaultActivites(projectRef);
+
+      if (AITipsEnabled) {
+        await getAITips(projectRef, data.name);
+      }
+      router.push(`/dashboard/project/${projectRef.id}`);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsCreating(true);
+    }
   };
   return (
     <div>
@@ -74,9 +79,11 @@ const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
               defaultChecked
               onChange={(e) => setAITipsEnabled(e.target.checked)}
             />
-            <label htmlFor="aiTips">Suggest </label>
+            <label htmlFor="aiTips" className="text-gray-400">
+              Give me AI generated Tips (will take 10-20 sec)
+            </label>
           </div>
-          <CustomButton className="float-right mt-3" onClick={handleSubmit(onSubmit)}>
+          <CustomButton className="float-right mt-3 w-28" onClick={handleSubmit(onSubmit)}>
             {isCreating ? (
               <div className="w-full flex justify-center">
                 <LoadingSpinner />

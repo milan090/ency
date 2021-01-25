@@ -105,7 +105,7 @@ const ContentBlockEditor: React.FC<Props> = ({ contentBlock, projectRef }) => {
     <div className="bg-white w-full rounded-sm border-l-4 border-black mb-5 flex group">
       <ContentBlockInput contentBlock={contentBlock} projectRef={projectRef} />
 
-      <div className="px-5 pt-2 inline-block relative" ref={container}>
+      <div className="px-5 pt-2 inline-block relative w-10" ref={container}>
         <button
           className={`outline-none cursor-pointer focus:outline-none ${
             !isOpen && "hidden"

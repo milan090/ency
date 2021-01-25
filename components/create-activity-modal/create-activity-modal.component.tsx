@@ -30,7 +30,6 @@ const CreateActivityModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
       createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
       isCompleted: false,
     };
-    console.log(newActivity);
     projectRef
       ?.collection("activities")
       .doc()
