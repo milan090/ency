@@ -9,10 +9,15 @@ const chatContext = createContext<UseChat>({
   addMessage: () => {
     // pass
   },
+  isCollapsed: false,
+  setIsCollapsed: () => {
+    // pass
+  },
 });
 
 export function ChatProvider(props: { children: React.ReactNode }): JSX.Element {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const addMessage = (newMessage: ChatMessage): void => {
     setMessages([...messages, newMessage]);
@@ -24,6 +29,8 @@ export function ChatProvider(props: { children: React.ReactNode }): JSX.Element 
         messages,
         setMessages,
         addMessage,
+        isCollapsed,
+        setIsCollapsed,
       }}
     >
       {props.children}

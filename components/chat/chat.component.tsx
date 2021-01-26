@@ -1,11 +1,11 @@
 import { useChat } from "hooks/useChat";
 import React, { useEffect, useRef, useState } from "react";
-import { Send } from "react-feather";
+import { ChevronDown, ChevronUp, Send } from "react-feather";
 import { ChatMessage } from "types/chatbot.types";
 import axios from "axios";
 
 const Chat: React.FC = () => {
-  const { messages, addMessage } = useChat();
+  const { messages, addMessage, isCollapsed, setIsCollapsed } = useChat();
   const [inputMessage, setInputMessage] = useState("");
   const chatBoxRef = useRef(null);
 
@@ -13,6 +13,7 @@ const Chat: React.FC = () => {
     const newMessage: ChatMessage = {
       from: "USER",
       content: inputMessage,
+      date: new Date(),
     };
     addMessage(newMessage);
     setInputMessage("");
@@ -27,6 +28,7 @@ const Chat: React.FC = () => {
     const newMessage: ChatMessage = {
       from: "BOT",
       content: reply,
+      date: new Date(),
     };
     addMessage(newMessage);
   };
@@ -47,8 +49,41 @@ const Chat: React.FC = () => {
   }, [messages]);
 
   return (
-    <div className="border-t border-gray-400">
-      <div id="chat" className="pt-4 px-4 overflow-y-scroll h-96">
+    <div
+      className="border-t-2 border-gray-300 flex flex-col items-stretch w-full transition-all duration-150"
+      style={{
+        height: !isCollapsed ? "50%" : "8%",
+      }}
+    >
+      <div className="w-full bg-gray-100 flex justify-between items-center">
+        <div className="float-left flex items-center">
+          <img src="../../brand-logo.svg" alt="logo" width="50px" className="" />
+          <div>
+            <p className="text-primary text-lg">Ency</p>
+            <p className="text-xs text-gray-500 flex items-center justify-center">
+              <p className="w-2 h-2 bg-green-300 rounded-full mb-0.5"></p>
+              <p className="ml-1">Online</p>
+            </p>
+          </div>
+        </div>
+
+        <button
+          className="float-right mr-5 outline-none focus:outline-none focus:bg-gray-300 p-1 hover:bg-gray-200 rounded-full transition-colors duration-150 ease-out"
+          onClick={() => {
+            setIsCollapsed(!isCollapsed);
+          }}
+        >
+          {isCollapsed ? <ChevronUp /> : <ChevronDown />}
+        </button>
+      </div>
+
+      <div
+        id="chat"
+        className={`pt-4 overflow-y-scroll w-full px-5 ${isCollapsed ? "hidden" : "block"}`}
+        style={{
+          minHeight: "70%",
+        }}
+      >
         <div className="flex flex-col items-start" ref={chatBoxRef}>
           {messages.map((message, i) =>
             message.from === "USER" ? (
@@ -59,10 +94,17 @@ const Chat: React.FC = () => {
           )}
         </div>
       </div>
-      <div id="chat-input" className="flex bg-gray-100 border-t border-gray-300">
+
+      <div
+        id="chat-input"
+        className={`${
+          isCollapsed ? "hidden" : "flex"
+        } bg-gray-100 border-t border-gray-300 mx-4 mb-3 mt-1 h-10`}
+      >
         <input
           type="text"
-          className="outline-none px-2 py-2"
+          placeholder="Write your message here"
+          className="outline-none px-4 py-1.5 bg-gray-200 w-72 rounded-tl-xl rounded-bl-xl"
           onChange={(e) => setInputMessage(e.target.value)}
           value={inputMessage}
           onKeyDown={(e) => {
@@ -71,12 +113,12 @@ const Chat: React.FC = () => {
             }
           }}
         />
-        <button className="p-2 outline-none focus:outline-none" onClick={handleSendMessage}>
-          <Send />
+        <button
+          className="py-2 px-3 outline-none focus:outline-none bg-primary rounded-tr-xl rounded-br-xl"
+          onClick={handleSendMessage}
+        >
+          <Send className="stroke-white" />
         </button>
-      </div>
-      <div className="bg-gray-200 h-10 pt-2 border-t border-gray-300">
-        <h3 className="text-center font-semibold">Chat With Ency</h3>
       </div>
     </div>
   );
@@ -89,8 +131,15 @@ interface MessageProps {
 const UserMessage: React.FC<MessageProps> = ({ message }) => {
   return (
     <div className="max-w-xs w-full">
-      <div className="bg-gray-300 px-5 py-2 rounded-2xl rounded-br-sm float-right mb-2">
-        <p>{message.content}</p>
+      <div className="bg-gray-300 px-3 py-2 rounded-lg rounded-br-none float-right mb-4 flex flex-col w-48 shadow-md">
+        <p className="text-sm">{message.content}</p>
+        <div>
+          <p className="float-right text-gray-500 text-xs">
+            <span>{("0" + message.date.getHours().toString()).slice(-2)}</span>
+            <span>:</span>
+            <span>{("0" + message.date.getMinutes().toString()).slice(-2)}</span>
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -99,8 +148,15 @@ const UserMessage: React.FC<MessageProps> = ({ message }) => {
 const BotMessage: React.FC<MessageProps> = ({ message }) => {
   return (
     <div className="max-w-xs">
-      <div className="bg-blue-500 px-5 py-2 rounded-2xl rounded-bl-sm my-4">
-        <p className="text-white">{message.content}</p>
+      <div className="bg-blue-500 px-3 py-2 rounded-lg rounded-bl-none mb-4 w-64 flex flex-col shadow-md">
+        <p className="text-white text-sm ">{message.content}</p>
+        <div>
+          <p className="float-right text-xs text-gray-200">
+            <span>{("0" + message.date.getHours().toString()).slice(-2)}</span>
+            <span>:</span>
+            <span>{("0" + message.date.getMinutes().toString()).slice(-2)}</span>
+          </p>
+        </div>
       </div>
     </div>
   );

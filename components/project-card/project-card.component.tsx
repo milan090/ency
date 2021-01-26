@@ -44,7 +44,7 @@ const ProjectCard: React.FC<Props> = ({ name, description, lastUpdated, id, ...p
       <div className="block">
         <div className="font-bold text-xl">{name}</div>
         <div className="text-md text-gray-500">{description}</div>
-        <p className="text-gray-500">Last Updated: {lastUpdated.toLocaleDateString()}</p>
+        <p className="text-gray-500 text-sm">Last Updated: {lastUpdated.toLocaleDateString()}</p>
       </div>
       <div
         className={`${
