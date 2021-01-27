@@ -56,7 +56,9 @@ const SummariseTextUrl: React.FC = () => {
           <div className="mb-10">
             <p>
               Ency is a powerful text summarizer, which can give you a summary of a text or a URL. 
-              It can also give you suggestions for articles, as well as keywords.
+              It can also give you suggestions for Wikipedia articles, as well as importants keywords.
+              Ency also gives you the choice on many points. You can therefore choose the number of sentences, 
+              but also whether or not to suggest articles, etc...
             </p>
           </div>
           <CustomButton onClick={() => setIsFormHidden(false)}>Summarise Stuff here!</CustomButton>
