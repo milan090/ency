@@ -35,6 +35,11 @@ export default function ProjectPage(): JSX.Element {
       });
   };
   useEffect(() => {
+    return () => {
+      setProjectRef(undefined);
+    };
+  }, [setProjectRef]);
+  useEffect(() => {
     if (isLoading) {
       // Pass
     } else if (!user.uid) {
@@ -87,21 +92,25 @@ export default function ProjectPage(): JSX.Element {
   return (
     <div className="bg-gray-200 flex mix-h-screen overflow-hidden">
       <AppBar />
-      <div className="px-10 w-full pt-8 pb-20 overflow-y-scroll max-h-screen">
-        <div>
-          <div>
-            {project?.id && (
-              <input
-                type="text"
-                className="font-semibold text-3xl bg-transparent outline-none"
-                value={project.name}
-                onChange={(e) => handleProjectNameChange(e.target.value)}
-              />
-            )}
-            <AutoSaveIndicator />
-          </div>
+      <div className="w-full max-h-screen">
+        <div className="bg-gray-50 w-full py-1 px-12 border-b border-gray-300">
+          <AutoSaveIndicator />
         </div>
-        <div>{projectRef && <BlocksEditor blocks={contentBlocks} projectRef={projectRef} />}</div>
+        <div className="px-10 w-full pt-8 pb-20 overflow-y-scroll max-h-screen">
+          <div>
+            <div>
+              {project?.id && (
+                <input
+                  type="text"
+                  className="font-semibold text-3xl bg-transparent outline-none"
+                  value={project.name}
+                  onChange={(e) => handleProjectNameChange(e.target.value)}
+                />
+              )}
+            </div>
+          </div>
+          <div>{projectRef && <BlocksEditor blocks={contentBlocks} projectRef={projectRef} />}</div>
+        </div>
       </div>
       <ProjectSidebar />
     </div>

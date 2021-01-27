@@ -36,7 +36,7 @@ export interface UseAutoSave {
 
 export interface UseProject {
   projectRef: FirebaseDocRef | undefined;
-  setProjectRef: (ref: FirebaseDocRef) => void;
+  setProjectRef: (ref: FirebaseDocRef | undefined) => void;
 }
 
 export type FirebaseDocRef = firebase.firestore.DocumentReference<firebase.firestore.DocumentData>;

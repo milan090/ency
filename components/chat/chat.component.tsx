@@ -5,7 +5,7 @@ import { ChatMessage } from "types/chatbot.types";
 import axios from "axios";
 
 const Chat: React.FC = () => {
-  const { messages, addMessage, isCollapsed, setIsCollapsed } = useChat();
+  const { messages, setMessages, isCollapsed, setIsCollapsed } = useChat();
   const [inputMessage, setInputMessage] = useState("");
   const chatBoxRef = useRef(null);
 
@@ -15,7 +15,7 @@ const Chat: React.FC = () => {
       content: inputMessage,
       date: new Date(),
     };
-    addMessage(newMessage);
+    setMessages([...messages, newMessage]);
     setInputMessage("");
   };
 
@@ -30,7 +30,7 @@ const Chat: React.FC = () => {
       content: reply,
       date: new Date(),
     };
-    addMessage(newMessage);
+    setMessages([...messages, newMessage]);
   };
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const Chat: React.FC = () => {
 
   return (
     <div
-      className="border-t-2 border-gray-300 flex flex-col items-stretch w-full transition-all duration-150"
+      className="border-t-2 border-gray-300 flex flex-col items-stretch w-full max-w-full transition-all duration-150"
       style={{
         height: !isCollapsed ? "50%" : "8%",
       }}
@@ -60,10 +60,10 @@ const Chat: React.FC = () => {
           <img src="../../brand-logo.svg" alt="logo" width="50px" className="" />
           <div>
             <p className="text-primary text-lg">Ency</p>
-            <p className="text-xs text-gray-500 flex items-center justify-center">
+            <div className="text-xs text-gray-500 flex items-center justify-center">
               <p className="w-2 h-2 bg-green-300 rounded-full mb-0.5"></p>
               <p className="ml-1">Online</p>
-            </p>
+            </div>
           </div>
         </div>
 
@@ -134,11 +134,11 @@ const UserMessage: React.FC<MessageProps> = ({ message }) => {
       <div className="bg-gray-300 px-3 py-2 rounded-lg rounded-br-none float-right mb-4 flex flex-col w-48 shadow-md">
         <p className="text-sm">{message.content}</p>
         <div>
-          <p className="float-right text-gray-500 text-xs">
+          <div className="float-right text-gray-500 text-xs">
             <span>{("0" + message.date.getHours().toString()).slice(-2)}</span>
             <span>:</span>
             <span>{("0" + message.date.getMinutes().toString()).slice(-2)}</span>
-          </p>
+          </div>
         </div>
       </div>
     </div>
@@ -151,11 +151,11 @@ const BotMessage: React.FC<MessageProps> = ({ message }) => {
       <div className="bg-blue-500 px-3 py-2 rounded-lg rounded-bl-none mb-4 w-64 flex flex-col shadow-md">
         <p className="text-white text-sm ">{message.content}</p>
         <div>
-          <p className="float-right text-xs text-gray-200">
+          <div className="float-right text-xs text-gray-200">
             <span>{("0" + message.date.getHours().toString()).slice(-2)}</span>
             <span>:</span>
             <span>{("0" + message.date.getMinutes().toString()).slice(-2)}</span>
-          </p>
+          </div>
         </div>
       </div>
     </div>

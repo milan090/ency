@@ -1,6 +1,8 @@
+import React from "react";
+
 export interface ChatMessage {
   from: "USER" | "BOT";
-  content: string;
+  content: string | React.ReactNode;
   date: Date;
 }
 

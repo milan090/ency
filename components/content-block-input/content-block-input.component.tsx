@@ -62,7 +62,7 @@ const ContentBlockInput: React.FC<Props> = ({ contentBlock, projectRef }) => {
         <TextareaAutosize
           defaultValue={contentBlock.value}
           placeholder="Enter Some Text"
-          className="outline-none w-full px-5 py-5 font-bold text-2xl"
+          className="outline-none w-full px-5 py-5 font-semibold text-xl"
           onChange={(e) => handleChange(e.currentTarget.value)}
         />
       );

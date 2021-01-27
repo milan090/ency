@@ -30,19 +30,25 @@ const CreateBlockMenu: React.FC<Props> = ({ blocksLength, projectRef }) => {
   return (
     <div className="my-10 flex items-center">
       <button
-        className="bg-white px-2 py-0.5 border-r-2 border-gray-300 h-8 w-10 hover:bg-gray-50"
+        className="bg-white px-2 py-0.5 border-r-2 border-gray-300 h-8 w-10 hover:bg-gray-50 outline-none focus:outline-none"
         onClick={() => handleCreateContentBlock("heading1")}
       >
-        <span className="font-bold">H</span>
+        <span className="font-bold">H1</span>
       </button>
       <button
-        className="bg-white px-2 py-0.5 border-r-2 border-gray-300 h-8 w-10 hover:bg-gray-50"
+        className="bg-white px-2 py-0.5 border-r-2 border-gray-300 h-8 w-10 hover:bg-gray-50 outline-none focus:outline-none"
+        onClick={() => handleCreateContentBlock("heading2")}
+      >
+        <span className="font-bold">H2</span>
+      </button>
+      <button
+        className="bg-white px-2 py-0.5 border-r-2 border-gray-300 h-8 w-10 hover:bg-gray-50 outline-none focus:outline-none"
         onClick={() => handleCreateContentBlock("paragraph")}
       >
         <span className="font-bold">Pa</span>
       </button>
       <button
-        className="bg-white px-2 py-0.5 border-r-2 border-gray-300  h-8 w-10 hover:bg-gray-50"
+        className="bg-white px-2 py-0.5 border-r-2 border-gray-300  h-8 w-10 hover:bg-gray-50 outline-none focus:outline-none"
         onClick={() => handleCreateContentBlock("list")}
       >
         <span className="font-bold">
@@ -50,7 +56,7 @@ const CreateBlockMenu: React.FC<Props> = ({ blocksLength, projectRef }) => {
         </span>
       </button>
       <button
-        className="bg-white px-2 py-0.5 border-r-2 border-gray-300  h-8 w-10 hover:bg-gray-50"
+        className="bg-white px-2 py-0.5 border-r-2 border-gray-300  h-8 w-10 hover:bg-gray-50 outline-none focus:outline-none"
         onClick={() => handleCreateContentBlock("image")}
       >
         <span className="font-bold">

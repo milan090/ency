@@ -10,6 +10,7 @@ import "firebase/firestore";
 import { useRouter } from "next/router";
 import LoadingSpinner from "components/loading-spinner/loading-spinner.component";
 import { createDefaultActivites, getAITips } from "utils/createProject";
+import { useChat } from "hooks/useChat";
 
 type Props = {
   isHidden: boolean;
@@ -26,6 +27,7 @@ const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
   const [AITipsEnabled, setAITipsEnabled] = useState(true);
   const { user } = useAuth();
   const router = useRouter();
+  const { addMessage } = useChat();
 
   useEffect(() => {
     console.log(AITipsEnabled);
@@ -45,7 +47,46 @@ const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
       await createDefaultActivites(projectRef);
 
       if (AITipsEnabled) {
-        await getAITips(projectRef, data.name);
+        const aiTips = await getAITips(data.name);
+        const batch = db.batch();
+
+        aiTips.contentBlocks.forEach((contentBlock) => {
+          const docRef = projectRef.collection("contentBlocks").doc();
+          batch.set(docRef, contentBlock);
+        });
+        console.log(aiTips);
+        await batch.commit();
+        const suggestedArticleNodes = (
+          <div>
+            <p>
+              Hey there! Its me Ency! I found these cool articles, thought you might find them
+              useful
+            </p>
+            <ul className="flex flex-col break-words list-inside list-disc">
+              {aiTips.recommendedArticles.slice(0, 4).map((articleLink, i) => {
+                const tmp = articleLink.split("/");
+                const articleName = tmp[tmp.length - 1];
+                return (
+                  <li key={i}>
+                    <a
+                      href={articleLink}
+                      className="hover:underline"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {articleName}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        );
+        addMessage({
+          content: suggestedArticleNodes,
+          date: new Date(),
+          from: "BOT",
+        });
       }
       router.push(`/dashboard/project/${projectRef.id}`);
     } catch (error) {
