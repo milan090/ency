@@ -53,7 +53,6 @@ const TextareaList: React.FC<Props> = ({ defaultValue, onChange }) => {
             value={value}
             onChange={(e) => handleChange(e.currentTarget.value, i)}
             onKeyDown={(e) => {
-              console.log(e.currentTarget.value);
               if (e.code === "Enter") {
                 const newList = [...list, ""];
                 setList(newList);

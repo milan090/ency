@@ -37,10 +37,6 @@ const ProjectsPreview: React.FC = () => {
     };
   }, [user.uid]);
 
-  useEffect(() => {
-    console.log(projects);
-  }, [projects]);
-
   if (isLoading) {
     return <h2>Loading...</h2>;
   }

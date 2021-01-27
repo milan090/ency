@@ -32,14 +32,13 @@ const DeleteProjectModal: React.FC<Props> = ({ isHidden, setIsHidden, name, id: 
         }
       );
       if (res.data.success) {
-        console.log(res.data);
         setIsHidden(true);
       } else {
         alert("Oops something went wrong");
       }
     } catch (error) {
       setIsDeleting(false);
-      console.log(error.response.data);
+      console.error(error.response.data);
     }
   };
 

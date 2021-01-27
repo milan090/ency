@@ -20,11 +20,8 @@ const CreateBlockMenu: React.FC<Props> = ({ blocksLength, projectRef }) => {
     contentBlocksRef
       .doc()
       .set(newContentBlock)
-      .then(() => {
-        console.log("New Block Created");
-      })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
   return (

@@ -30,7 +30,9 @@ const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
   const { addMessage } = useChat();
 
   useEffect(() => {
-    console.log(AITipsEnabled);
+    return () => {
+      setIsCreating(false);
+    };
   }, [AITipsEnabled]);
 
   const onSubmit = async (data: CreateProjectFormInputs): Promise<void> => {
@@ -54,7 +56,6 @@ const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
           const docRef = projectRef.collection("contentBlocks").doc();
           batch.set(docRef, contentBlock);
         });
-        console.log(aiTips);
         await batch.commit();
         const suggestedArticleNodes = (
           <div>
@@ -65,7 +66,8 @@ const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
             <ul className="flex flex-col break-words list-inside list-disc">
               {aiTips.recommendedArticles.slice(0, 4).map((articleLink, i) => {
                 const tmp = articleLink.split("/");
-                const articleName = tmp[tmp.length - 1];
+                console.log(tmp[tmp.length - 1]);
+                const articleName = tmp[tmp.length - 1].replace(/_/g, " ");
                 return (
                   <li key={i}>
                     <a
@@ -90,7 +92,7 @@ const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
       }
       router.push(`/dashboard/project/${projectRef.id}`);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setIsCreating(true);
     }

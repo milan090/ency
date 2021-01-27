@@ -20,9 +20,7 @@ export default function SignIn(): JSX.Element {
   const router = useRouter();
 
   const onSubmit = (formInput: SignUpFormInputs): void => {
-    signUp(formInput).then((res) => {
-      console.log(res);
-    });
+    signUp(formInput);
   };
 
   useEffect(() => {

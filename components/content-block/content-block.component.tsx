@@ -63,12 +63,13 @@ const ContentBlockEditor: React.FC<Props> = ({ contentBlock, projectRef }) => {
           .commit()
           .then(() => {
             setIsOpen(false);
-            setIsDeleting(false);
           })
           .catch((error) => {
-            setIsDeleting(false);
-            console.log(error);
+            console.error(error);
             alert("Oops something went wrong");
+          })
+          .finally(() => {
+            setIsDeleting(false);
           });
       });
   };
@@ -96,7 +97,7 @@ const ContentBlockEditor: React.FC<Props> = ({ contentBlock, projectRef }) => {
       await batch.commit();
       setIsOpen(false);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       alert("Oops something went wrong");
     }
   };

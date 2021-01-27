@@ -17,7 +17,7 @@ export default function SignIn(): JSX.Element {
   const { signIn, user } = useAuth();
 
   const onSubmit = (formInput: SignInFormInputs): void => {
-    signIn(formInput).then((res) => console.log(res));
+    signIn(formInput);
   };
 
   useEffect(() => {

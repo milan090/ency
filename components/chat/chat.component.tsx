@@ -95,12 +95,7 @@ const Chat: React.FC = () => {
         </div>
       </div>
 
-      <div
-        id="chat-input"
-        className={`${
-          isCollapsed ? "hidden" : "flex"
-        } bg-gray-100 border-t border-gray-300 mx-4 mb-3 mt-1 h-10`}
-      >
+      <div id="chat-input" className={`${isCollapsed ? "hidden" : "flex"} mx-4 mb-3 mt-1 h-10`}>
         <input
           type="text"
           placeholder="Write your message here"
@@ -132,7 +127,7 @@ const UserMessage: React.FC<MessageProps> = ({ message }) => {
   return (
     <div className="max-w-xs w-full">
       <div className="bg-gray-300 px-3 py-2 rounded-lg rounded-br-none float-right mb-4 flex flex-col w-48 shadow-md">
-        <p className="text-sm">{message.content}</p>
+        <div className="text-sm">{message.content}</div>
         <div>
           <div className="float-right text-gray-500 text-xs">
             <span>{("0" + message.date.getHours().toString()).slice(-2)}</span>
@@ -149,7 +144,7 @@ const BotMessage: React.FC<MessageProps> = ({ message }) => {
   return (
     <div className="max-w-xs">
       <div className="bg-blue-500 px-3 py-2 rounded-lg rounded-bl-none mb-4 w-64 flex flex-col shadow-md">
-        <p className="text-white text-sm ">{message.content}</p>
+        <div className="text-white text-sm ">{message.content}</div>
         <div>
           <div className="float-right text-xs text-gray-200">
             <span>{("0" + message.date.getHours().toString()).slice(-2)}</span>

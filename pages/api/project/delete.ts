@@ -58,7 +58,7 @@ export default async function deleteProject(
 
     return res.json({ success: "DELETED" });
   } catch (error) {
-    // console.log(error);
+    // console.error(error);
     res.status(500).json({
       error: "Something went wrong",
     });

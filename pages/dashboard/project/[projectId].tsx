@@ -27,11 +27,9 @@ export default function ProjectPage(): JSX.Element {
       ?.update({
         name: newValue,
       })
-      .then(() => {
-        console.log("Name updated");
-      })
+
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
   useEffect(() => {
@@ -77,12 +75,9 @@ export default function ProjectPage(): JSX.Element {
               index: data.index,
             });
           });
-          console.log(contentBlocks);
-
           setContentBlocks(contentBlocks);
         });
       return () => {
-        console.log("Unsubscrib");
         unsubscribeProjectPreview();
         unsubscribeContentBlocks();
       };

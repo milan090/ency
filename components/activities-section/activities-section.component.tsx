@@ -28,7 +28,6 @@ const ActivitiesSection: React.FC = () => {
           };
           newActivites.push(newActivity);
         });
-        console.log("Activites", newActivites);
         setActivites(newActivites);
       });
 

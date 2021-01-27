@@ -13,14 +13,14 @@ const ActivityCard: React.FC<Props> = ({ activity }) => {
         isCompleted: !activity.isCompleted,
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
         alert("Oops something went wrong");
       });
   };
 
   const handleDelete = (): void => {
     activity.ref.delete().catch((error) => {
-      console.log(error);
+      console.error(error);
       alert("Oops something went wrong");
     });
   };

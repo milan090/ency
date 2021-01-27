@@ -62,7 +62,7 @@ export const getAITips = async (name: string): Promise<AITips> => {
     {
       index: 0,
       type: "paragraph",
-      value: `Defition: ${capitalizeFirstLetter(definition)}`,
+      value: definition ? `Defition: ${capitalizeFirstLetter(definition)}` : "",
     },
     {
       index: 0,

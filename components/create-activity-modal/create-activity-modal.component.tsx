@@ -35,13 +35,14 @@ const CreateActivityModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
       .doc()
       .set(newActivity)
       .then(() => {
-        setIsCreating(false);
         setIsHidden(true);
       })
       .catch((error) => {
-        setIsCreating(false);
-        console.log(error);
+        console.error(error);
         alert("Oops something went wrong");
+      })
+      .finally(() => {
+        setIsCreating(false);
       });
   };
 
