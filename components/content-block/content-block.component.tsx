@@ -8,6 +8,7 @@ import { ContentBlock, ContentBlockDoc } from "types/project,types";
 import ContentBlockInput from "components/content-block-input/content-block-input.component";
 import LoadingSpinner from "components/loading-spinner/loading-spinner.component";
 import { useAutoSave } from "hooks/useAutoSave";
+import BlockSummaryModal from "components/block-summary-modal/block-summary-modal.component";
 
 type Props = {
   contentBlock: ContentBlock;
@@ -18,6 +19,7 @@ const ContentBlockEditor: React.FC<Props> = ({ contentBlock, projectRef }) => {
   const [isOpen, setIsOpen] = useState(false); // Dropdown
   const [isDeleting, setIsDeleting] = useState(false);
   const { removeItemToSave } = useAutoSave();
+  const [summarizeBlockIsHidden, setSummarizeBlockIsHidden] = useState(true);
 
   const container = useRef(null);
 
@@ -118,6 +120,23 @@ const ContentBlockEditor: React.FC<Props> = ({ contentBlock, projectRef }) => {
           <MoreVertical size="18px" className="outline-none" />
         </button>
         <Dropdown show={isOpen} className="shadow-xl w-52 right-2">
+          {(contentBlock.type === "paragraph" || contentBlock.type === "list") && (
+            <li className="cursor-pointer">
+              <button
+                className="hover:bg-gray-200 py-2 px-4 block whitespace-no-wrap w-full text-left outline-none focus:outline-none focus:bg-gray-300 border-b border-gray-300"
+                onClick={() => setSummarizeBlockIsHidden(false)}
+              >
+                Summarize
+              </button>
+              {!summarizeBlockIsHidden && (
+                <BlockSummaryModal
+                  isHidden={summarizeBlockIsHidden}
+                  setIsHidden={setSummarizeBlockIsHidden}
+                  value={contentBlock.value}
+                />
+              )}
+            </li>
+          )}
           <li className="cursor-pointer">
             <button
               className="hover:bg-gray-200 py-2 px-4 block whitespace-no-wrap w-full text-left outline-none focus:outline-none focus:bg-gray-300 border-b border-gray-300"

@@ -26,12 +26,13 @@ export interface SummarizeText {
   output: string;
 }
 
-export const summarizeText = async (text: string): Promise<SummarizeUrl> => {
+export const summarizeText = async (text: string, length?: number): Promise<SummarizeUrl> => {
   const userIdToken = await auth.currentUser?.getIdToken();
   const res = await axios.post(
     `${process.env.NEXT_PUBLIC_AI_API_URL}/summarize-text`,
     {
       text: text,
+      length: length || 5,
     },
     {
       headers: {

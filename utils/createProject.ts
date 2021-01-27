@@ -52,10 +52,11 @@ type AITips = {
 export const getAITips = async (name: string): Promise<AITips> => {
   const res = await axios.post(`${process.env.NEXT_PUBLIC_AI_API_URL}/ai-tips`, { word: name });
   const data = res.data[name];
-  const summary: string = data.output;
+  const summary: string | string[] = data.output;
   const definition: string = res.data.definition;
   const keywords: [number, string][] = data.keywords;
   const recommendedArticles: string[] = data.recommended_articles;
+  console.log(res.data);
 
   const contentBlocksAll: ContentBlockDoc[] = [
     {
@@ -71,7 +72,7 @@ export const getAITips = async (name: string): Promise<AITips> => {
     {
       index: 0,
       type: "paragraph",
-      value: summary,
+      value: typeof summary === "string" ? summary : summary[0],
     },
     {
       index: 0,

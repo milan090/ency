@@ -58,7 +58,7 @@ const ProjectCard: React.FC<Props> = ({ name, description, lastUpdated, id, ...p
         <div className="flex items-center justify-between">
           <Link href={`dashboard/project/${id}`}>
             <span>
-              <CustomButton className="float-right text-sm">Coninue</CustomButton>
+              <CustomButton className="float-right text-sm">Continue</CustomButton>
             </span>
           </Link>
 
@@ -77,7 +77,7 @@ const ProjectCard: React.FC<Props> = ({ name, description, lastUpdated, id, ...p
               leaveTo="transform opacity-0 scale-95"
             >
               <Dropdown show={true} className="w-40">
-                <li className="cursor-pointer">
+                {/* <li className="cursor-pointer">
                   <span className="hover:bg-gray-200 py-2 px-4 block whitespace-no-wrap">
                     Share
                   </span>
@@ -86,7 +86,7 @@ const ProjectCard: React.FC<Props> = ({ name, description, lastUpdated, id, ...p
                   <span className="text-black hover:bg-gray-200 py-2 px-4 block whitespace-no-wrap">
                     Edit
                   </span>
-                </li>
+                </li> */}
                 <li className="cursor-pointer">
                   <button
                     className="hover:bg-gray-200 py-2 px-4 block whitespace-no-wrap w-full text-left outline-none focus:outline-none focus:bg-gray-300"

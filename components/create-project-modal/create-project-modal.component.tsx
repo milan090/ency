@@ -107,7 +107,7 @@ const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
   return (
     <div>
       <ModalContainer isHidden={isHidden} setIsHidden={setIsHidden} title="Create New Project">
-        <form noValidate>
+        <form noValidate className="max-w-md">
           <CustomInput
             fref={register({
               required: "This field is required",
@@ -121,16 +121,16 @@ const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
             // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus
           />
-          <div>
+          <div className="flex ">
             <input
               type="checkbox"
               id="aiTips"
-              className="mr-2 cursor-pointer"
+              className="mr-2 cursor-pointer mt-1.5"
               defaultChecked
               onChange={(e) => setAITipsEnabled(e.target.checked)}
             />
             <label htmlFor="aiTips" className="text-gray-400">
-              Give me AI generated Tips (will take 10-20 sec)
+              Let Ency provide you with awesome AI Generated Tips (will take 10-20 sec)
             </label>
           </div>
           <CustomButton className="float-right mt-3 w-28" onClick={handleSubmit(onSubmit)}>
