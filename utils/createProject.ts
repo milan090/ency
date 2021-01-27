@@ -1,6 +1,5 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
-import { db } from "config/firebase";
 import { FirebaseDocRef } from "types/common.types";
 import { ActivityDoc, ContentBlockDoc } from "types/project,types";
 import axios from "axios";
@@ -31,14 +30,14 @@ const DEFAULT_ACTIVITES: ActivityDoc[] = [
     isCompleted: false,
   },
 ];
-export const createDefaultActivites = async (projectRef: FirebaseDocRef): Promise<void> => {
-  const batch = db.batch();
-
+export const createDefaultActivites = async (
+  projectRef: FirebaseDocRef,
+  batch: firebase.firestore.WriteBatch
+): Promise<void> => {
   DEFAULT_ACTIVITES.forEach((activity) => {
     const docRef = projectRef.collection("activities").doc();
     batch.set(docRef, activity);
   });
-  batch.commit();
 };
 
 function capitalizeFirstLetter(sentence: string): string {
@@ -62,7 +61,7 @@ export const getAITips = async (name: string): Promise<AITips> => {
     {
       index: 0,
       type: "paragraph",
-      value: definition ? `Defition: ${capitalizeFirstLetter(definition)}` : "",
+      value: definition ? `Definition: ${capitalizeFirstLetter(definition)}` : "",
     },
     {
       index: 0,

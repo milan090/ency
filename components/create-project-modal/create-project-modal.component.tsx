@@ -42,21 +42,21 @@ const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
     const userRef = db.collection("users").doc(user.uid);
     const projectRef = userRef.collection("projects").doc();
     try {
-      await projectRef.set({
+      const batch = db.batch();
+      batch.set(projectRef, {
         name: data.name,
         lastUpdated: firebase.firestore.Timestamp.fromDate(new Date()),
       });
-      await createDefaultActivites(projectRef);
+      await createDefaultActivites(projectRef, batch);
 
       if (AITipsEnabled) {
         const aiTips = await getAITips(data.name);
-        const batch = db.batch();
 
         aiTips.contentBlocks.forEach((contentBlock) => {
           const docRef = projectRef.collection("contentBlocks").doc();
           batch.set(docRef, contentBlock);
         });
-        await batch.commit();
+
         const suggestedArticleNodes = (
           <div>
             <p>
@@ -66,7 +66,6 @@ const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
             <ul className="flex flex-col break-words list-inside list-disc">
               {aiTips.recommendedArticles.slice(0, 4).map((articleLink, i) => {
                 const tmp = articleLink.split("/");
-                console.log(tmp[tmp.length - 1]);
                 const articleName = tmp[tmp.length - 1].replace(/_/g, " ");
                 return (
                   <li key={i}>
@@ -84,17 +83,21 @@ const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
             </ul>
           </div>
         );
-        addMessage({
-          content: suggestedArticleNodes,
-          date: new Date(),
-          from: "BOT",
-        });
+        setTimeout(() => {
+          addMessage({
+            content: suggestedArticleNodes,
+            date: new Date(),
+            from: "BOT",
+          });
+        }, 5000);
       }
+      await batch.commit();
       router.push(`/dashboard/project/${projectRef.id}`);
     } catch (error) {
+      alert("Sorry creating project failed");
       console.error(error);
     } finally {
-      setIsCreating(true);
+      setIsCreating(false);
     }
   };
   return (
