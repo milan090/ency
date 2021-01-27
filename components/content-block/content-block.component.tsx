@@ -120,7 +120,7 @@ const ContentBlockEditor: React.FC<Props> = ({ contentBlock, projectRef }) => {
           <MoreVertical size="18px" className="outline-none" />
         </button>
         <Dropdown show={isOpen} className="shadow-xl w-52 right-2">
-          {(contentBlock.type === "paragraph" || contentBlock.type === "list") && (
+          {contentBlock.type === "paragraph" && (
             <li className="cursor-pointer">
               <button
                 className="hover:bg-gray-200 py-2 px-4 block whitespace-no-wrap w-full text-left outline-none focus:outline-none focus:bg-gray-300 border-b border-gray-300"
