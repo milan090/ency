@@ -94,7 +94,11 @@ const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
       await batch.commit();
       router.push(`/dashboard/project/${projectRef.id}`);
     } catch (error) {
-      alert("Sorry creating project failed");
+      if (AITipsEnabled) {
+        alert("Sorry creating project failed. Try disabling AI Tips feature");
+      } else {
+        alert("Sorry creating project failed");
+      }
       console.error(error);
     } finally {
       setIsCreating(false);

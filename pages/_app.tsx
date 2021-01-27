@@ -7,6 +7,8 @@ import { ProjectProvider } from "hooks/useProject";
 import { ChatProvider } from "hooks/useChat";
 import Head from "next/head";
 
+const defaultDescription = "The Virtual Assisstant you need";
+
 export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <AuthProvider>
@@ -15,6 +17,15 @@ export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
           <ChatProvider>
             <Head>
               <link rel="shortcut icon" href="/favicon.ico" />
+              <title>Preferral</title>
+              <meta property="og:image" content="./brand-logo.svg" />
+              <meta property="og:title" content="Preferral API" />
+              <link rel="icon" href="/favicon.ico" type="image/jpg" sizes="196x196" />
+              <meta property="og:description" content={defaultDescription} />
+              <meta
+                name="viewport"
+                content="minimum-scale=1, initial-scale=1, width=device-width"
+              />
             </Head>
             <div>
               <div className="sm:hidden">
