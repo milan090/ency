@@ -55,9 +55,7 @@ const SummariseTextUrl: React.FC = () => {
           <SummarizeHeadder onClick={handleGoBack} mode={mode} />
           <div className="mb-10">
             <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius nisi eum excepturi
-              voluptatum nobis ducimus repellendus doloremque iure rem id officiis consequatur autem
-              dicta architecto aperiam, alias, iste quaerat reiciendis?
+              Ency is a powerful text summarizer, which can give you a summary of a text or a URL. It can also give you suggestions for articles, as well as keywords.
             </p>
           </div>
           <CustomButton onClick={() => setIsFormHidden(false)}>Summarise Stuff here!</CustomButton>
