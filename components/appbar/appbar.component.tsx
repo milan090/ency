@@ -12,7 +12,7 @@ const AppBar: React.FC = () => {
   return (
     <div className="w-24">
       <div className="left-0 h-screen px-2 py-2 bg-white shadow-lg block">
-        <Link href="/dashboard">
+        <Link href="/">
           <img src="/brand-logo.svg" width="70" alt="" className="cursor-pointer" />
         </Link>
         <div className="flex flex-col h-full pb-20 pt-10 justify-between">

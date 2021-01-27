@@ -5,6 +5,7 @@ import { AuthProvider } from "hooks/useAuth.provider";
 import { AutoSaveProvider } from "hooks/useAutoSave";
 import { ProjectProvider } from "hooks/useProject";
 import { ChatProvider } from "hooks/useChat";
+import Head from "next/head";
 
 export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
@@ -12,6 +13,9 @@ export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
       <AutoSaveProvider>
         <ProjectProvider>
           <ChatProvider>
+            <Head>
+              <link rel="shortcut icon" href="/favicon.ico" />
+            </Head>
             <div>
               <div className="sm:hidden">
                 <h1 className="text-5xl font-bold mt-32 ml-5">
