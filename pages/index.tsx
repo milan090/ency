@@ -15,7 +15,7 @@ export default function Home() {
       </Head>
       <div>
         <div
-          style={{ backgroundImage: "url('./home/landing-page-bg.svg')" }}
+          style={{ backgroundImage: "url('./home/landing-page-bg-3.svg')" }}
           className="bg-no-repeat bg-cover"
         >
           <div>
