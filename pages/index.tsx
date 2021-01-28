@@ -1,12 +1,26 @@
 /* eslint-disable react/no-unescaped-entities */
 import Head from "next/head";
 import CustomButton from "../components/custom-button/custom-button.component";
-
 import Navbar from "../components/navbar/navbar.component";
-
 import { PlayCircle } from "react-feather";
+import { useEffect } from "react";
 
 export default function Home() {
+  useEffect(() => {
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", (e) => {
+        e.preventDefault();
+        const id = anchor.getAttribute("href");
+        if (!id) return;
+        const div = document.querySelector(id);
+        if (!div) return;
+        div.scrollIntoView({
+          behavior: "smooth",
+        });
+      });
+    });
+  }, []);
   return (
     <div>
       <Head>
@@ -21,7 +35,7 @@ export default function Home() {
           <div>
             <Navbar isLoggedIn={false} />
             <div className="w-full flex flex-col justify-center items-center mt-20">
-              <section className="max-w-6xl w-full mx-10 h-screen">
+              <section className="xl:max-w-6xl lg:max-w-4xl md:max-w-2xl sm:max-w-xl xs:max-w-lg w-full mx-10 h-screen">
                 <h1 className="text-6xl font-bold" style={{ lineHeight: "1.12" }}>
                   The <br /> Virtual <br /> Assistant <br /> You Need.
                 </h1>
@@ -44,8 +58,11 @@ export default function Home() {
                   </span>
                 </div>
               </section>
-              <div className="h-screen max-w-6xl w-full mx-10 pb-10">
-                <div className="flex items-center justify-between h-full">
+              <div
+                className="h-screen xl:max-w-6xl lg:max-w-5xl md:max-w-2xl sm:max-w-xl xs:max-w-lg w-full mx-10 pb-10 my-20 lg:my-0"
+                id="features"
+              >
+                <div className="flex flex-col lg:flex-row items-center justify-between h-full">
                   <div className="max-w-sm">
                     <h1 className="font-bold text-4xl text-white leading-tight">
                       Make Your Projects <br /> <span className="text-accent">Well-Managed</span>
@@ -65,8 +82,8 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="h-screen max-w-6xl w-full mx-10 pb-10">
-                <div className="flex items-center justify-between h-full">
+              <div className="h-screen xl:max-w-6xl lg:max-w-5xl md:max-w-2xl sm:max-w-xl xs:max-w-lg w-full mx-10 pb-10 my-20 lg:my-0">
+                <div className="flex flex-col-reverse lg:flex-row  items-center justify-between h-full">
                   <div className="rounded-full bg-accent h-96 w-96 relative">
                     <img
                       src="./home/url-summary.png"
@@ -88,8 +105,8 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="h-screen max-w-6xl w-full mx-10 pb-10">
-                <div className="flex items-center justify-between h-full">
+              <div className="h-screen xl:max-w-6xl lg:max-w-5xl md:max-w-2xl sm:max-w-xl xs:max-w-lg w-full mx-10 pb-10 my-20 lg:my-0">
+                <div className="flex flex-col lg:flex-row  items-center justify-between h-full">
                   <div className="max-w-sm">
                     <h1 className="font-bold text-4xl text-white leading-tight">
                       Confused Where To Start? <br />{" "}
@@ -106,14 +123,14 @@ export default function Home() {
                     <img
                       src="./home/ai-tips.png"
                       alt="Content Blocks"
-                      className="absolute max-w-lg right-10 -top-5"
+                      className="absolute max-w-lg right- -top-5"
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="h-screen max-w-6xl w-full mx-10 pb-10">
-                <div className="flex items-center justify-between h-full">
+              <div className="h-screen xl:max-w-6xl lg:max-w-5xl md:max-w-2xl sm:max-w-xl xs:max-w-lg w-full mx-10 pb-10 my-20">
+                <div className="flex flex-col-reverse lg:flex-row  items-center justify-between h-full">
                   <div className="rounded-full bg-accent h-96 w-96 relative">
                     <img
                       src="./home/blocks-editor.png"
@@ -140,7 +157,7 @@ export default function Home() {
           style={{ backgroundImage: "url('./home/free-bg.svg')" }}
           className="bg-no-repeat bg-cover"
         >
-          <div className="h-screen flex justify-center items-center">
+          <div className="h-screen flex flex-col lg:flex-row  justify-center items-center">
             <div className="max-w-6xl">
               <div className="text-center">
                 <h2 className="font-bold text-5xl">And It's 100% Free</h2>
