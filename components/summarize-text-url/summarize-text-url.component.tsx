@@ -55,9 +55,10 @@ const SummariseTextUrl: React.FC = () => {
           <SummarizeHeadder onClick={handleGoBack} mode={mode} />
           <div className="mb-10">
             <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius nisi eum excepturi
-              voluptatum nobis ducimus repellendus doloremque iure rem id officiis consequatur autem
-              dicta architecto aperiam, alias, iste quaerat reiciendis?
+              Ency is a powerful text summarizer, which can give you a summary of a text or a URL. 
+              It can also give you suggestions for Wikipedia articles, as well as importants keywords.
+              Ency also gives you the choice on many points. You can therefore choose the number of sentences, 
+              but also whether or not to suggest articles, etc...
             </p>
           </div>
           <CustomButton onClick={() => setIsFormHidden(false)}>Summarise Stuff here!</CustomButton>
@@ -82,14 +83,18 @@ const SummariseTextUrl: React.FC = () => {
           </h4>
           <ol className="list-decimal list-inside text-gray-500">
             <li className="my-4">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt est assumenda nulla
-              exercitationem corrupti iste nemo excepturi doloribus, quae autem dolor error illum
-              atque rerum quaerat aperiam omnis culpa maiores!
+              Ency is an Artificial Intelligence based on Transformers, a recent Deep Learning model, widely used for 
+              summarization and translation tasks, but more generally for Natural Language Processing (NLP).
             </li>
             <li className="my-4">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui ipsum explicabo libero
-              fugit quas, doloribus autem ipsa dolorem. Non magnam eveniet nemo, cumque quo
-              aspernatur! Quisquam magnam amet assumenda et.
+              Ency is based on the Distilbert model, a variant of Bert, an AI model developed by Google Research in 2019. 
+              This model is therefore based on Transformers. Our AI uses the Transfer Learning method, to avoid the need for extensive training, 
+              which can last several weeks. So we import a Distilbert configuration, but we rewrite the model.
+            </li>
+            <li className="my-4">
+              To facilitate the deployment of Ency, we use an instance of AWS, Amazon's servers, called EC3. 
+              This allows us to manage a small amount of information traffic, using two 4Gb CPUs. We can therefore offer you an answer in a 
+              bearable time, that is to say, about 10 seconds.
             </li>
           </ol>
         </div>
