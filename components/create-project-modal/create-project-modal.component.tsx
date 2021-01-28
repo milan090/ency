@@ -130,7 +130,7 @@ const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
               onChange={(e) => setAITipsEnabled(e.target.checked)}
             />
             <label htmlFor="aiTips" className="text-gray-400">
-              Let Ency provide you with awesome AI Generated Tips (will take 10-20 sec)
+              Let Ency provide you with AI Generated Tips (bad generations can appear if the subject is not well known)
             </label>
           </div>
           <CustomButton className="float-right mt-3 w-28" onClick={handleSubmit(onSubmit)}>
