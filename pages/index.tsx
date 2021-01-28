@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import Head from "next/head";
 import CustomButton from "../components/custom-button/custom-button.component";
 
@@ -12,33 +13,155 @@ export default function Home() {
         <title>Ency | Your Personal Research Assisstant</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div style={{ backgroundImage: "url('./home/landing-page.svg')" }} className="bg-no-repeat h-screen bg-cover bg-center">
-        <Navbar isLoggedIn={false} />
-        
-        <div className="w-full flex justify-center mt-20">
-          <section className="max-w-6xl w-full mx-10">
-            <h1 className="text-6xl font-bold" style={{ lineHeight: "1.12" }}>
-              The <br /> Virtual <br /> Assistant <br /> You Need.
-            </h1>
-            <p className="text-gray-500 ml-2">
-              Summarise, Narrate, Personalise <br /> Get things done with Ency
-            </p>
+      <div>
+        <div
+          style={{ backgroundImage: "url('./home/landing-page-bg.svg')" }}
+          className="bg-no-repeat bg-cover"
+        >
+          <div>
+            <Navbar isLoggedIn={false} />
+            <div className="w-full flex flex-col justify-center items-center mt-20">
+              <section className="max-w-6xl w-full mx-10 h-screen">
+                <h1 className="text-6xl font-bold" style={{ lineHeight: "1.12" }}>
+                  The <br /> Virtual <br /> Assistant <br /> You Need.
+                </h1>
+                <p className="text-gray-500 ml-2">
+                  Summarise, Narrate, Personalise <br /> Get things done with Ency
+                </p>
 
-            <div className="mt-10 ml-2 flex flex-row items-center">
-              {/* Get Started Button */}
-              <span className="mr-4">
-                <CustomButton>Get Started</CustomButton>
-              </span>
+                <div className="mt-10 ml-2 flex flex-row items-center">
+                  {/* Get Started Button */}
+                  <span className="mr-4">
+                    <CustomButton>Get Started</CustomButton>
+                  </span>
 
-              {/* How It Works */}
-              <span className="flex flex-row cursor-pointer">
-                <span className="mr-1">
-                  <PlayCircle className="stroke-primary" />
-                </span>
-                <span className="text-primary font-semibold">How It Works</span>
-              </span>
+                  {/* How It Works */}
+                  <span className="flex flex-row cursor-pointer">
+                    <span className="mr-1">
+                      <PlayCircle className="stroke-primary" />
+                    </span>
+                    <span className="text-primary font-semibold">How It Works</span>
+                  </span>
+                </div>
+              </section>
+              <div className="h-screen max-w-6xl w-full mx-10 pb-10">
+                <div className="flex items-center justify-between h-full">
+                  <div className="max-w-sm">
+                    <h1 className="font-bold text-4xl text-white leading-tight">
+                      Make Your Projects <br /> <span className="text-accent">Well-Managed</span>
+                    </h1>
+                    <p className="text-white mt-5">
+                      Organize your research projects and tasks efficiently. Spent less time
+                      thinking what to do, and where to find stuff.{" "}
+                    </p>
+                  </div>
+                  <div className="rounded-full bg-accent h-96 w-96 relative">
+                    <img
+                      src="./home/content-blocks.svg"
+                      alt="Content Blocks"
+                      className="absolute max-w-lg right-10 -top-5"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="h-screen max-w-6xl w-full mx-10 pb-10">
+                <div className="flex items-center justify-between h-full">
+                  <div className="rounded-full bg-accent h-96 w-96 relative">
+                    <img
+                      src="./home/url-summary.png"
+                      alt="Content Blocks"
+                      className="absolute max-w-lg -top-5"
+                    />
+                  </div>
+                  <div className="max-w-sm">
+                    <h1 className="font-bold text-4xl text-white leading-tight">
+                      Summarize Text Or <br /> Web Articles With
+                      <br /> <span className="text-accent">Just A Click</span>
+                    </h1>
+                    <p className="text-white mt-5">
+                      With our powerful custom build Natural language processors, almost anything
+                      can be summarized in to short sentences. <br />
+                      <br /> Who said assigments can't at midnight?
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="h-screen max-w-6xl w-full mx-10 pb-10">
+                <div className="flex items-center justify-between h-full">
+                  <div className="max-w-sm">
+                    <h1 className="font-bold text-4xl text-white leading-tight">
+                      Confused Where To Start? <br />{" "}
+                      <span className="text-accent">Not Anymore</span>
+                    </h1>
+                    <p className="text-white mt-5">
+                      You just type in the name of your project, and Ency will provide you with AI
+                      Generated Content Template for you to continue working on.
+                      <br /> <br /> Ency will also provide you with some awesome articles you can
+                      refer into
+                    </p>
+                  </div>
+                  <div className="rounded-full bg-accent h-96 w-96 relative">
+                    <img
+                      src="./home/ai-tips.png"
+                      alt="Content Blocks"
+                      className="absolute max-w-lg right-10 -top-5"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="h-screen max-w-6xl w-full mx-10 pb-10">
+                <div className="flex items-center justify-between h-full">
+                  <div className="rounded-full bg-accent h-96 w-96 relative">
+                    <img
+                      src="./home/blocks-editor.png"
+                      alt="Content Blocks"
+                      className="absolute max-w-lg -top-5"
+                    />
+                  </div>
+                  <div className="max-w-md">
+                    <h1 className="font-bold text-4xl text-white leading-tight">
+                      No Wait, It's Not Just A Text Editor, We Give You The{" "}
+                      <span className="text-accent">Block Editor!</span>
+                    </h1>
+                    <p className="text-white mt-5">
+                      Typing Text In A Normal Text Editor Is Plain Boring. So We Made This Intuitive
+                      Block Editor, Just To Make Your Research Bit More Enjoyable
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-          </section>
+          </div>
+        </div>
+        <div
+          style={{ backgroundImage: "url('./home/free-bg.svg')" }}
+          className="bg-no-repeat bg-cover"
+        >
+          <div className="h-screen flex justify-center items-center">
+            <div className="max-w-6xl">
+              <div className="text-center">
+                <h2 className="font-bold text-5xl">And It's 100% Free</h2>
+                <p className="text-gray-500 mt-2">So what are you waiting for? Get Started Now!</p>
+              </div>
+              <div className="mt-10 flex justify-center items-center">
+                {/* Get Started Button */}
+                <span className="mr-4">
+                  <CustomButton>Get Started</CustomButton>
+                </span>
+
+                {/* How It Works */}
+                <span className="flex flex-row cursor-pointer">
+                  <span className="mr-1">
+                    <PlayCircle className="stroke-primary" />
+                  </span>
+                  <span className="text-primary font-semibold">How It Works</span>
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -17,9 +17,9 @@ export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
           <ChatProvider>
             <Head>
               <link rel="shortcut icon" href="/favicon.ico" />
-              <title>Preferral</title>
-              <meta property="og:image" content="./brand-logo.svg" />
-              <meta property="og:title" content="Preferral API" />
+              <title>Ency</title>
+              <meta property="og:image" content="./brand-logo.png" />
+              <meta property="og:title" content="Ency | Virtual Assistant" />
               <link rel="icon" href="/favicon.ico" type="image/jpg" sizes="196x196" />
               <meta property="og:description" content={defaultDescription} />
               <meta
