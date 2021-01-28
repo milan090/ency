@@ -1,10 +1,11 @@
 import pdf from "html-pdf";
+import { Stream } from "stream";
 import { ContentBlock } from "types/project,types";
 
 export const contentBlocksToPDF = (
   contentBlocks: ContentBlock[],
   projectName: string
-): Promise<Buffer> => {
+): Promise<Stream> => {
   const html = `
   <!DOCTYPE html>
   <html lang="en">
@@ -18,7 +19,7 @@ export const contentBlocksToPDF = (
   </body>
   </html>
   `;
-  return htmlToBuffer(html);
+  return htmlToStream(html);
 };
 
 const contentBlockToHTML = ({ value, type }: ContentBlock): string => {
@@ -43,11 +44,11 @@ const contentBlockToHTML = ({ value, type }: ContentBlock): string => {
   }
 };
 
-const htmlToBuffer = (html: string): Promise<Buffer> => {
-  return new Promise<Buffer>((resolve, reject) => {
-    pdf.create(html).toBuffer((err, buffer) => {
+const htmlToStream = (html: string): Promise<Stream> => {
+  return new Promise<Stream>((resolve, reject) => {
+    pdf.create(html, { directory: "/tmp" }).toStream((err, stream) => {
       if (err) return reject(err);
-      return resolve(buffer);
+      return resolve(stream);
     });
   });
 };

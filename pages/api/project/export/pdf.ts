@@ -1,5 +1,6 @@
 import { db } from "config/firebase-admin";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { Stream } from "stream";
 import { ContentBlock, ProjectPreviewDoc } from "types/project,types";
 import { contentBlocksToPDF } from "utils/contentBlocksToPDF";
 import { getUserUid } from "utils/getUser";
@@ -51,11 +52,11 @@ export default async function exportProjectAsPDF(
       id: doc.id,
     }));
 
-    const data: Buffer = await contentBlocksToPDF(contentBlocks, projectData.name);
+    const dataStream: Stream = await contentBlocksToPDF(contentBlocks, projectData.name);
     res.setHeader("Content-Type", "	application/pdf");
     res.setHeader("content-disposition", "attachment; filename=" + projectData.name + ".pdf");
 
-    res.send(data);
+    dataStream.pipe(res);
   } catch (error) {
     console.error(error);
     res.status(500).json({
