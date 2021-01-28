@@ -57,7 +57,7 @@ export default async function exportProjectAsPDF(
 
     res.send(data);
   } catch (error) {
-    // console.error(error);
+    console.error(error);
     res.status(500).json({
       error: "Something went wrong",
     });
