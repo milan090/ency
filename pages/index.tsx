@@ -105,7 +105,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="h-screen xl:max-w-6xl lg:max-w-5xl md:max-w-2xl sm:max-w-xl xs:max-w-lg w-full mx-10 pb-10 my-20 lg:my-0">
+              <div className="h-screen xl:max-w-5xl lg:max-w-4xl md:max-w-2xl sm:max-w-xl xs:max-w-lg w-full mx-10 pb-10 my-20 lg:my-0">
                 <div className="flex flex-col lg:flex-row  items-center justify-between h-full">
                   <div className="max-w-sm">
                     <h1 className="font-bold text-4xl text-white leading-tight">
