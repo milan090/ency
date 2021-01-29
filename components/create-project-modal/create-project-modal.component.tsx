@@ -83,7 +83,7 @@ const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
             </ul>
           </div>
         );
-        if (Object.keys(articleLink).length !== 0) {
+        if (Object.keys(articleLink).length === 0) {
           setTimeout(() => {
             addMessage({
               content: suggestedArticleNodes,
