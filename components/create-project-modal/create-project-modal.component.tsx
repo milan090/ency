@@ -94,7 +94,7 @@ const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
         
         setTimeout(() => {
           addMessage({
-            content: aiTips.n_art === 0 ? nonArticlesNodes : suggestedArticleNodes,
+            content: aiTips.n_art == 0 ? nonArticlesNodes : suggestedArticleNodes,
             date: new Date(),
             from: "BOT",
           });
