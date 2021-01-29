@@ -67,7 +67,7 @@ export const getAITips = async (name: string): Promise<AITips> => {
     {
       index: 0,
       type: "heading1",
-      value: "Summary",
+      value: summary == "Ency did not find any interesting information about this topic !" ? "No AI-tips found" : "Summary",
     },
     {
       index: 0,
