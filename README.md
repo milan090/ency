@@ -1,3 +1,6 @@
+<img src="./assets/Ency.png">
+
+
 ## 💡 Introduction
 
 Researching and creating projects is tedious. Ency is a virtual assistant developed with the concept of automating research and organizing projects and assignments.
