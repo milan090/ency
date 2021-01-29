@@ -83,13 +83,15 @@ const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
             </ul>
           </div>
         );
-        setTimeout(() => {
-          addMessage({
-            content: suggestedArticleNodes,
-            date: new Date(),
-            from: "BOT",
-          });
-        }, 5000);
+        if (Object.keys(articleLink).length !== 0) {
+          setTimeout(() => {
+            addMessage({
+              content: suggestedArticleNodes,
+              date: new Date(),
+              from: "BOT",
+            });
+          }, 5000);
+        }
       }
       await batch.commit();
       router.push(`/dashboard/project/${projectRef.id}`);
