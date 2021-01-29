@@ -30,10 +30,10 @@ Researching and creating projects is tedious. Ency is a virtual assistant develo
 ## Team Coffee!☕
 
 - [Aidri](https://github.com/AIDRI) 🧐
-- [Aineas](https://github.com/AineasGamingYolo) 😉
-- [Karan](https://github.com/KaranSinghBisht) 😎
 - [Milan](https://github.com/milan090) 🤠
+- [Karan](https://github.com/KaranSinghBisht) 😎
 - [Saptarshi](https://github.com/saptarshibasu15) 😴
+- [Aineas](https://github.com/AineasGamingYolo) 😉
 
 ##### Crafted With ♥ By Team Coffee
 
