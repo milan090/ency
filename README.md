@@ -3,7 +3,7 @@
 
 ## 💡 Introduction
 
-Researching and creating projects is tedious. Ency is a virtual assistant developed with the concept of automating research and organizing projects and assignments.
+Researching and creating projects is tedious. Ency is a virtual assistant developed with the concept of automating research and organizing projects and assignments. Get access ENCY [here](https://ency.live/) !
 
 ![React](https://img.shields.io/badge/-React-blue) ![Python](https://img.shields.io/badge/-Python-yellow) ![TypeScript](https://img.shields.io/badge/-TypeScript-cyan) ![Docker](https://img.shields.io/badge/-Docker-blue) ![AWS](https://img.shields.io/badge/-AWS-yellow) ![TailwindCss](https://img.shields.io/badge/-Tailwindcss-aqua) ![Flask](https://img.shields.io/badge/-Flask-green) ![Firebase](https://img.shields.io/badge/-Firebase-orange) ![Vercel](https://img.shields.io/badge/-Vercel-blue)
 
