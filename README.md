@@ -12,6 +12,7 @@ Researching and creating projects is tedious. Ency is a virtual assistant develo
 - Summarize Text or Web Articles with a single click 👆
 - Organize data with the block editor ⬛
 - Get AI-generated content blocks based on your topic to get started 🏃‍
+- Get AI-generated features such as keywords and interesting readings. 🔑
 - Export your project in Txt or Pdf format 📝
 
 ## ⚙ How It Works 
