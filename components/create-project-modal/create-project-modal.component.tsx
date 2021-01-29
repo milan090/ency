@@ -84,9 +84,17 @@ const CreateProjectModal: React.FC<Props> = ({ isHidden, setIsHidden }) => {
           </div>
         );
         
+        const nonArticlesNodes = (
+          <div>
+            <p>
+              Mmmh, I don't find interesting articles on Internet !
+            </p>
+          </div>
+        );
+        
         setTimeout(() => {
           addMessage({
-            content: suggestedArticleNodes,
+            content: aiTips.n_art === 0 ? nonArticlesNodes : suggestedArticleNodes,
             date: new Date(),
             from: "BOT",
           });
