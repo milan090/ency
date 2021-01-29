@@ -56,6 +56,7 @@ export const getAITips = async (name: string): Promise<AITips> => {
   const definition: string = res.data.definition;
   const keywords: [number, string][] = data.keywords;
   const recommendedArticles: string[] = data.recommended_articles;
+  const n_art: number = data.n_art;
   console.log(res.data);
 
   const contentBlocksAll: ContentBlockDoc[] = [
@@ -98,5 +99,6 @@ export const getAITips = async (name: string): Promise<AITips> => {
   return {
     contentBlocks: contentBlocks,
     recommendedArticles: recommendedArticles,
+    n_art: n_art,
   };
 };
