@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import AppBar from "components/appbar/appbar.component";
 import { useAuth } from "hooks/useAuth.provider";
 import {
@@ -13,6 +14,7 @@ import BlocksEditor from "components/blocks-editor/blocks-editor.component";
 import ProjectSidebar from "components/project-sidebar/project-sidebar.component";
 import AutoSaveIndicator from "components/autosave-indicator/autosave-indicator.component";
 import { useProject } from "hooks/useProject";
+import { ArrowLeft } from "react-feather";
 
 export default function ProjectPage(): JSX.Element {
   const router = useRouter();
@@ -92,7 +94,7 @@ export default function ProjectPage(): JSX.Element {
           <AutoSaveIndicator />
         </div>
         <div className="px-10 w-full pt-8 pb-20 overflow-y-scroll max-h-screen">
-          <div>
+          <div className="flex justify-between items-center">
             <div>
               {project?.id && (
                 <input
@@ -103,6 +105,10 @@ export default function ProjectPage(): JSX.Element {
                 />
               )}
             </div>
+
+            <Link href="/dashboard">
+              <ArrowLeft className="stroke-white bg-primary p-1 w-7 h-7 border-2 border-primary rounded-full cursor-pointer hover:stroke-primary hover:bg-transparent transition-colors duration-150 ease-out" />
+            </Link>
           </div>
           <div>{projectRef && <BlocksEditor blocks={contentBlocks} projectRef={projectRef} />}</div>
         </div>

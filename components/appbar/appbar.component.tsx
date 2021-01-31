@@ -18,7 +18,7 @@ const AppBar: React.FC = () => {
     const userIdToken = await auth.currentUser?.getIdToken();
 
     const file = await axios.post(
-      "/api/project/export/pdf",
+      "/api/project/export/text",
       {
         projectId: projectRef?.id,
       },
@@ -30,7 +30,7 @@ const AppBar: React.FC = () => {
       }
     );
     const projectData: ProjectPreviewDoc = ((await projectRef?.get()) as any).data();
-    FileDownload(file.data as Blob, `${projectData?.name}.pdf`);
+    FileDownload(file.data as Blob, `${projectData?.name}.txt`);
   };
 
   return (

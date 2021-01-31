@@ -11,6 +11,8 @@ const SummariseTextUrl: React.FC = () => {
   const [mode, setMode] = useState<SummarizeMode>(null);
   const [value, setValue] = useState("");
   const [summarizedValue, setSummarizedValue] = useState("");
+  const [keywords, setKeywords] = useState<string[]>([]);
+  const [recommendedArticles, setRecommendedArticles] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isFormHidden, setIsFormHidden] = useState(true);
 
@@ -30,6 +32,12 @@ const SummariseTextUrl: React.FC = () => {
         setIsLoading(true);
         const data = await summarizeUrl(apiValue);
         setSummarizedValue(data.output);
+        if (data.keywords) {
+          setKeywords(data.keywords);
+        }
+        if (data.recommendedArticles) {
+          setRecommendedArticles(data.recommendedArticles);
+        }
       } catch (error) {
         console.error(error);
       } finally {
@@ -55,10 +63,10 @@ const SummariseTextUrl: React.FC = () => {
           <SummarizeHeadder onClick={handleGoBack} mode={mode} />
           <div className="mb-10">
             <p>
-              Ency is a powerful text summarizer, which can give you a summary of a text or a URL. 
-              It can also give you suggestions for Wikipedia articles, as well as importants keywords.
-              Ency also gives you the choice on many points. You can therefore choose the number of sentences, 
-              but also whether or not to suggest articles, etc...
+              Ency is a powerful text summarizer, which can give you a summary of a text or a URL.
+              It can also give you suggestions for Wikipedia articles, as well as importants
+              keywords. Ency also gives you the choice on many points. You can therefore choose the
+              number of sentences, but also whether or not to suggest articles, etc...
             </p>
           </div>
           <CustomButton onClick={() => setIsFormHidden(false)}>Summarise Stuff here!</CustomButton>
@@ -83,18 +91,15 @@ const SummariseTextUrl: React.FC = () => {
           </h4>
           <ol className="list-decimal list-inside text-gray-500">
             <li className="my-4">
-              Ency is an Artificial Intelligence based on Transformers, a recent Deep Learning model, widely used for 
-              summarization and translation tasks, but more generally for Natural Language Processing (NLP).
+              Ency is an Artificial Intelligence based on Transformers, a recent Deep Learning
+              model, widely used for summarization and translation tasks, but more generally for
+              Natural Language Processing (NLP).
             </li>
             <li className="my-4">
-              Ency is based on the Distilbert model, a variant of Bert, an AI model developed by Google Research in 2019. 
-              This model is therefore based on Transformers. Our AI uses the Transfer Learning method, to avoid the need for extensive training, 
-              which can last several weeks. So we import a Distilbert configuration, but we rewrite the model.
-            </li>
-            <li className="my-4">
-              To facilitate the deployment of Ency, we use an instance of AWS, Amazon's servers, called EC3. 
-              This allows us to manage a small amount of information traffic, using two 4Gb CPUs. We can therefore offer you an answer in a 
-              bearable time, that is to say, about 10 seconds.
+              Ency is based on the Distilbert model, a variant of Bert, an AI model developed by
+              Google Research in 2019. This model is therefore based on Transformers. Our AI uses
+              the Transfer Learning method, to avoid the need for extensive training, which can last
+              several weeks. So we import a Distilbert configuration, but we rewrite the model.
             </li>
           </ol>
         </div>
@@ -114,7 +119,23 @@ const SummariseTextUrl: React.FC = () => {
             <p className="mt-5">This will take a few moments</p>
           </div>
         ) : (
-          <p>{summarizedValue}</p>
+          <div>
+            {keywords && (
+              <div className="mb-5">
+                <KeywordList keywords={keywords} />
+              </div>
+            )}
+            <p>{summarizedValue}</p>
+            {recommendedArticles && (
+              <div className="mt-5">
+                <div className="pb-4">
+                  <h1 className="text-lg font-bold">Suggested Articles</h1>
+                  <hr className="bg-primary w-12 h-1.5 mt-1" />
+                </div>
+                <RecommendedArticles recommendedArticles={recommendedArticles} />{" "}
+              </div>
+            )}
+          </div>
         )}
       </div>
     </div>
@@ -197,6 +218,37 @@ const SummarizeInfoHereHeading: React.FC = () => (
   >
     <span className="px-5 bg-gray-200">Summary</span>
   </h4>
+);
+
+type KeywordListProps = {
+  keywords: string[];
+};
+
+const KeywordList: React.FC<KeywordListProps> = ({ keywords }) => (
+  <div className="flex flex-wrap text-sm">
+    {keywords.map((keyword, i) => (
+      <div
+        key={i}
+        className="border-2 rounded-full border-primary px-3 py-1 mr-2 mb-1.5 capitalize"
+      >
+        <span>{keyword}</span>
+      </div>
+    ))}
+  </div>
+);
+
+type RecommendedArticlesProps = {
+  recommendedArticles: string[];
+};
+
+const RecommendedArticles: React.FC<RecommendedArticlesProps> = ({ recommendedArticles }) => (
+  <ul className="list-disc list-inside">
+    {recommendedArticles.map((recommendedArticle, i) => (
+      <li key={i} className="break-words text-blue-500 hover:underline">
+        <a href={recommendedArticle}>{recommendedArticle}</a>
+      </li>
+    ))}
+  </ul>
 );
 
 export default SummariseTextUrl;

@@ -3,6 +3,8 @@ import { auth } from "config/firebase";
 
 export interface SummarizeUrl {
   output: string;
+  keywords?: string[];
+  recommendedArticles?: string[];
 }
 
 export const summarizeUrl = async (url: string): Promise<SummarizeUrl> => {
@@ -11,6 +13,7 @@ export const summarizeUrl = async (url: string): Promise<SummarizeUrl> => {
     `${process.env.NEXT_PUBLIC_AI_API_URL}/summarize-url`,
     {
       url: url,
+      keywords: true,
     },
     {
       headers: {
@@ -19,7 +22,12 @@ export const summarizeUrl = async (url: string): Promise<SummarizeUrl> => {
     }
   );
   const data = res.data;
-  return { output: data.output };
+  console.log(data);
+  return {
+    output: data.output,
+    keywords: data.keywords,
+    recommendedArticles: data.recommended_articles,
+  };
 };
 
 export interface SummarizeText {

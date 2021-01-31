@@ -46,7 +46,7 @@ const contentBlockToHTML = ({ value, type }: ContentBlock): string => {
 
 const htmlToStream = (html: string): Promise<Stream> => {
   return new Promise<Stream>((resolve, reject) => {
-    pdf.create(html, { directory: "/tmp" }).toStream((err, stream) => {
+    pdf.create(html).toStream((err, stream) => {
       if (err) return reject(err);
       return resolve(stream);
     });
