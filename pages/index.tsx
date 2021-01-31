@@ -93,7 +93,7 @@ export default function Home() {
                     <p className="text-white mt-5">
                       With our powerful custom build Natural language processors, almost anything
                       can be summarized in to short sentences. <br />
-                      <br /> Who said assigments can't at midnight?
+                      <br /> Who said assigments can't be done at midnight?
                     </p>
                   </div>
                 </div>
