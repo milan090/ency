@@ -63,9 +63,8 @@ const SummariseTextUrl: React.FC = () => {
           <SummarizeHeadder onClick={handleGoBack} mode={mode} />
           <div className="mb-10">
             <p>
-              Ency is a powerful text summarizer, which can give you a summary of a text or a URL.
-              It can also give you suggestions for Wikipedia articles, as well as importants
-              keywords.
+               Ency is a powerful text summarizer, which gives you a summary of a text or a web page. 
+              It also gives you suggestions for Wikipedia articles, and important keywords.
             </p>
           </div>
           <CustomButton onClick={() => setIsFormHidden(false)}>Summarise Stuff here!</CustomButton>
@@ -90,15 +89,10 @@ const SummariseTextUrl: React.FC = () => {
           </h4>
           <ol className="list-decimal list-inside text-gray-500">
             <li className="my-4">
-              Ency is an Artificial Intelligence based on Transformers, a recent Deep Learning
-              model, widely used for summarization and translation tasks, but more generally for
-              Natural Language Processing (NLP).
+              Ency is an Artificial Intelligence based on Transformers, which is widely used for summarization and translation tasks.
             </li>
             <li className="my-4">
-              Ency is based on the Distilbert model, a variant of Bert, an AI model developed by
-              Google Research in 2019. This model is based on Transformers. Our AI uses
-              the Transfer Learning method, to avoid the need for extensive training, which can last
-              several weeks. So we import a Distilbert configuration, and we rewrite the model.
+              Ency is based on the Distilbert model, an AI model developed by Google Research in 2019.
             </li>
           </ol>
         </div>
