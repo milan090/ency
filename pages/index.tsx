@@ -4,27 +4,11 @@ import Link from "next/link";
 import CustomButton from "../components/custom-button/custom-button.component";
 import Navbar from "../components/navbar/navbar.component";
 import { PlayCircle } from "react-feather";
-import { useEffect } from "react";
 import { useAuth } from "hooks/useAuth.provider";
 
 export default function Home() {
   const { user } = useAuth();
 
-  useEffect(() => {
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-      anchor.addEventListener("click", (e) => {
-        e.preventDefault();
-        const id = anchor.getAttribute("href");
-        if (!id) return;
-        const div = document.querySelector(id);
-        if (!div) return;
-        div.scrollIntoView({
-          behavior: "smooth",
-        });
-      });
-    });
-  }, []);
   return (
     <div>
       <Head>
@@ -61,7 +45,9 @@ export default function Home() {
                       <PlayCircle className="stroke-primary" />
                     </span>
                     <span className="text-primary font-semibold">
-                      <a href="https://youtu.be/kmLkdqIRy9o">How It Works</a>
+                      <a href="https://youtu.be/kmLkdqIRy9o" target="_blank" rel="noreferrer">
+                        How It Works
+                      </a>
                     </span>
                   </span>
                 </div>
@@ -185,7 +171,9 @@ export default function Home() {
                     <PlayCircle className="stroke-primary" />
                   </span>
                   <span className="text-primary font-semibold">
-                    <a href="https://youtu.be/kmLkdqIRy9o">How It Works</a>
+                    <a href="https://youtu.be/kmLkdqIRy9o" target="_blank" rel="noreferrer">
+                      How It Works
+                    </a>
                   </span>
                 </span>
               </div>
