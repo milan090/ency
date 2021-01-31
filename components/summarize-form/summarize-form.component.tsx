@@ -57,7 +57,7 @@ const SummarizeForm: React.FC<Props> = ({ handleFormSubmission }) => {
     );
   } else if (mode === "url") {
     return (
-      <div>
+      <form noValidate>
         <CustomInput
           label="URL"
           placeHolder="Enter URL"
@@ -75,7 +75,7 @@ const SummarizeForm: React.FC<Props> = ({ handleFormSubmission }) => {
         >
           Summarise Webpage
         </CustomButton>
-      </div>
+      </form>
     );
   } else {
     return <div>Error</div>;

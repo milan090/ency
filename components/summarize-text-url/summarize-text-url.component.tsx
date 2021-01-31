@@ -182,7 +182,7 @@ const EditValue: React.FC<EditValueProps> = ({ mode, onChange, value, handleSubm
             type="text"
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            className="w-full max-w-2xl px-3 py-1 outline-none"
+            className="w-full max-w-2xl px-3 py-1.5 rounded-sm outline-none"
           />
           <CustomButton className="mx-5" onClick={handleSubmit}>
             Summarize Again

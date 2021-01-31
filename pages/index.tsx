@@ -1,11 +1,15 @@
 /* eslint-disable react/no-unescaped-entities */
 import Head from "next/head";
+import Link from "next/link";
 import CustomButton from "../components/custom-button/custom-button.component";
 import Navbar from "../components/navbar/navbar.component";
 import { PlayCircle } from "react-feather";
 import { useEffect } from "react";
+import { useAuth } from "hooks/useAuth.provider";
 
 export default function Home() {
+  const { user } = useAuth();
+
   useEffect(() => {
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -46,7 +50,9 @@ export default function Home() {
                 <div className="mt-10 ml-2 flex flex-row items-center">
                   {/* Get Started Button */}
                   <span className="mr-4">
-                    <CustomButton>Get Started</CustomButton>
+                    <Link href={user.uid ? "/dashboard" : "/sign-in"}>
+                      <CustomButton>Get Started</CustomButton>
+                    </Link>
                   </span>
 
                   {/* How It Works */}
@@ -54,7 +60,9 @@ export default function Home() {
                     <span className="mr-1">
                       <PlayCircle className="stroke-primary" />
                     </span>
-                    <span className="text-primary font-semibold">How It Works</span>
+                    <span className="text-primary font-semibold">
+                      <a href="https://youtu.be/kmLkdqIRy9o">How It Works</a>
+                    </span>
                   </span>
                 </div>
               </section>
@@ -166,7 +174,9 @@ export default function Home() {
               <div className="mt-10 flex justify-center items-center">
                 {/* Get Started Button */}
                 <span className="mr-4">
-                  <CustomButton>Get Started</CustomButton>
+                  <Link href={user.uid ? "/dashboard" : "/sign-in"}>
+                    <CustomButton>Get Started</CustomButton>
+                  </Link>
                 </span>
 
                 {/* How It Works */}
@@ -174,7 +184,9 @@ export default function Home() {
                   <span className="mr-1">
                     <PlayCircle className="stroke-primary" />
                   </span>
-                  <span className="text-primary font-semibold">How It Works</span>
+                  <span className="text-primary font-semibold">
+                    <a href="https://youtu.be/kmLkdqIRy9o">How It Works</a>
+                  </span>
                 </span>
               </div>
             </div>
