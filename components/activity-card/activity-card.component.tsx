@@ -27,17 +27,17 @@ const ActivityCard: React.FC<Props> = ({ activity }) => {
   return (
     <div className="rounded-md bg-gray-300 w-full min-h-10 my-3 py-2 px-2 group">
       <div className="flex justify-between items-center">
-        <div className="flex items-center">
-          <div className="h-6 w-6">
+        <div className="flex">
+          <div className="h-6 w-6 mt-0.5">
             <button
-              className="border-primary border-3 h-6 w-6 rounded-md outline-none focus:outline-none hidden group-hover:block"
+              className="border-primary border-2 h-5 w-5 rounded-sm outline-none focus:outline-none group-hover:block"
               onClick={handleCheck}
             >
               {activity.isCompleted && <Check size="18px" />}
             </button>
           </div>
           <span
-            className={`ml-2 w-56 break-words ${
+            className={`ml-2 w-60 break-words ${
               activity.isCompleted && "line-through text-gray-600"
             }`}
           >

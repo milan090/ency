@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Plus } from "react-feather";
-import { Activity } from "types/project,types";
-import ActivityCard from "components/activity-card/activity-card.component";
-import CreateActivityModal from "components/create-activity-modal/create-activity-modal.component";
 import { useProject } from "hooks/useProject";
 import { useChat } from "hooks/useChat";
+
+import CreateActivityModal from "components/create-activity-modal/create-activity-modal.component";
+import ActivityCard from "components/activity-card/activity-card.component";
+import { Plus } from "react-feather";
+
+import { Activity } from "types/project,types";
 
 const ActivitiesSection: React.FC = () => {
   const [activites, setActivites] = useState<Activity[]>([]);
@@ -48,7 +50,7 @@ const ActivitiesSection: React.FC = () => {
     >
       <div className="flex justify-between items-stretch pb-2 px-4">
         <div>
-          <h3 className="font-semibold text-2xl">Activites</h3>
+          <h3 className="font-semibold text-xl">Activites</h3>
           <hr className="w-10 border-none h-1 bg-primary" />
         </div>
         <Plus

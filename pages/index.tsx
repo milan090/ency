@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
 import Head from "next/head";
-import Link from "next/link";
 import CustomButton from "../components/custom-button/custom-button.component";
 import Navbar from "../components/navbar/navbar.component";
 import { PlayCircle } from "react-feather";
@@ -34,9 +33,9 @@ export default function Home() {
                 <div className="mt-10 ml-2 flex flex-row items-center">
                   {/* Get Started Button */}
                   <span className="mr-4">
-                    <Link href={user.uid ? "/dashboard" : "/sign-in"}>
-                      <CustomButton>Get Started</CustomButton>
-                    </Link>
+                    <CustomButton href={user.uid ? "/dashboard" : "/sign-in"}>
+                      Get Started
+                    </CustomButton>
                   </span>
 
                   {/* How It Works */}
@@ -160,9 +159,9 @@ export default function Home() {
               <div className="mt-10 flex justify-center items-center">
                 {/* Get Started Button */}
                 <span className="mr-4">
-                  <Link href={user.uid ? "/dashboard" : "/sign-in"}>
-                    <CustomButton>Get Started</CustomButton>
-                  </Link>
+                  <CustomButton href={user.uid ? "/dashboard" : "/sign-in"}>
+                    Get Started
+                  </CustomButton>
                 </span>
 
                 {/* How It Works */}

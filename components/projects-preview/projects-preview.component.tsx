@@ -43,7 +43,7 @@ const ProjectsPreview: React.FC = () => {
   return (
     <div className="h-full">
       <div>
-        <h2 className="font-bold text-3xl">Projects</h2>
+        <h2 className="font-semibold text-3xl">Projects</h2>
         <hr className="w-10 border-none bg-primary h-1 mt-0.5" />
       </div>
       {projects.length === 0 ? (

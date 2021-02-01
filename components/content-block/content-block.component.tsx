@@ -1,19 +1,21 @@
-import Dropdown from "components/dropdown/dropdown.component";
-import { db } from "config/firebase";
-import { firestore } from "config/firebase";
 import React, { useEffect, useRef, useState } from "react";
-import { MoreVertical } from "react-feather";
-import { FirebaseDocRef } from "types/common.types";
-import { ContentBlock, ContentBlockDoc } from "types/project,types";
+import { db, firestore } from "config/firebase";
+
+import { useAutoSave } from "hooks/useAutoSave";
+
+import Dropdown from "components/dropdown/dropdown.component";
 import ContentBlockInput from "components/content-block-input/content-block-input.component";
 import LoadingSpinner from "components/loading-spinner/loading-spinner.component";
-import { useAutoSave } from "hooks/useAutoSave";
 import BlockSummaryModal from "components/block-summary-modal/block-summary-modal.component";
+import { MoreVertical } from "react-feather";
 
-type Props = {
+import { ContentBlock, ContentBlockDoc } from "types/project,types";
+import { FirebaseDocRef } from "types/common.types";
+
+interface Props {
   contentBlock: ContentBlock;
   projectRef: FirebaseDocRef;
-};
+}
 
 const ContentBlockEditor: React.FC<Props> = ({ contentBlock, projectRef }) => {
   const [isOpen, setIsOpen] = useState(false); // Dropdown

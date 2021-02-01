@@ -43,7 +43,7 @@ const ProjectCard: React.FC<Props> = ({ name, description, lastUpdated, id, ...p
     >
       <div className="flex flex-col h-full">
         <div>
-          <h4 className="font-bold text-xl break-normal">{name}</h4>
+          <h4 className="font-semibold text-xl break-normal">{name}</h4>
           <p className="text-sm text-gray-700 break-normal">{description}</p>
         </div>
         <p className="text-gray-500 text-xs">

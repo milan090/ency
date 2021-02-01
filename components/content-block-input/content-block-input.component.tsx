@@ -1,7 +1,6 @@
 import ImageBlock from "components/image-block/image-block.component";
-import TextareaList from "components/textarea-list/textarea-list.components";
 import { useAutoSave } from "hooks/useAutoSave";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea";
 import { FirebaseDocRef } from "types/common.types";
 import { ContentBlock } from "types/project,types";
@@ -19,10 +18,11 @@ const ContentBlockInput: React.FC<Props> = ({ contentBlock, projectRef }) => {
   useEffect(() => {
     return () => {
       if (autoSaveTimeout) {
+        console.log("YO");
         clearTimeout(autoSaveTimeout);
       }
     };
-  });
+  }, [autoSaveTimeout]);
 
   const handleChange = (newValue: string, wait?: boolean): void => {
     addItemToSave(contentBlock.id);
@@ -94,3 +94,80 @@ const ContentBlockInput: React.FC<Props> = ({ contentBlock, projectRef }) => {
 };
 
 export default ContentBlockInput;
+
+import { nextTick } from "process";
+
+interface TextareaListProps {
+  defaultValue: string;
+  onChange: (value: string) => void;
+}
+
+const TextareaList: React.FC<TextareaListProps> = ({ defaultValue, onChange }) => {
+  const [list, setList] = useState(defaultValue.split("\n"));
+  const listRef = useRef(null);
+
+  const handleChange = (value: string, index: number): void => {
+    if (value === "\n") {
+      const newList = [...list];
+      newList[index] = "";
+      setList(newList);
+      return;
+    }
+    const newValue = value.replace(/(\r\n|\n|\r)/gm, "");
+    const newList = [...list];
+
+    newList[index] = newValue;
+    setList(newList);
+
+    onChange(newList.join("\n"));
+  };
+
+  const focusAbove = (index: number): void => {
+    nextTick(() => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const previousListItem = (listRef.current as any).children[index - 1];
+      if (previousListItem) previousListItem.firstChild.focus();
+    });
+  };
+
+  const focusBelow = (index: number): void => {
+    nextTick(() => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const nextListItem = (listRef.current as any).children[index + 1];
+      if (nextListItem) nextListItem.firstChild.focus();
+    });
+  };
+
+  return (
+    <ul className="w-full list-outside list-disc ml-7 mt-2 mb-3 py-3" ref={listRef}>
+      {list.map((value, i) => (
+        <li key={i} className="my-1">
+          <TextareaAutosize
+            placeholder="Enter Some Text"
+            className="outline-none w-11/12 block"
+            value={value}
+            onChange={(e) => handleChange(e.currentTarget.value, i)}
+            onKeyDown={(e) => {
+              if (e.code === "Enter") {
+                const newList = [...list, ""];
+                setList(newList);
+                onChange(newList.join("\n"));
+                focusBelow(i);
+              } else if (e.currentTarget.value.length < 1 && e.code === "Backspace" && i !== 0) {
+                const newList = [...list];
+                newList.splice(i, 1);
+                setList(newList);
+                onChange(newList.join("\n"));
+                focusAbove(i);
+              } else if (e.code === "ArrowUp") {
+                focusAbove(i);
+              } else if (e.code === "ArrowDown") {
+                focusBelow(i);
+              }
+            }}
+          />
+        </li>
+      ))}
+    </ul>
+  );
+};

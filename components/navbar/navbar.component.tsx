@@ -26,7 +26,7 @@ const Navbar: React.FC<Props> = () => {
           <NavLink isActive={true} href="/">
             Home
           </NavLink>
-          <NavLink isActive={false} href="#features">
+          <NavLink isActive={false} href="/#features">
             Features
           </NavLink>
         </div>

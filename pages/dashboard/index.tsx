@@ -25,7 +25,7 @@ export default function Dashboard(): JSX.Element {
       <div className="py-8 w-full px-10 max-h-screen overflow-y-scroll">
         <div className="text-md text-gray-500 mb-3">{getDate()}</div>
         <div className="mb-8 flex justify-between">
-          <h2 className="text-3xl font-bold">Good Morning, {user.name}!</h2>
+          <h2 className="text-3xl">Good Morning, {user.name}!</h2>
           <div>
             <AddButton onClick={() => setCreateProjectIsHidden(false)} />
             <CreateProjectModal
