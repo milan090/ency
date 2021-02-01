@@ -16,10 +16,12 @@ export const useAuthProvider = (): UseAuth => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUser({ email: user.email || undefined, uid: user.uid });
-        getUserAdditionalData(user);
+    auth.onAuthStateChanged((newUser) => {
+      if (newUser) {
+        const isVerified: boolean = newUser.emailVerified;
+        console.log(isVerified);
+        setUser({ email: newUser.email || undefined, uid: newUser.uid, isVerified: isVerified });
+        getUserAdditionalData(newUser);
       }
       setIsLoading(false);
     });
@@ -31,7 +33,6 @@ export const useAuthProvider = (): UseAuth => {
       .doc(user.uid)
       .set(user)
       .then(() => {
-        setUser(user);
         return user;
       })
       .catch((error) => {
@@ -70,7 +71,7 @@ export const useAuthProvider = (): UseAuth => {
       .then((res) => {
         if (!res.user) throw Error("Something went wrong");
         const { email, uid } = res.user;
-        setUser({ email: email || undefined, uid });
+        setUser({ email: email || undefined, uid, isVerified: res.user.emailVerified });
         getUserAdditionalData(res.user);
         return res.user;
       })
@@ -89,7 +90,7 @@ export const useAuthProvider = (): UseAuth => {
       .get()
       .then((userData) => {
         if (userData.data()) {
-          setUser(userData.data() as IUser);
+          setUser({ ...(userData.data() as IUser), isVerified: user.emailVerified });
         }
       });
   };

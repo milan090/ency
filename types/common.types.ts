@@ -5,6 +5,7 @@ export interface IUser {
   name?: string;
   email?: string;
   uid?: string;
+  isVerified?: boolean;
 }
 
 export type SignUpFunction = (
