@@ -77,7 +77,7 @@ export const getAITips = async (name: string): Promise<AITips> => {
     {
       index: 0,
       type: "list",
-      value: keywords.map((e) => e[1]).join("\n"),
+      value: keywords.join("\n"),
     },
   ];
 
