@@ -16,14 +16,21 @@ export const useAuthProvider = (): UseAuth => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    auth.onAuthStateChanged((newUser) => {
-      if (newUser) {
-        const isVerified: boolean = newUser.emailVerified;
-        console.log(isVerified);
-        setUser({ email: newUser.email || undefined, uid: newUser.uid, isVerified: isVerified });
-        getUserAdditionalData(newUser);
+    auth.onAuthStateChanged((userData) => {
+      if (userData) {
+        const isVerified: boolean = userData.emailVerified;
+        auth.currentUser?.getIdToken(true).then(() => {
+          setUser({
+            email: userData.email || undefined,
+            uid: userData.uid,
+            isVerified: isVerified,
+          });
+          getUserAdditionalData(userData);
+          setIsLoading(false);
+        });
+      } else {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     });
   }, []);
 

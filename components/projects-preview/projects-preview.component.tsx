@@ -13,10 +13,9 @@ const ProjectsPreview: React.FC = () => {
     setIsLoading(true);
     if (!user.uid) return;
     const projectRef = db.collection("users").doc(user.uid).collection("projects");
-
-    const unsubscribeProject = projectRef
-      .orderBy("lastUpdated", "desc")
-      .onSnapshot((querySnapshot) => {
+    let unsubscribeProject: any;
+    try {
+      unsubscribeProject = projectRef.orderBy("lastUpdated", "desc").onSnapshot((querySnapshot) => {
         const projectPreviews: Array<ProjectPreview> = [];
         querySnapshot.forEach((doc) => {
           const data = doc.data() as ProjectPreviewDoc;
@@ -31,6 +30,9 @@ const ProjectsPreview: React.FC = () => {
         setProjects(projectPreviews);
         setIsLoading(false);
       });
+    } catch (error) {
+      console.log(error);
+    }
 
     return () => {
       unsubscribeProject();
@@ -38,7 +40,7 @@ const ProjectsPreview: React.FC = () => {
   }, [user.uid]);
 
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return <h2>Loading Projects...</h2>;
   }
   return (
     <div className="h-full">
