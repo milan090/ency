@@ -10,29 +10,38 @@ import {
   UseAuth,
 } from "types/common.types";
 import { SignInFormInputs, SignUpFormInputs } from "types/forms.types";
+import { useRouter } from "next/router";
 
 export const useAuthProvider = (): UseAuth => {
   const [user, setUser] = useState<IUser>({});
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
-    auth.onAuthStateChanged((userData) => {
+    const isConfirmingEmail = router.query["confirm_email"];
+    const unsubscribe = auth.onAuthStateChanged((userData) => {
       if (userData) {
         const isVerified: boolean = userData.emailVerified;
-        auth.currentUser?.getIdToken(true).then(() => {
-          setUser({
-            email: userData.email || undefined,
-            uid: userData.uid,
-            isVerified: isVerified,
+        userData.getIdToken(!!isConfirmingEmail).then(() => {
+          userData.reload().then(() => {
+            setUser({
+              email: userData.email || undefined,
+              uid: userData.uid,
+              isVerified: isVerified,
+            });
+            getUserAdditionalData(userData);
+            setIsLoading(false);
           });
-          getUserAdditionalData(userData);
-          setIsLoading(false);
         });
       } else {
         setIsLoading(false);
       }
     });
-  }, []);
+
+    return () => {
+      unsubscribe();
+    };
+  }, [router.query]);
 
   const createUser = (user: IUser): Promise<IUser | { error: Error }> => {
     return db
@@ -53,7 +62,7 @@ export const useAuthProvider = (): UseAuth => {
       .then((res) => {
         if (!res.user) throw new Error("Something went wrong");
         const { uid, displayName, email } = res.user;
-        return createUser({ uid, name: displayName || undefined, email: email || undefined });
+        createUser({ uid, name: displayName || undefined, email: email || undefined });
       })
       .catch((error) => {
         return { error };
@@ -64,7 +73,9 @@ export const useAuthProvider = (): UseAuth => {
     return auth
       .createUserWithEmailAndPassword(email, password)
       .then((res) => {
-        auth.currentUser?.sendEmailVerification();
+        res.user?.sendEmailVerification({
+          url: `${location.protocol}//${location.host}/dashboard?confirm_email=true`,
+        });
         return createUser({ email, uid: res.user?.uid, name });
       })
       .catch((error) => {

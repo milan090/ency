@@ -20,10 +20,6 @@ export default function Dashboard(): JSX.Element {
     }
   }, [isLoading, router, user]);
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
   return (
     <div className="bg-gray-200 flex justify-between min-h-screen overflow-y-hidden">
       <AppBar />
@@ -51,12 +47,12 @@ export default function Dashboard(): JSX.Element {
 const ProjectSection: React.FC = () => {
   const { user, isLoading } = useAuth();
   const resendConfirmationEmail = () => {
-    auth.currentUser?.sendEmailVerification().then(() => {
-      alert("We have resend your email confirmation mail");
+    auth.currentUser?.sendEmailVerification({
+      url: `${location.protocol}//${location.host}/dashboard?confirm_email=true`,
     });
   };
   if (isLoading) {
-    return <div className="p-10 pb-52  bg-white rounded-xl w-full break-all ">loading</div>;
+    return <div className="p-10 pb-52  bg-white rounded-xl w-full break-all ">loading..</div>;
   }
   return (
     <div className="p-10 pb-52  bg-white rounded-xl w-full break-all ">
