@@ -22,7 +22,6 @@ export const summarizeUrl = async (url: string): Promise<SummarizeUrl> => {
     }
   );
   const data = res.data;
-  console.log(data);
   return {
     output: data.output,
     keywords: data.keywords,

@@ -18,7 +18,6 @@ const ContentBlockInput: React.FC<Props> = ({ contentBlock, projectRef }) => {
   useEffect(() => {
     return () => {
       if (autoSaveTimeout) {
-        console.log("YO");
         clearTimeout(autoSaveTimeout);
       }
     };
