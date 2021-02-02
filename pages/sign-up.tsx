@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import CustomButton from "components/custom-button/custom-button.component";
 import CustomInput from "components/custom-input/custom-input.component";
@@ -12,15 +12,29 @@ import { SignUpFormInputs } from "types/forms.types";
 import { useAuth } from "hooks/useAuth.provider";
 import { useRouter } from "next/router";
 import GoogleSignInButton from "components/google-sign-in/google-sign-in.component";
+import LoadingSpinner from "components/loading-spinner/loading-spinner.component";
 
 export default function SignIn(): JSX.Element {
-  const { register, handleSubmit, errors, watch } = useForm<SignUpFormInputs>();
+  const [isLoading, setIsLoading] = useState(false);
+  const { register, handleSubmit, errors, watch, setError } = useForm<SignUpFormInputs>();
   const { signUp, user } = useAuth();
 
   const router = useRouter();
 
   const onSubmit = (formInput: SignUpFormInputs): void => {
-    signUp(formInput);
+    setIsLoading(true);
+    signUp(formInput).catch((error) => {
+      console.log(error);
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          setError("email", { message: "Account with this email already exists" });
+          break;
+
+        default:
+          break;
+      }
+      setIsLoading(false);
+    });
   };
 
   useEffect(() => {
@@ -118,7 +132,13 @@ export default function SignIn(): JSX.Element {
                 })}
               />
               <CustomButton className="w-full mt-2" onClick={handleSubmit(onSubmit)}>
-                Sign Up
+                {isLoading ? (
+                  <div className="w-full flex justify-center">
+                    <LoadingSpinner />
+                  </div>
+                ) : (
+                  "Sign Up"
+                )}
               </CustomButton>
             </form>
 

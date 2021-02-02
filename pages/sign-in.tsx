@@ -2,22 +2,30 @@ import { useAuth } from "hooks/useAuth.provider";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import CustomButton from "../components/custom-button/custom-button.component";
 import CustomInput from "../components/custom-input/custom-input.component";
 import Navbar from "../components/navbar/navbar.component";
 import GoogleSignInButton from "components/google-sign-in/google-sign-in.component";
 import { SignInFormInputs } from "types/forms.types";
+import LoadingSpinner from "components/loading-spinner/loading-spinner.component";
 
 export default function SignIn(): JSX.Element {
-  const { register, handleSubmit, errors } = useForm<SignInFormInputs>();
+  const [isLoading, setIsLoading] = useState(false);
+  const { register, handleSubmit, errors, setError } = useForm<SignInFormInputs>();
 
   const router = useRouter();
   const { signIn, user } = useAuth();
 
   const onSubmit = (formInput: SignInFormInputs): void => {
-    signIn(formInput);
+    setIsLoading(true);
+    signIn(formInput).catch((error) => {
+      if (error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
+        setError("password", { message: "User with given password or email not found" });
+      }
+      setIsLoading(false);
+    });
   };
 
   useEffect(() => {
@@ -64,7 +72,13 @@ export default function SignIn(): JSX.Element {
               />
 
               <CustomButton className="w-full mt-2" onClick={handleSubmit(onSubmit)}>
-                Sign In
+                {isLoading ? (
+                  <div className="w-full flex justify-center">
+                    <LoadingSpinner />
+                  </div>
+                ) : (
+                  "Sign In"
+                )}
               </CustomButton>
             </form>
             <p className="text-center w-full my-2">or</p>

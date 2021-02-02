@@ -70,32 +70,22 @@ export const useAuthProvider = (): UseAuth => {
   };
 
   const signUp: SignUpFunction = ({ email, password, name }: SignUpFormInputs) => {
-    return auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((res) => {
-        res.user?.sendEmailVerification({
-          url: `${location.protocol}//${location.host}/dashboard?confirm_email=true`,
-        });
-        return createUser({ email, uid: res.user?.uid, name });
-      })
-      .catch((error) => {
-        return { error };
+    return auth.createUserWithEmailAndPassword(email, password).then((res) => {
+      res.user?.sendEmailVerification({
+        url: `${location.protocol}//${location.host}/dashboard?confirm_email=true`,
       });
+      return createUser({ email, uid: res.user?.uid, name });
+    });
   };
 
   const signIn: SignInFunction = ({ email, password }: SignInFormInputs) => {
-    return auth
-      .signInWithEmailAndPassword(email, password)
-      .then((res) => {
-        if (!res.user) throw Error("Something went wrong");
-        const { email, uid } = res.user;
-        setUser({ email: email || undefined, uid, isVerified: res.user.emailVerified });
-        getUserAdditionalData(res.user);
-        return res.user;
-      })
-      .catch((error) => {
-        return { error };
-      });
+    return auth.signInWithEmailAndPassword(email, password).then((res) => {
+      if (!res.user) throw Error("Something went wrong");
+      const { email, uid } = res.user;
+      setUser({ email: email || undefined, uid, isVerified: res.user.emailVerified });
+      getUserAdditionalData(res.user);
+      return res.user;
+    });
   };
 
   const signOut: SignOutFunction = () => {
