@@ -24,7 +24,6 @@ export default function SignIn(): JSX.Element {
   const onSubmit = (formInput: SignUpFormInputs): void => {
     setIsLoading(true);
     signUp(formInput).catch((error) => {
-      console.log(error);
       switch (error.code) {
         case "auth/email-already-in-use":
           setError("email", { message: "Account with this email already exists" });
