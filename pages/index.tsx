@@ -14,7 +14,7 @@ export default function Home() {
         <title>Ency | Your Personal Research Assisstant</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
+      <div className="overflow-x-hidden">
         <div
           style={{ backgroundImage: "url('./home/landing-page-bg-3.svg')" }}
           className="bg-no-repeat bg-cover"

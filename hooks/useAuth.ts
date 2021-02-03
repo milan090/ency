@@ -89,7 +89,11 @@ export const useAuthProvider = (): UseAuth => {
   };
 
   const signOut: SignOutFunction = () => {
-    return auth.signOut().then(() => setUser({}));
+    setIsLoading(true);
+    return auth
+      .signOut()
+      .then(() => setUser({}))
+      .finally(() => setIsLoading(false));
   };
 
   const getUserAdditionalData = (user: firebase.User): void => {

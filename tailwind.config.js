@@ -20,6 +20,7 @@ module.exports = {
       primary: theme("colors.primary"),
       accent: theme("colors.accent"),
       white: theme("colors.white"),
+      black: theme("colors.black"),
       "blue-500": theme("colors.blue.500"),
       "red-500": theme("colors.red.500")
     }),
@@ -27,7 +28,7 @@ module.exports = {
   variants: {
     extend: {
       display: ["focus", "hover", "group-focus", "group-hover"],
-      stroke: ["hover"]
+      stroke: ["hover", "group-hover"]
     },
   },
   plugins: [],

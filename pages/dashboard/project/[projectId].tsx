@@ -84,7 +84,7 @@ export default function ProjectPage(): JSX.Element {
         unsubscribeContentBlocks();
       };
     }
-  }, [user]);
+  }, [user, isLoading, projectId, router, setProjectRef]);
 
   return (
     <div className="bg-gray-200 flex mix-h-screen overflow-hidden">
