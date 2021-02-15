@@ -2,7 +2,7 @@ import { db } from "config/firebase-admin";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getUserUid } from "utils/getUser";
 
-export default async function deleteProject(
+export default async function PostToWordpress(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {

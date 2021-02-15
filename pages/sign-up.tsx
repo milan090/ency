@@ -6,7 +6,7 @@ import CustomButton from "components/custom-button/custom-button.component";
 import CustomInput from "components/custom-input/custom-input.component";
 import Navbar from "components/navbar/navbar.component";
 
-const emailValidateRegex = /@/;
+const emailValidateRegex = /@/; // I should improve this
 
 import { SignUpFormInputs } from "types/forms.types";
 import { useAuth } from "hooks/useAuth.provider";
@@ -59,6 +59,7 @@ export default function SignIn(): JSX.Element {
             <form className="mt-6" onSubmit={handleSubmit(onSubmit)} noValidate>
               <CustomInput
                 label="Your Email"
+                textSize="base"
                 type="email"
                 name="email"
                 placeHolder="Enter Your Email"
@@ -73,6 +74,7 @@ export default function SignIn(): JSX.Element {
               />
               <CustomInput
                 label="Your Name"
+                textSize="base"
                 type="text"
                 name="name"
                 placeHolder="Enter Your Name"
@@ -95,6 +97,7 @@ export default function SignIn(): JSX.Element {
               />
               <CustomInput
                 label="Password"
+                textSize="base"
                 type="password"
                 name="password"
                 placeHolder="Enter Your Password"
@@ -119,6 +122,7 @@ export default function SignIn(): JSX.Element {
               />
               <CustomInput
                 label="Confirm Password"
+                textSize="base"
                 type="password"
                 name="cpassword"
                 placeHolder="Enter Your Password Again"

@@ -55,6 +55,7 @@ export default function SignIn(): JSX.Element {
                 type="email"
                 name="email"
                 placeHolder="Enter Your Email"
+                textSize="base"
                 error={errors.email?.message}
                 fref={register({
                   required: "Field is required",
@@ -64,6 +65,7 @@ export default function SignIn(): JSX.Element {
                 label="Your Password"
                 type="password"
                 name="password"
+                textSize="base"
                 placeHolder="Enter Your Password"
                 error={errors.password?.message}
                 fref={register({

@@ -1,8 +1,10 @@
 import { db } from "config/firebase-admin";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getUserUid } from "utils/getUser";
+import crypto from "crypto";
+import { WordpressConnection } from "utils/wordpress";
 
-export default async function deleteProject(
+export default async function ConnectToWordpress(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
@@ -10,18 +12,21 @@ export default async function deleteProject(
     if (req.method !== "POST") {
       return res.status(405).json({
         error: "Invalid method on route. Use POST instead",
+        code: "api/method",
       });
     }
-    const { projectId } = req.body;
     const userUid: string | null = await getUserUid(req);
+    const wpWebsite: string | undefined = req.body;
 
     if (!userUid) {
       return res.status(400).json({
         error: "Not authenticated",
+        code: "user/not-authenticated",
       });
-    } else if (!projectId) {
+    } else if (!wpWebsite) {
       return res.status(400).json({
-        error: `Expected projectId to be a string, but got projectId: ${projectId}`,
+        error: `Expected wpWebsite to be a string but got: ${wpWebsite}`,
+        code: "api/missing-parameter",
       });
     }
 
@@ -34,29 +39,19 @@ export default async function deleteProject(
       });
     }
 
-    const projectRef = userRef.collection("projects").doc(projectId);
-    const project = await projectRef.get();
-    if (!project.exists) {
-      return res.status(404).json({
-        error: `Could not find a project with the given id ${projectId} for this user`,
-      });
-    }
+    const newWpConnectionRef = userRef.collection("wordpress").doc();
 
-    const contentBlocksCollectionRef = projectRef.collection("contentBlocks");
-    const contentBlocks = await contentBlocksCollectionRef.get();
-    const batchSize = contentBlocks.size;
+    const newApiKey: string = crypto.randomBytes(30).toString("base64").slice(0, 40);
 
-    if (batchSize !== 0) {
-      const batch = db.batch();
-      contentBlocks.forEach((doc) => {
-        batch.delete(doc.ref);
-      });
-      await batch.commit();
-    }
+    const newWpConnection: WordpressConnection = {
+      apiKey: newApiKey,
+      wpWebsite: wpWebsite,
+      userId: user.id,
+    };
 
-    await projectRef.delete();
+    await newWpConnectionRef.set(newWpConnection);
 
-    return res.json({ success: "DELETED" });
+    return res.json(newWpConnection);
   } catch (error) {
     // console.error(error);
     res.status(500).json({
