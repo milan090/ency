@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Ency | Your Personal Research Assisstant</title>
+        <title>Ency</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
