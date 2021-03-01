@@ -46,7 +46,11 @@ export const Navbar: React.FC = () => {
 
         <div>
           <NavLink value="Log In" href="/login" />
-          <WhiteBGButton>Sign Up</WhiteBGButton>
+          <Link href="/sign-up">
+            <a>
+              <WhiteBGButton>Sign Up</WhiteBGButton>
+            </a>
+          </Link>
         </div>
       </div>
     </nav>
