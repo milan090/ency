@@ -4,7 +4,7 @@ import Head from "next/head";
 import "../styles/tailwind.css";
 import "../styles/globals.css";
 
-const domain = process.env.VERCEL_URL || "ency.live";
+import { domain } from "utils/domain";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -21,7 +21,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           property="og:description"
           content="Presenting to you Ency, an AI Assisstant that helps you complete your reports, assignments and articles much faster & easier. There’s no turning back now!"
         />
-        <meta property="og:image" content="/images/logo.svg" />
+        <meta property="og:image" content="/images/logo.png" />
         <meta property="og:url" content={`https://${domain}`} />
       </Head>
       <Component {...pageProps} />
