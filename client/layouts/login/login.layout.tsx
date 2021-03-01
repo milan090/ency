@@ -7,11 +7,10 @@ import { GoogleSigninButton } from "components/google-signin-button/google-signi
 
 type FormInputs = {
   email: string;
-  fname: string;
   password: string;
 };
 
-export const SignUpLayout: React.FC = () => {
+export const LoginLayout: React.FC = () => {
   const { register, handleSubmit, errors } = useForm<FormInputs>();
 
   const onFormSubmit = (data: FormInputs): void => {
@@ -20,29 +19,16 @@ export const SignUpLayout: React.FC = () => {
 
   return (
     <div className="flex justify-center mt-10">
-      <div className="w-2/3 flex justify-end">
+      <div className="w-2/3 flex">
         <section>
           <h1 className="font-extrabold text-4xl mb-4">Sign Up To Ency</h1>
           <p className="text-sm text-gray-500">
-            Have an account?{" "}
-            <Link href="/login">
-              <a className="text-blue-500 hover:underline">Log In</a>
+            Don&apos;t have an account?{" "}
+            <Link href="/sign-up">
+              <a className="text-blue-500 hover:underline">Sign Up</a>
             </Link>
           </p>
           <form onSubmit={handleSubmit(onFormSubmit)} noValidate={true} className="mt-5">
-            <FormInput
-              label="Full Name"
-              name="fname"
-              type="text"
-              placeholder="Enter your name"
-              error={errors.fname?.message}
-              fref={register({
-                required: {
-                  value: true,
-                  message: "This field is required",
-                },
-              })}
-            />
             <FormInput
               label="Email"
               name="email"
@@ -78,7 +64,11 @@ export const SignUpLayout: React.FC = () => {
               })}
             />
 
-            <div className="mt-10 mb-4">
+            <p className="text-sm text-blue-500 hover:underline float-right mb-10">
+              Forgot Password?
+            </p>
+
+            <div className="mt-8 mb-4">
               <BlueBGButtonWide type="submit">Sign Up</BlueBGButtonWide>
             </div>
           </form>
