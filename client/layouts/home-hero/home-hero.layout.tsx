@@ -1,5 +1,5 @@
 import { BlueBGButtonLg } from "components/CustomButtons/bluebg-button.component";
-import { WhiteBGButtonLg } from "components/CustomButtons/whitebg-button.component";
+import { BlueBorderWhiteBGButtonLg } from "components/CustomButtons/whitebg-button.component";
 import React from "react";
 import { Play } from "react-feather";
 
@@ -18,10 +18,10 @@ export const HomeHeroLayout: React.FC = () => {
           <div className="md:mr-10 md:mb-0 mb-5">
             <BlueBGButtonLg>Get Started For Free</BlueBGButtonLg>
           </div>
-          <WhiteBGButtonLg>
+          <BlueBorderWhiteBGButtonLg>
             <Play className="inline-block mr-2" size="16px" />
             <span>How it works</span>
-          </WhiteBGButtonLg>
+          </BlueBorderWhiteBGButtonLg>
         </div>
       </section>
     </div>

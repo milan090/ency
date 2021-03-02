@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { WhiteBGButton } from "components/CustomButtons/whitebg-button.component";
+import { BlueBorderWhiteBGButton } from "components/CustomButtons/whitebg-button.component";
 
 const NavLinks: { value: string; href: string }[] = [
   {
@@ -48,7 +48,7 @@ export const Navbar: React.FC = () => {
           <NavLink value="Log In" href="/login" />
           <Link href="/sign-up">
             <a>
-              <WhiteBGButton>Sign Up</WhiteBGButton>
+              <BlueBorderWhiteBGButton>Sign Up</BlueBorderWhiteBGButton>
             </a>
           </Link>
         </div>
