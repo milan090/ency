@@ -40,7 +40,7 @@ const appbarLinks: AppbarLinkProps[] = [
 
 export const Appbar: React.FC = () => {
   return (
-    <nav className="w-72 flex flex-col h-screen pt-12 pb-8">
+    <nav className="w-80 flex flex-col max-h-screen h-screen pt-12 pb-8">
       <Link href="/">
         <a className="pl-8">
           <img src="/images/logo.svg" alt="Ency Logo" />

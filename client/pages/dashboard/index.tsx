@@ -8,10 +8,12 @@ export default function DashboardPage(): JSX.Element {
       <Head>
         <title>Dashboard</title>
       </Head>
-      <div className="flex">
+      <div className="flex h-screen">
         <Appbar />
-        <main className="w-full">
-          <DashboardHome />
+        <main className="w-full overflow-hidden flex flex-1">
+          <div className="overflow-y-scroll flex-1">
+            <DashboardHome />
+          </div>
         </main>
       </div>
     </div>
