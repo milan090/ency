@@ -32,7 +32,6 @@ Researching and creating projects is tedious. Ency is a virtual assistant develo
 - [Aidri](https://github.com/AIDRI) 🧐
 - [Milan](https://github.com/milan090) 🤠
 - [Karan](https://github.com/KaranSinghBisht) 😎
-- [Saptarshi](https://github.com/saptarshibasu15) 😴
 - [Aineas](https://github.com/AineasGamingYolo) 😉
 
 ##### Crafted With ♥ By Team Coffee
