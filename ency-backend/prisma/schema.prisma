@@ -9,3 +9,61 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+model User {
+  uid String @id
+  email String
+  name String
+  description String?
+  coins Int
+
+  projects Project[]
+  likes Like[]
+  comments Comment[]
+}
+
+model Project {
+  id Int @id @default(autoincrement())
+  user User @relation(fields: [userUid], references: [uid])
+  userUid String
+
+  title String
+  iconSrc String
+  description String?
+  tags String[]
+
+  pages ProjecPage[]
+  pageCount Int
+
+  likes Like[]
+  comments Comment[]
+}
+
+model ProjecPage {
+  id Int @id @default(autoincrement())
+  name String
+
+  project Project @relation(fields: [projectId], references: [id])
+  projectId Int
+}
+
+model Like {
+  id Int @id @default(autoincrement())
+  user User @relation(fields: [userUid], references: [uid])
+  userUid String
+
+  project Project @relation(fields: [projectId], references: [id])
+  projectId Int
+}
+
+model Comment {
+  id Int @id @default(autoincrement())
+  user User @relation(fields: [userUid], references: [uid])
+  userUid String
+
+  project Project @relation(fields: [projectId], references: [id])
+  projectId Int
+
+  content String
+  createdDate DateTime
+}
