@@ -1,0 +1,9 @@
+node_modules
+dist
+test
+
+.gitignore
+.eslintrc.js
+.env
+.env.example
+docker-compose.test.yml
