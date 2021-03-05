@@ -7,7 +7,6 @@ services:
     branch: develop
     deploy_on_push: true
   source_dir: ency-backend
-  dockerfile_path: ency-backend/Dockerfile
   run_command: yarn start:prod
   routes:
   - path: /api
