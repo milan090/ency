@@ -59,7 +59,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/sammy/node_project/views/
+      device: /home/ubuntu/ency/ency-backend/views/
       o: bind
   postgres:
     name: nest-db
