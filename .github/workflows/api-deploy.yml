@@ -8,7 +8,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy Nodejs app
+      - name: Deploy Ency API
         uses: appleboy/ssh-action@master
         with:
           host: ${{secrets.SSH_HOST}}
@@ -18,6 +18,5 @@ jobs:
           script: |
             cd ~/ency/ency-backend
             git pull origin develop
-            docker-compose exec nest-api yarn prisma migrate deploy --preview-feature
             docker-compose up -d --build
             
