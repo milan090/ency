@@ -1,0 +1,22 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Nodejs app
+        uses: appleboy/ssh-action@0.1.2
+        with:
+          host: ${{secrets.SSH_HOST}}
+          key: ${{secrets.SSH_KEY}}
+          username: ${{secrets.SSH_USERNAME}}
+
+          script: |
+            cd ~/ency/ency-backend
+            git pull origin develop
+            docker-compose up -d
+            
