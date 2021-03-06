@@ -5,11 +5,15 @@ import { PrismaService } from "./prisma/prisma.service";
 import { PrismaModule } from "./prisma/prisma.module";
 import { FirebaseAdminModule } from "@aginix/nestjs-firebase-admin";
 import { AuthModule } from "./auth/auth.module";
+import { ProjectModule } from "./project/project.module";
 import * as admin from "firebase-admin";
-import { AuthGuard } from "./auth/auth.guard";
+import { ProjectPageModule } from "./project-page/project-page.module";
+import { ConfigModule } from "@nestjs/config";
+import { LoggerService } from "./logger.service";
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     PrismaModule,
     // nestjs-firebase-admin: https://www.npmjs.com/package/@aginix/nestjs-firebase-admin
     FirebaseAdminModule.forRootAsync({
@@ -22,8 +26,11 @@ import { AuthGuard } from "./auth/auth.guard";
       }),
     }),
     AuthModule,
+    ProjectModule,
+    ProjectPageModule,
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaService],
+  providers: [AppService, PrismaService, LoggerService],
+  exports: [LoggerService],
 })
 export class AppModule {}

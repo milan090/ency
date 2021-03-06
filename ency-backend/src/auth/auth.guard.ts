@@ -1,5 +1,4 @@
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
-import { ModuleTokenFactory } from "@nestjs/core/injector/module-token-factory";
 import { AuthService } from "./auth.service";
 
 @Injectable()
@@ -8,7 +7,11 @@ export class AuthGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean | Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    const token = request.headers.authorization.split("Bearer ")[1];
-    return this.authService.validateUser(token);
+
+    const authHeader = request.headers.authorization;
+    if (!authHeader) return false;
+
+    const token = authHeader.split("Bearer ")[1];
+    return this.authService.validateUser(token, request);
   }
 }
