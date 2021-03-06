@@ -31,11 +31,13 @@ services:
     restart: unless-stopped
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - web-root:/var/www/html
       - ./nginx-conf:/etc/nginx/conf.d
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
+      - dhparam:/etc/ssl/certs
     depends_on:
       - nest-api
     networks:
@@ -60,6 +62,12 @@ volumes:
     driver_opts:
       type: none
       device: /home/ubuntu/ency/ency-backend/views/ # Make empty dir called views
+      o: bind
+  dhparam:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/sammy/node_project/dhparam/
       o: bind
   postgres:
     name: nest-db
