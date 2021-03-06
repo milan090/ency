@@ -18,5 +18,6 @@ jobs:
           script: |
             cd ~/ency/ency-backend
             git pull origin develop
-            docker-compose up -d
+            docker-compose exec nest-api yarn prisma migrate deploy --preview-feature
+            docker-compose up -d --build
             
