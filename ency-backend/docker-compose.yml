@@ -50,7 +50,7 @@ services:
       - web-root:/var/www/html
     depends_on:
       - webserver
-    command: certonly --webroot --webroot-path=/var/www/html --email milanmuhammed1@gmail.com --agree-tos --no-eff-email --staging -d dev-api.ency.live  -d www.dev-api.ency.live
+    command: certonly --webroot --webroot-path=/var/www/html --email milanmuhammed1@gmail.com --agree-tos --no-eff-email --force-renewal -d dev-api.ency.live  -d www.dev-api.ency.live
 
 volumes:
   certbot-etc:
@@ -59,7 +59,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/ubuntu/ency/ency-backend/views/
+      device: /home/ubuntu/ency/ency-backend/views/ # Make empty dir called views
       o: bind
   postgres:
     name: nest-db
