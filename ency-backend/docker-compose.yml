@@ -9,12 +9,8 @@ services:
       dockerfile: Dockerfile
     environment:
       - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public
-      - FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID}
-      - FIREBASE_CLIENT_EMAIL=${FIREBASE_CLIENT_EMAIL}
-      - FIREBASE_PRIVATE_KEY=${FIREBASE_PRIVATE_KEY}
-      - PORT=3000
     ports:
-      - 3000:3000
+      - 8080:8080
     env_file:
       - .env.prod
     depends_on:
