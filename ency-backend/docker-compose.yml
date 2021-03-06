@@ -67,7 +67,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/sammy/node_project/dhparam/
+      device: /home/ubuntu/ency/ency-backend/dhparam/
       o: bind
   postgres:
     name: nest-db
