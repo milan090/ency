@@ -28,23 +28,29 @@ model Project {
   userUid String
 
   title String
-  iconSrc String
+  iconSrc String?
   description String?
   tags String[]
+  isPublic Boolean @default(false)
 
-  pages ProjecPage[]
-  pageCount Int
+  pages ProjectPage[]
 
   likes Like[]
   comments Comment[]
+
+  @@unique([id, userUid])
+  @@map("project")
 }
 
-model ProjecPage {
+model ProjectPage {
   id Int @id @default(autoincrement())
   name String
+  data Json
 
   project Project @relation(fields: [projectId], references: [id])
   projectId Int
+
+  @@map("project_page")
 }
 
 model Like {

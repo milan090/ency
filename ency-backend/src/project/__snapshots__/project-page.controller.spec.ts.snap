@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProjectPageController Post(:id/page) create With valid input, Should return valid Response: new-project-page 1`] = `
+Object {
+  "data": "",
+  "id": 2,
+  "name": "Untitled Page",
+  "projectId": 1,
+}
+`;

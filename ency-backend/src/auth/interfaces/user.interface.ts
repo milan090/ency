@@ -1,7 +1,3 @@
-import { User } from "@prisma/client";
-
-export interface IUser {
+export interface IFirebaseUser {
   uid: string;
 }
-
-export type UserEntity = User;

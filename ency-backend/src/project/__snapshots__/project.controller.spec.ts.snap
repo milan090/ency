@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProjectController Get() findAll Should return array of projects for valid user: mock-projects-data 1`] = `
+Array [
+  Object {
+    "description": "Mock description",
+    "iconSrc": null,
+    "id": 1,
+    "isPublic": false,
+    "pageCount": 1,
+    "tags": Array [
+      "tag",
+    ],
+    "title": "Hello world",
+    "userUid": "abc",
+  },
+  Object {
+    "description": "Mock description",
+    "iconSrc": null,
+    "id": 2,
+    "isPublic": false,
+    "pageCount": 1,
+    "tags": Array [
+      "tag",
+    ],
+    "title": "Hello world",
+    "userUid": "abc",
+  },
+  Object {
+    "description": "Mock description",
+    "iconSrc": null,
+    "id": 3,
+    "isPublic": true,
+    "pageCount": 1,
+    "tags": Array [
+      "hello",
+    ],
+    "title": "Hello world",
+    "userUid": "abc",
+  },
+]
+`;
+
+exports[`ProjectController Get(:id) findOne Should return valid Project data with not user authenticated: mock-project-isPublic-data 1`] = `
+Object {
+  "description": "Mock description",
+  "iconSrc": null,
+  "id": 5,
+  "isPublic": true,
+  "pageCount": 1,
+  "tags": Array [
+    "hello",
+  ],
+  "title": "Hello world",
+  "userUid": "abc",
+}
+`;
+
+exports[`ProjectController Get(:id) findOne Should return valid Project data: mock-project-0-data 1`] = `
+Object {
+  "description": "Mock description",
+  "iconSrc": null,
+  "id": 4,
+  "isPublic": false,
+  "pageCount": 1,
+  "tags": Array [
+    "tag",
+  ],
+  "title": "Hello world",
+  "userUid": "abc",
+}
+`;
+
+exports[`ProjectController Put(:id) update Should return valid response on valid user and data: mock-project-updated 1`] = `
+Object {
+  "description": "Some new description",
+  "iconSrc": null,
+  "id": 7,
+  "isPublic": false,
+  "tags": Array [
+    "updated",
+  ],
+  "title": "Hello world",
+  "userUid": "abc",
+}
+`;

@@ -1,9 +1,12 @@
 import { FirebaseAuthenticationService } from "@aginix/nestjs-firebase-admin";
-import { Injectable } from "@nestjs/common";
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from "@nestjs/common";
 import { User } from "@prisma/client";
-import { Request } from "express";
 import { PrismaService } from "src/prisma/prisma.service";
-import { UserEntity } from "./interfaces/user.interface";
+import { IFirebaseUser } from "./interfaces/user.interface";
 
 @Injectable()
 export class AuthService {
@@ -12,21 +15,18 @@ export class AuthService {
     private prisma: PrismaService,
   ) {}
 
-  async validateUser(token: string, req: any): Promise<boolean> {
+  async validateUser(token: string, req: any): Promise<IFirebaseUser | null> {
     try {
       const idToken = await this.firebaseAuth.verifyIdToken(token);
-      req.user = { uid: idToken.uid };
-      return !!idToken.uid;
+      const user = { uid: idToken.uid };
+      req.user = user;
+      return user;
     } catch (error) {
-      return false;
+      return null;
     }
   }
 
-  async createUser(
-    uid: string,
-    name: string,
-    email: string,
-  ): Promise<UserEntity> {
+  async createUser(uid: string, name: string, email: string): Promise<User> {
     return await this.prisma.user.create({
       data: {
         uid,
@@ -37,7 +37,7 @@ export class AuthService {
     });
   }
 
-  async getUser(uid: string): Promise<UserEntity> {
+  async getUser(uid: string): Promise<User | null> {
     return this.prisma.user.findUnique({ where: { uid } });
   }
 }

@@ -1,8 +1,8 @@
 import { createParamDecorator, ExecutionContext } from "@nestjs/common";
-import { IUser } from "../interfaces/user.interface";
+import { IFirebaseUser } from "../interfaces/user.interface";
 
-export const User = createParamDecorator<IUser>(
-  (data: unknown, ctx: ExecutionContext): IUser => {
+export const FirebaseUser = createParamDecorator<IFirebaseUser>(
+  (data: unknown, ctx: ExecutionContext): IFirebaseUser => {
     const request = ctx.switchToHttp().getRequest();
     return request.user;
   },

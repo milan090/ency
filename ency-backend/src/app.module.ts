@@ -1,15 +1,13 @@
 import { Module } from "@nestjs/common";
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
-import { PrismaService } from "./prisma/prisma.service";
 import { PrismaModule } from "./prisma/prisma.module";
 import { FirebaseAdminModule } from "@aginix/nestjs-firebase-admin";
 import { AuthModule } from "./auth/auth.module";
 import { ProjectModule } from "./project/project.module";
 import * as admin from "firebase-admin";
-import { ProjectPageModule } from "./project-page/project-page.module";
 import { ConfigModule } from "@nestjs/config";
 import { LoggerService } from "./logger.service";
+import { APP_GUARD } from "@nestjs/core";
+import { AuthGuard } from "./auth/auth.guard";
 
 @Module({
   imports: [
@@ -27,10 +25,14 @@ import { LoggerService } from "./logger.service";
     }),
     AuthModule,
     ProjectModule,
-    ProjectPageModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, PrismaService, LoggerService],
+  providers: [
+    LoggerService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
   exports: [LoggerService],
 })
 export class AppModule {}
