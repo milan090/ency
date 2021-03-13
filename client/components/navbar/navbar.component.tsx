@@ -3,6 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { BlueBorderWhiteBGButton } from "components/CustomButtons/whitebg-button.component";
 
+import styles from "./navbar.styles.module.scss";
+
 const NavLinks: { value: string; href: string }[] = [
   {
     value: "Home",
@@ -36,7 +38,7 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Middle Nav Links */}
-        <ul className="flex">
+        <ul className={`flex group hover:text-gray-500 ${styles["nav-links"]}`}>
           {NavLinks.map((props, i) => (
             <li key={i}>
               <NavLink {...props} />
@@ -64,6 +66,6 @@ type NavLinkProps = {
 
 const NavLink: React.FC<NavLinkProps> = ({ value, href }) => (
   <Link href={href}>
-    <a className="mx-4">{value}</a>
+    <a className={`mx-4 text-black hover:text-black ${styles["nav-link"]}`}>{value}</a>
   </Link>
 );

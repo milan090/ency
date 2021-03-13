@@ -5,11 +5,12 @@
 
 .searchInput input {
   width: 5rem;
-  transition: width 300ms ease-in, padding-left 300ms ease-in;
+  transition: width 500ms ease-out;
+  /* transition: width 300ms ease-in; */
 }
 
 /* If focused or placeholder not being shown (has a value) */
 .searchInput input:focus, .searchInput input:not(:placeholder-shown) {
   width: 15rem;
-  padding-left: 1rem;
+  transition: width 300ms ease-in-out;
 }

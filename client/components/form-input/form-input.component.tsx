@@ -47,7 +47,7 @@ export const FormPasswordInput: React.FC<Props> = ({
   const [inputType, setInputType] = useState<"password" | "text">("password");
   const inputDivRef = useRef<any>();
 
-  const handleClick = () => {
+  const handleClick = (): void => {
     setInputType((currentInputType) => (currentInputType === "password" ? "text" : "password"));
   };
 
