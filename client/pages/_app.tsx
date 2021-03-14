@@ -42,6 +42,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           setIsLoading(false);
         }
       } else {
+        setUser({ uid: "", email: "", name: "" });
         setIsLoading(false);
       }
     });

@@ -4,10 +4,15 @@ import Link from "next/link";
 import { DollarSign, Globe, Home, IconProps, LogOut, Plus, Settings, User } from "react-feather";
 import { useRouter } from "next/dist/client/router";
 import { logout } from "utils/auth.utils";
-import { useAuth } from "hooks/auth.hook";
 
 type AppbarLinkProps = {
   href: string;
+  value: string;
+  Icon: React.FC<IconProps>;
+};
+
+type AppbarNavItemsProps = {
+  isActive?: boolean;
   value: string;
   Icon: React.FC<IconProps>;
 };
@@ -41,14 +46,10 @@ const appbarLinks: AppbarLinkProps[] = [
 ];
 
 export const Appbar: React.FC = () => {
-  const router = useRouter();
-  const setUser = useAuth((state) => state.setUser);
-
   const handleLogout = async (): Promise<void> => {
     try {
       await logout();
-      setUser({});
-      router.push("/login");
+      // Setting user state to empty and redirecting to login page will happen in _app.tsx
     } catch (error) {
       console.log(error);
     }
@@ -83,7 +84,7 @@ export const Appbar: React.FC = () => {
 
       <div className="mt-auto">
         <button onClick={handleLogout}>
-          <AppbarLink Icon={LogOut} href="/dashboard/logout" value="Logout" />
+          <AppbarNavItem Icon={LogOut} value="Logout" />
         </button>
         <p className="text-xs text-gray-600 pl-8 mt-2">
           <a href="" className="hover:underline">
@@ -109,21 +110,29 @@ const AppbarLink: React.FC<AppbarLinkProps> = ({ href, value, Icon }) => {
 
   return (
     <Link href={href}>
-      <a
-        className={`w-full text-sm py-4 pl-8 flex items-center ${
-          isActive && "border-r-4 border-black"
-        }`}
-        style={{
-          background: isActive
-            ? "linear-gradient(270deg, rgba(51, 51, 51, 0.09) 0%, rgba(51, 51, 51, 0.05) 41.41%, rgba(51, 51, 51, 0.01) 91.55%)"
-            : "",
-        }}
-      >
-        <span className="mr-4">
-          <Icon className="stroke-gray-500" />
-        </span>
-        <span className="text-gray-700">{value}</span>
+      <a href={href}>
+        <AppbarNavItem Icon={Icon} value={value} isActive={isActive} />
       </a>
     </Link>
+  );
+};
+
+const AppbarNavItem: React.FC<AppbarNavItemsProps> = ({ isActive = false, value, Icon }) => {
+  return (
+    <span
+      className={`w-full text-sm py-4 pl-8 flex items-center ${
+        isActive && "border-r-4 border-black"
+      }`}
+      style={{
+        background: isActive
+          ? "linear-gradient(270deg, rgba(51, 51, 51, 0.09) 0%, rgba(51, 51, 51, 0.05) 41.41%, rgba(51, 51, 51, 0.01) 91.55%)"
+          : "",
+      }}
+    >
+      <span className="mr-4">
+        <Icon className="stroke-gray-500" />
+      </span>
+      <span className="text-gray-700">{value}</span>
+    </span>
   );
 };

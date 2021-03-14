@@ -93,7 +93,7 @@ export const LoginLayout: React.FC = () => {
               {!isLoading ? (
                 <BlueBGButtonWide type="submit">Sign In</BlueBGButtonWide>
               ) : (
-                <BlueBGButtonWide>Loading</BlueBGButtonWide>
+                <BlueBGButtonWide>Loading...</BlueBGButtonWide>
               )}
             </div>
           </form>
