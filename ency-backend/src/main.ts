@@ -10,6 +10,7 @@ import { LoggerService } from "./logger.service";
 import morgan from "morgan";
 
 const PORT = process.env.PORT || 8080;
+const ORIGIN_URL = process.env.ORIGIN_URL || "http://localhost:3000";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -30,7 +31,7 @@ async function bootstrap() {
   app.useLogger(app.get(LoggerService));
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors({
-    origin: "http://localhost:3000",
+    origin: ORIGIN_URL,
     credentials: true,
   });
   const logger = new LoggerService("Request");
