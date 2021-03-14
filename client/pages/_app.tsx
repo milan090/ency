@@ -5,8 +5,48 @@ import "../styles/tailwind.css";
 import "../styles/globals.css";
 
 import { domain } from "utils/domain";
+import { useEffect } from "react";
+import { auth } from "config/firebase";
+import { useAuth } from "hooks/auth.hook";
+import { axios } from "config/axios";
+import { UserEntity } from "types/auth.types";
+import shallow from "zustand/shallow";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  const { setIsLoading, setUser, setToken } = useAuth(
+    (state) => ({
+      setUser: state.setUser,
+      setIsLoading: state.setIsLoading,
+      setToken: state.setToken,
+      token: state.token,
+    }),
+    shallow
+  );
+
+  useEffect(() => {
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        try {
+          const token = await user.getIdToken();
+          setToken(token);
+
+          const { data } = await axios.get<UserEntity>("/auth", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+
+          const { name, email, uid } = data;
+          setUser({ name, email, uid });
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
+        setIsLoading(false);
+      }
+    });
+  }, []);
+
   return (
     <>
       <Head>

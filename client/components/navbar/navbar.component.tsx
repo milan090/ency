@@ -4,6 +4,8 @@ import Image from "next/image";
 import { BlueBorderWhiteBGButton } from "components/CustomButtons/whitebg-button.component";
 
 import styles from "./navbar.styles.module.scss";
+import { useAuth } from "hooks/auth.hook";
+import { IUser } from "types/auth.types";
 
 const NavLinks: { value: string; href: string }[] = [
   {
@@ -25,6 +27,8 @@ const NavLinks: { value: string; href: string }[] = [
 ];
 
 export const Navbar: React.FC = () => {
+  const user: IUser = useAuth((state) => state.user);
+
   return (
     <nav className="flex justify-center items-center h-20">
       <div className="w-11/12 flex justify-between items-center">
@@ -46,14 +50,24 @@ export const Navbar: React.FC = () => {
           ))}
         </ul>
 
-        <div>
-          <NavLink value="Log In" href="/login" />
-          <Link href="/sign-up">
-            <a>
-              <BlueBorderWhiteBGButton>Sign Up</BlueBorderWhiteBGButton>
-            </a>
-          </Link>
-        </div>
+        {!user.uid ? (
+          <div>
+            <NavLink value="Log In" href="/login" />
+            <Link href="/sign-up">
+              <a>
+                <BlueBorderWhiteBGButton>Sign Up</BlueBorderWhiteBGButton>
+              </a>
+            </Link>
+          </div>
+        ) : (
+          <div>
+            <Link href="/dashboard">
+              <a>
+                <BlueBorderWhiteBGButton>Go To Dashboard</BlueBorderWhiteBGButton>
+              </a>
+            </Link>
+          </div>
+        )}
       </div>
     </nav>
   );

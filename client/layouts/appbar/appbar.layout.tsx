@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { DollarSign, Globe, Home, IconProps, LogOut, Plus, Settings, User } from "react-feather";
 import { useRouter } from "next/dist/client/router";
+import { logout } from "utils/auth.utils";
+import { useAuth } from "hooks/auth.hook";
 
 type AppbarLinkProps = {
   href: string;
@@ -39,8 +41,21 @@ const appbarLinks: AppbarLinkProps[] = [
 ];
 
 export const Appbar: React.FC = () => {
+  const router = useRouter();
+  const setUser = useAuth((state) => state.setUser);
+
+  const handleLogout = async (): Promise<void> => {
+    try {
+      await logout();
+      setUser({});
+      router.push("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <nav className="w-80 flex flex-col max-h-screen h-screen pt-12 pb-8">
+    <nav className="md:w-72 xl:w-80 flex flex-col max-h-screen h-screen pt-12 pb-8">
       <Link href="/">
         <a className="pl-8">
           <img src="/images/logo.svg" alt="Ency Logo" />
@@ -67,7 +82,9 @@ export const Appbar: React.FC = () => {
       </div>
 
       <div className="mt-auto">
-        <AppbarLink Icon={LogOut} href="/dashboard/logout" value="Logout" />
+        <button onClick={handleLogout}>
+          <AppbarLink Icon={LogOut} href="/dashboard/logout" value="Logout" />
+        </button>
         <p className="text-xs text-gray-600 pl-8 mt-2">
           <a href="" className="hover:underline">
             Privacy Policy

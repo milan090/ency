@@ -17,8 +17,8 @@ if (!firebase.apps.length) {
 }
 
 const app = firebase.app();
+export { firebase };
 export const auth = firebase.auth();
-export const now = firebase.firestore.Timestamp.now();
 export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 // googleAuthProvider.setCustomParameters
 if (process.env.NODE_ENV === "development") {

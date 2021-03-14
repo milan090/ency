@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { FormInput, FormPasswordInput } from "components/form-input/form-input.component";
 import { useForm } from "react-hook-form";
 import { BlueBGButtonWide } from "components/CustomButtons/bluebg-button.component";
 import { GoogleSigninButton } from "components/google-signin-button/google-signin-button.component";
+import { signUpWithEmailAndPassword } from "utils/auth.utils";
+import { useAuth } from "hooks/auth.hook";
+import { useRouter } from "next/dist/client/router";
 
 type FormInputs = {
   email: string;
@@ -13,9 +16,32 @@ type FormInputs = {
 
 export const SignUpLayout: React.FC = () => {
   const { register, handleSubmit, errors } = useForm<FormInputs>();
+  const setUser = useAuth((state) => state.setUser);
+  const user = useAuth((state) => state.user);
 
-  const onFormSubmit = (data: FormInputs): void => {
-    console.log(data);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user.uid) {
+      router.push("/dashboard");
+    }
+  }, [user]);
+
+  const onFormSubmit = async ({ fname, email, password }: FormInputs): Promise<void> => {
+    if (isLoading) return;
+    setIsLoading(true);
+    try {
+      const data = await signUpWithEmailAndPassword(fname, email, password);
+      {
+        const { email, uid, name } = data;
+        setUser({ email, uid, name });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -79,7 +105,11 @@ export const SignUpLayout: React.FC = () => {
             />
 
             <div className="mt-10 mb-4">
-              <BlueBGButtonWide type="submit">Sign Up</BlueBGButtonWide>
+              {isLoading ? (
+                <BlueBGButtonWide>Loading....</BlueBGButtonWide>
+              ) : (
+                <BlueBGButtonWide type="submit">Sign Up</BlueBGButtonWide>
+              )}
             </div>
           </form>
           <GoogleSigninButton />

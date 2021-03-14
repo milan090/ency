@@ -155,7 +155,7 @@ const tmpProjects: ProjectCardProps[] = [
 
 const ProjectsPreview: React.FC = () => {
   return (
-    <div className="grid grid-cols-3 grid-flow-row mt-10 gap-x-8 gap-y-5">
+    <div className="transition-all duration-700 grid lg:grid-cols-2 xl:grid-cols-3  grid-flow-row mt-10 gap-x-8 gap-y-5">
       {tmpProjects.map((props, i) => (
         <ProjectCard {...props} key={i} />
       ))}

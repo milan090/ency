@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { FormInput, FormPasswordInput } from "components/form-input/form-input.component";
 import { useForm } from "react-hook-form";
 import { BlueBGButtonWide } from "components/CustomButtons/bluebg-button.component";
 import { GoogleSigninButton } from "components/google-signin-button/google-signin-button.component";
+import { loginWithEmailAndPassword } from "utils/auth.utils";
+import { useAuth } from "hooks/auth.hook";
+import { useRouter } from "next/dist/client/router";
 
 type FormInputs = {
   email: string;
@@ -12,10 +15,28 @@ type FormInputs = {
 
 export const LoginLayout: React.FC = () => {
   const { register, handleSubmit, errors } = useForm<FormInputs>();
+  const [isLoading, setIsLoading] = useState(false);
+  const authLoading = useAuth((state) => state.isLoading);
+  const user = useAuth((state) => state.user);
+  const router = useRouter();
 
-  const onFormSubmit = (data: FormInputs): void => {
-    console.log(data);
+  const onFormSubmit = async ({ email, password }: FormInputs): Promise<void> => {
+    if (isLoading) return;
+    setIsLoading(true);
+    try {
+      await loginWithEmailAndPassword(email, password);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  useEffect(() => {
+    if (!authLoading && user.uid) {
+      router.push("/dashboard");
+    }
+  }, [user, authLoading]);
 
   return (
     <div className="flex justify-center mt-10">
@@ -69,7 +90,11 @@ export const LoginLayout: React.FC = () => {
             </p>
 
             <div className="mt-8 mb-4">
-              <BlueBGButtonWide type="submit">Sign Up</BlueBGButtonWide>
+              {!isLoading ? (
+                <BlueBGButtonWide type="submit">Sign In</BlueBGButtonWide>
+              ) : (
+                <BlueBGButtonWide>Loading</BlueBGButtonWide>
+              )}
             </div>
           </form>
           <GoogleSigninButton />
