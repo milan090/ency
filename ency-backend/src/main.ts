@@ -7,6 +7,7 @@ import {
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { AppModule } from "./app.module";
 import { LoggerService } from "./logger.service";
+import morgan from "morgan";
 
 const PORT = process.env.PORT || 8080;
 
@@ -28,6 +29,18 @@ async function bootstrap() {
 
   app.useLogger(app.get(LoggerService));
   app.useGlobalPipes(new ValidationPipe());
+  app.enableCors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  });
+  const logger = new LoggerService("Request");
+  app.use(
+    morgan("tiny", {
+      stream: {
+        write: (message) => logger.log(message.replace("\n", "")),
+      },
+    }),
+  );
   await app.listen(PORT, "0.0.0.0");
   LoggerService.verbose(`listening on port ${PORT}`);
 }

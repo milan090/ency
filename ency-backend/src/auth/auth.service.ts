@@ -1,9 +1,5 @@
 import { FirebaseAuthenticationService } from "@aginix/nestjs-firebase-admin";
-import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException,
-} from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { User } from "@prisma/client";
 import { PrismaService } from "src/prisma/prisma.service";
 import { IFirebaseUser } from "./interfaces/user.interface";
@@ -24,6 +20,13 @@ export class AuthService {
     } catch (error) {
       return null;
     }
+  }
+
+  async signUpEmailPass(email: string, password: string) {
+    return this.firebaseAuth.createUser({
+      email: email,
+      password: password,
+    });
   }
 
   async createUser(uid: string, name: string, email: string): Promise<User> {

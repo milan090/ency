@@ -26,6 +26,7 @@ export class AuthGuard implements CanActivate {
     const token = authHeader?.split("Bearer ")[1];
     const user = await this.authService.validateUser(token, request);
 
+    // Returns true if Either user exists or its public endpoint
     return !!user || isPublic;
   }
 }
