@@ -4,8 +4,8 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { ProjectPage } from "@prisma/client";
-import { IFirebaseUser } from "src/auth/interfaces/user.interface";
-import { PrismaService } from "src/prisma/prisma.service";
+import { IFirebaseUser } from "../auth/interfaces/user.interface";
+import { PrismaService } from "../prisma/prisma.service";
 import { CreateProjectPageDto } from "./dto/create-project-page.dto";
 import { UpdateProjectPageDto } from "./dto/update-project-page.dto";
 import {

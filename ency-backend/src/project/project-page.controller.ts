@@ -11,9 +11,9 @@ import {
 import { ProjectPageService } from "./project-page.service";
 import { CreateProjectPageDto } from "./dto/create-project-page.dto";
 import { UpdateProjectPageDto } from "./dto/update-project-page.dto";
-import { Public } from "src/auth/auth.guard";
-import { FirebaseUser } from "src/auth/decorators/user.decorator";
-import { IFirebaseUser } from "src/auth/interfaces/user.interface";
+import { Public } from "../auth/auth.guard";
+import { FirebaseUser } from "../auth/decorators/user.decorator";
+import { IFirebaseUser } from "../auth/interfaces/user.interface";
 import {
   ProjectPageEntity,
   ProjectPageEntityNoData,

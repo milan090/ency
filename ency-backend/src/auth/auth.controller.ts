@@ -8,7 +8,7 @@ import {
   UseInterceptors,
 } from "@nestjs/common";
 import { User } from "@prisma/client";
-import { PrismaInterceptor } from "src/prisma/prisma.interceptor";
+import { PrismaInterceptor } from "../prisma/prisma.interceptor";
 import { Public } from "./auth.guard";
 import { AuthService } from "./auth.service";
 import { FirebaseUser } from "./decorators/user.decorator";
