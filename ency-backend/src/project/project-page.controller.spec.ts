@@ -1,12 +1,12 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { AppModule } from "src/app.module";
-import { AuthModule } from "src/auth/auth.module";
-import { PrismaModule } from "src/prisma/prisma.module";
+import { AppModule } from "../app.module";
+import { AuthModule } from "../auth/auth.module";
+import { PrismaModule } from "../prisma/prisma.module";
 import { ProjectPageController } from "./project-page.controller";
 import { ProjectPageService } from "./project-page.service";
 import { ProjectController } from "./project.controller";
 import { users, projects } from "../../prisma/mock-data.json";
-import { IFirebaseUser } from "src/auth/interfaces/user.interface";
+import { IFirebaseUser } from "../auth/interfaces/user.interface";
 import { ProjectService } from "./project.service";
 
 describe("ProjectPageController", () => {

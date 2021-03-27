@@ -1,7 +1,7 @@
 import { FirebaseAuthenticationService } from "@aginix/nestjs-firebase-admin";
 import { Injectable } from "@nestjs/common";
 import { User } from "@prisma/client";
-import { PrismaService } from "src/prisma/prisma.service";
+import { PrismaService } from "../prisma/prisma.service";
 import { IFirebaseUser } from "./interfaces/user.interface";
 
 @Injectable()

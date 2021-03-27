@@ -12,9 +12,9 @@ import {
 import { ProjectService } from "./project.service";
 import { CreateProjectDto } from "./dto/create-project.dto";
 import { UpdateProjectDto } from "./dto/update-project.dto";
-import { FirebaseUser } from "src/auth/decorators/user.decorator";
-import { IFirebaseUser } from "src/auth/interfaces/user.interface";
-import { Public } from "src/auth/auth.guard";
+import { FirebaseUser } from "../auth/decorators/user.decorator";
+import { IFirebaseUser } from "../auth/interfaces/user.interface";
+import { Public } from "../auth/auth.guard";
 import { ProjectEntity } from "./enitiies/project.entity";
 
 @Controller("projects")
