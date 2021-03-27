@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   InternalServerErrorException,
   NotFoundException,
@@ -26,7 +27,7 @@ export class AuthController {
     const { email, name, password } = body;
 
     const newUser = await this.authService.signUpEmailPass(email, password);
-    const res = await this.authService.createUser(newUser.uid, name, email);
+    const res = await this.authService.createUser(newUser.uid, name, email, password);
     return res;
   }
 
@@ -36,4 +37,5 @@ export class AuthController {
     if (!userData) throw new NotFoundException("User with given id not found");
     return userData;
   }
+  
 }

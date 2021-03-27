@@ -29,12 +29,13 @@ export class AuthService {
     });
   }
 
-  async createUser(uid: string, name: string, email: string): Promise<User> {
+  async createUser(uid: string, name: string, email: string, password: string): Promise<User> {
     return await this.prisma.user.create({
       data: {
         uid,
         email,
         name,
+        password,
         coins: 0,
       },
     });
@@ -42,5 +43,14 @@ export class AuthService {
 
   async getUser(uid: string): Promise<User | null> {
     return this.prisma.user.findUnique({ where: { uid } });
+  }
+
+  async deleteUser(email: string) {
+    return await this.prisma.user.delete({
+      where: {
+        email: email
+        //uid: uid
+      },
+    });
   }
 }

@@ -10,6 +10,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 
 describe("AuthController", () => {
   let controller: AuthController;
+  let service: AuthService
   let module: TestingModule;
 
   beforeAll(async () => {
@@ -20,6 +21,7 @@ describe("AuthController", () => {
     }).compile();
 
     controller = module.get<AuthController>(AuthController);
+    service = module.get<AuthService>(AuthService);
   });
 
   afterAll(async () => {
@@ -53,21 +55,31 @@ describe("AuthController", () => {
       const firebaseUser: IFirebaseUser = {
         uid: userMockData.uid,
       };
-      const user = await controller.signUp(firebaseUser, {
-        ...userMockData,
-      });
+      const user = await controller.signUp(
+        //firebaseUser,
+        {...userMockData}
+    );
       expect(user.coins).toBe(0);
-      expect(user.uid).toBe(userMockData.uid);
+      //expect(user.uid).toBe(userMockData.uid);
+      expect(user.name).toBe(userMockData.name)
       expect(user.email).toBe(userMockData.email);
     });
 
     it("Creating a duplicate user should return error message", async () => {
-      const userMockData = users[0];
+      const userMockData = users[1];
       const firebaseUser: IFirebaseUser = { uid: userMockData.uid };
 
       await expect(
-        controller.signUp(firebaseUser, userMockData),
+        controller.signUp({...userMockData}), //firebaseUser
       ).rejects.toBeInstanceOf(PrismaClientKnownRequestError);
+    });
+
+    afterAll(() => {
+      const userEmail2 = users[1].email
+      const userEmail1 = users[0].email
+      //console.log(userEmail2)
+      expect(service.deleteUser(userEmail1)).toBe(0);
+      service.deleteUser(userEmail2);
     });
   });
 });
