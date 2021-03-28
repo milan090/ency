@@ -27,7 +27,7 @@ export class AuthController {
     const { email, name, password } = body;
 
     const newUser = await this.authService.signUpEmailPass(email, password);
-    const res = await this.authService.createUser(newUser.uid, name, email, password);
+    const res = await this.authService.createUser(newUser.uid, name, email);
     return res;
   }
 

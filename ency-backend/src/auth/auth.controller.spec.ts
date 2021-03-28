@@ -30,7 +30,13 @@ describe("AuthController", () => {
 
   describe("getUser", () => {
     it("Should return a valid user object", async () => {
-      const userMockData = users[0];
+      const userMockData = {
+        uid: users[0].uid,
+        coins: users[0].coins,
+        description: users[0].description,
+        email: users[0].email,
+        name: users[0].name
+      }
       const firebaseUser: IFirebaseUser = {
         uid: userMockData.uid,
       };
@@ -51,35 +57,43 @@ describe("AuthController", () => {
 
   describe("signUp", () => {
     it("Creating new valid user Should return a valid user object", async () => {
-      const userMockData = users[1];
+      const userMockData = users[0];
+      
       const firebaseUser: IFirebaseUser = {
         uid: userMockData.uid,
       };
+
       const user = await controller.signUp(
         //firebaseUser,
-        {...userMockData}
+        {...userMockData, password: "Abc123!!!"}
     );
+      users[0].uid = user.uid;
       expect(user.coins).toBe(0);
-      //expect(user.uid).toBe(userMockData.uid);
+      expect(user.uid).toBe(userMockData.uid);
       expect(user.name).toBe(userMockData.name)
       expect(user.email).toBe(userMockData.email);
     });
 
     it("Creating a duplicate user should return error message", async () => {
-      const userMockData = users[1];
+      const userMockData = {
+        uid: users[0].uid,
+        coins: users[0].coins,
+        description: users[0].description,
+        email: users[0].email,
+        name: users[0].name,
+      }
       const firebaseUser: IFirebaseUser = { uid: userMockData.uid };
 
       await expect(
-        controller.signUp({...userMockData}), //firebaseUser
-      ).rejects.toBeInstanceOf(PrismaClientKnownRequestError);
+        controller.signUp({...userMockData, password: "Abc123!!!"}), //firebaseUser
+      ).toThrowError;  //.rejects.toBeInstanceOf(); //(PrismaClientKnownRequestError);
+      
     });
 
     afterAll(() => {
-      const userEmail2 = users[1].email
-      const userEmail1 = users[0].email
-      //console.log(userEmail2)
-      expect(service.deleteUser(userEmail1)).toBe(0);
-      service.deleteUser(userEmail2);
+      //expect(service.deleteUser(userUid1)).toBe(0);
+      service.deleteUser(users[0].uid);
     });
   });
 });
+

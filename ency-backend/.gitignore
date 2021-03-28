@@ -36,4 +36,3 @@ lerna-debug.log*
 .env
 .env.prod
 dhparam/
-prisma/migrations
