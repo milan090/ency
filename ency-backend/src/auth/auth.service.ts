@@ -44,13 +44,16 @@ export class AuthService {
     return this.prisma.user.findUnique({ where: { uid } });
   }
 
-  async deleteUser(uid: string) {
+  async deleteUser(uid: string, test: boolean) {
+    if (test == true){
+    await this.firebaseAuth.deleteUser(uid)
+  } else {
     await this.prisma.user.delete({
       where: {
-        //email: email
         uid: uid
       },
     });
-    return await this.firebaseAuth.deleteUser(uid)
+    await this.firebaseAuth.deleteUser(uid)
+  }
   }
 }

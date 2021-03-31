@@ -30,15 +30,10 @@ describe("AuthController", () => {
 
   describe("getUser", () => {
     it("Should return a valid user object", async () => {
-      const userMockData = {
-        uid: users[0].uid,
-        coins: users[0].coins,
-        description: users[0].description,
-        email: users[0].email,
-        name: users[0].name
-      }
+      const userMockData = users[0]
+
       const firebaseUser: IFirebaseUser = {
-        uid: userMockData.uid,
+        uid: users[0].uid,
       };
       const user = await controller.getUser(firebaseUser);
       expect(user.email).toBe(userMockData.email);
@@ -64,10 +59,10 @@ describe("AuthController", () => {
       };
 
       const user = await controller.signUp(
-        //firebaseUser,
         {...userMockData, password: "Abc123!!!"}
     );
       users[0].uid = user.uid;
+      //console.log(userMockData.uid)
       expect(user.coins).toBe(0);
       expect(user.uid).toBe(userMockData.uid);
       expect(user.name).toBe(userMockData.name)
@@ -75,25 +70,21 @@ describe("AuthController", () => {
     });
 
     it("Creating a duplicate user should return error message", async () => {
-      const userMockData = {
-        uid: users[0].uid,
-        coins: users[0].coins,
-        description: users[0].description,
-        email: users[0].email,
-        name: users[0].name,
-      }
+      const userMockData = users[0]
       const firebaseUser: IFirebaseUser = { uid: userMockData.uid };
-
-      await expect(
-        controller.signUp({...userMockData, password: "Abc123!!!"}), //firebaseUser
-      ).toThrowError;  //.rejects.toBeInstanceOf(); //(PrismaClientKnownRequestError);
-      
-    });
-
+      setTimeout(async () => {   
+      await expect(controller.signUp(
+        {...userMockData, password: "Abc123!!!"})).not.toBeInstanceOf(Promise);
+      }, 500); //250
+    })
+    
     afterAll(() => {
-      //expect(service.deleteUser(userUid1)).toBe(0);
-      service.deleteUser(users[0].uid);
-    });
+      //console.log("afterAll started")
+      console.log(users[0].uid)
+      setTimeout(async () => {
+      service.deleteUser(users[0].uid, true)
+      }, 800); //300
+  });
   });
 });
 
