@@ -6,7 +6,6 @@ import { AuthService } from "./auth.service";
 import { IFirebaseUser } from "./interfaces/user.interface";
 import { users } from "../../prisma/mock-data.json";
 import { NotFoundException } from "@nestjs/common";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 
 describe("AuthController", () => {
   let controller: AuthController;
@@ -25,6 +24,9 @@ describe("AuthController", () => {
   });
 
   afterAll(async () => {
+    setTimeout(async () => {
+    await service.deleteUser(users[0].uid, true)
+    }, 800);
     await module.close();
   });
 
@@ -75,16 +77,8 @@ describe("AuthController", () => {
       setTimeout(async () => {   
       await expect(controller.signUp(
         {...userMockData, password: "Abc123!!!"})).not.toBeInstanceOf(Promise);
-      }, 500); //250
+      }, 500); 
     })
-    
-    afterAll(() => {
-      //console.log("afterAll started")
-      console.log(users[0].uid)
-      setTimeout(async () => {
-      service.deleteUser(users[0].uid, true)
-      }, 800); //300
-  });
   });
 });
 

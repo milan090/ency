@@ -47,7 +47,7 @@ export class ProjectPageService {
         project: {
           id: projectId,
           OR: [
-            // Either thr project isPublic or is owned by the user
+            // Either the project isPublic or is owned by the user
             {
               isPublic: true,
             },
@@ -109,12 +109,12 @@ export class ProjectPageService {
       select: {
         project: true,
       },
-    });
+    });    
 
-    if (!projectPage)
+    if (!projectPage) {
       throw new NotFoundException("Page with given id does not exist");
-
-    if (projectPage?.project.userUid === user.uid)
+    }
+    if (projectPage?.project.userUid != user.uid)
       throw new BadRequestException(
         "You are not authorized to perform this action",
       );
@@ -142,14 +142,14 @@ export class ProjectPageService {
       },
     });
 
-    if (!projectPage)
+    if (!projectPage) {
       throw new NotFoundException("Page with given id does not exist");
-
-    if (projectPage?.project.userUid === user.uid)
+    }
+    if (projectPage?.project.userUid != user.uid){ //userUid === user.uid) 
       throw new BadRequestException(
         "You are not authorized to perform this action",
       );
-
+    }
     return this.prisma.projectPage.delete({
       where: {
         id: pageId,
