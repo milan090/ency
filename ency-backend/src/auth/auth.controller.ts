@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   InternalServerErrorException,
   NotFoundException,
@@ -36,4 +37,5 @@ export class AuthController {
     if (!userData) throw new NotFoundException("User with given id not found");
     return userData;
   }
+  
 }

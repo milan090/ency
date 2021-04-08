@@ -43,4 +43,17 @@ export class AuthService {
   async getUser(uid: string): Promise<User | null> {
     return this.prisma.user.findUnique({ where: { uid } });
   }
+
+  async deleteUser(uid: string, test: boolean) {
+    if (test == true){
+    await this.firebaseAuth.deleteUser(uid)
+  } else {
+    await this.prisma.user.delete({
+      where: {
+        uid: uid
+      },
+    });
+    await this.firebaseAuth.deleteUser(uid)
+  }
+  }
 }

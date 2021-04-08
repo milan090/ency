@@ -6,10 +6,10 @@ import { AuthService } from "./auth.service";
 import { IFirebaseUser } from "./interfaces/user.interface";
 import { users } from "../../prisma/mock-data.json";
 import { NotFoundException } from "@nestjs/common";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 
 describe("AuthController", () => {
   let controller: AuthController;
+  let service: AuthService
   let module: TestingModule;
 
   beforeAll(async () => {
@@ -20,17 +20,22 @@ describe("AuthController", () => {
     }).compile();
 
     controller = module.get<AuthController>(AuthController);
+    service = module.get<AuthService>(AuthService);
   });
 
   afterAll(async () => {
+    setTimeout(async () => {
+    await service.deleteUser(users[0].uid, true)
+    }, 800);
     await module.close();
   });
 
   describe("getUser", () => {
     it("Should return a valid user object", async () => {
-      const userMockData = users[0];
+      const userMockData = users[0]
+
       const firebaseUser: IFirebaseUser = {
-        uid: userMockData.uid,
+        uid: users[0].uid,
       };
       const user = await controller.getUser(firebaseUser);
       expect(user.email).toBe(userMockData.email);
@@ -49,25 +54,31 @@ describe("AuthController", () => {
 
   describe("signUp", () => {
     it("Creating new valid user Should return a valid user object", async () => {
-      const userMockData = users[1];
+      const userMockData = users[0];
+      
       const firebaseUser: IFirebaseUser = {
         uid: userMockData.uid,
       };
-      const user = await controller.signUp(firebaseUser, {
-        ...userMockData,
-      });
+
+      const user = await controller.signUp(
+        {...userMockData, password: "Abc123!!!"}
+    );
+      users[0].uid = user.uid;
+      //console.log(userMockData.uid)
       expect(user.coins).toBe(0);
       expect(user.uid).toBe(userMockData.uid);
+      expect(user.name).toBe(userMockData.name)
       expect(user.email).toBe(userMockData.email);
     });
 
     it("Creating a duplicate user should return error message", async () => {
-      const userMockData = users[0];
+      const userMockData = users[0]
       const firebaseUser: IFirebaseUser = { uid: userMockData.uid };
-
-      await expect(
-        controller.signUp(firebaseUser, userMockData),
-      ).rejects.toBeInstanceOf(PrismaClientKnownRequestError);
-    });
+      setTimeout(async () => {   
+      await expect(controller.signUp(
+        {...userMockData, password: "Abc123!!!"})).not.toBeInstanceOf(Promise);
+      }, 500); 
+    })
   });
 });
+
