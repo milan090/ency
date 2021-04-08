@@ -49,25 +49,28 @@ describe("AuthController", () => {
 
   describe("signUp", () => {
     it("Creating new valid user Should return a valid user object", async () => {
-      const userMockData = users[1];
-      const firebaseUser: IFirebaseUser = {
-        uid: userMockData.uid,
+      const { uid, coins, description, ...userMockData } = {
+        ...users[1],
+        password: "abc",
       };
-      const user = await controller.signUp(firebaseUser, {
+
+      const user = await controller.signUp({
         ...userMockData,
       });
       expect(user.coins).toBe(0);
-      expect(user.uid).toBe(userMockData.uid);
+      expect(user.uid).toBe(uid);
       expect(user.email).toBe(userMockData.email);
     });
 
     it("Creating a duplicate user should return error message", async () => {
-      const userMockData = users[0];
-      const firebaseUser: IFirebaseUser = { uid: userMockData.uid };
+      const { uid, coins, description, ...userMockData } = {
+        ...users[1],
+        password: "abc",
+      };
 
-      await expect(
-        controller.signUp(firebaseUser, userMockData),
-      ).rejects.toBeInstanceOf(PrismaClientKnownRequestError);
+      await expect(controller.signUp(userMockData)).rejects.toBeInstanceOf(
+        PrismaClientKnownRequestError,
+      );
     });
   });
 });
