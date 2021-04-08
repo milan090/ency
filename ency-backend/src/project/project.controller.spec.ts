@@ -1,10 +1,10 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { PrismaModule } from "src/prisma/prisma.module";
+import { PrismaModule } from "../prisma/prisma.module";
 import { ProjectController } from "./project.controller";
 import { ProjectService } from "./project.service";
 import { users, projects } from "../../prisma/mock-data.json";
 import { Project } from "@prisma/client";
-import { IFirebaseUser } from "src/auth/interfaces/user.interface";
+import { IFirebaseUser } from "../auth/interfaces/user.interface";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { ProjectEntity } from "./enitiies/project.entity";
 import { NotFoundException } from "@nestjs/common";

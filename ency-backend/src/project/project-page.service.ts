@@ -4,8 +4,8 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { ProjectPage } from "@prisma/client";
-import { IFirebaseUser } from "src/auth/interfaces/user.interface";
-import { PrismaService } from "src/prisma/prisma.service";
+import { IFirebaseUser } from "../auth/interfaces/user.interface";
+import { PrismaService } from "../prisma/prisma.service";
 import { CreateProjectPageDto } from "./dto/create-project-page.dto";
 import { UpdateProjectPageDto } from "./dto/update-project-page.dto";
 import {
@@ -47,7 +47,7 @@ export class ProjectPageService {
         project: {
           id: projectId,
           OR: [
-            // Either thr project isPublic or is owned by the user
+            // Either the project isPublic or is owned by the user
             {
               isPublic: true,
             },
@@ -109,12 +109,12 @@ export class ProjectPageService {
       select: {
         project: true,
       },
-    });
+    });    
 
-    if (!projectPage)
+    if (!projectPage) {
       throw new NotFoundException("Page with given id does not exist");
-
-    if (projectPage?.project.userUid === user.uid)
+    }
+    if (projectPage?.project.userUid != user.uid)
       throw new BadRequestException(
         "You are not authorized to perform this action",
       );
@@ -142,14 +142,14 @@ export class ProjectPageService {
       },
     });
 
-    if (!projectPage)
+    if (!projectPage) {
       throw new NotFoundException("Page with given id does not exist");
-
-    if (projectPage?.project.userUid === user.uid)
+    }
+    if (projectPage?.project.userUid != user.uid){ //userUid === user.uid) 
       throw new BadRequestException(
         "You are not authorized to perform this action",
       );
-
+    }
     return this.prisma.projectPage.delete({
       where: {
         id: pageId,

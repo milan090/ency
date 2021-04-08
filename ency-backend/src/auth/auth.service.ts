@@ -1,7 +1,7 @@
 import { FirebaseAuthenticationService } from "@aginix/nestjs-firebase-admin";
 import { Injectable } from "@nestjs/common";
 import { User } from "@prisma/client";
-import { PrismaService } from "src/prisma/prisma.service";
+import { PrismaService } from "../prisma/prisma.service";
 import { IFirebaseUser } from "./interfaces/user.interface";
 
 @Injectable()
@@ -42,5 +42,18 @@ export class AuthService {
 
   async getUser(uid: string): Promise<User | null> {
     return this.prisma.user.findUnique({ where: { uid } });
+  }
+
+  async deleteUser(uid: string, test: boolean) {
+    if (test == true) {
+      await this.firebaseAuth.deleteUser(uid);
+    } else {
+      await this.prisma.user.delete({
+        where: {
+          uid: uid,
+        },
+      });
+      await this.firebaseAuth.deleteUser(uid);
+    }
   }
 }
