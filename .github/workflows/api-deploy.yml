@@ -1,9 +1,9 @@
-name: Build & Deploy
+name: CI CD
 
 on:
   push:
     paths:
-      - 'ency-backend/'
+      - 'ency-backend/**'
     branches:
       - 'develop'
 
