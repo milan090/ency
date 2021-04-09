@@ -1,9 +1,7 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
-  InternalServerErrorException,
   NotFoundException,
   Post,
   UseInterceptors,

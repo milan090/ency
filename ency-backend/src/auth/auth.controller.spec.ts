@@ -24,10 +24,36 @@ describe("AuthController", () => {
   });
 
   afterAll(async () => {
-    setTimeout(async () => {
-      await service.deleteUser(users[0].uid, true);
-    }, 800);
-    await module.close();
+    await service.deleteUser(users[0].uid, true);
+
+    // await module.close();
+  });
+
+  describe("signUp", () => {
+    it("Creating new valid user Should return a valid user object", async () => {
+      const userMockData = users[0];
+
+      const user = await controller.signUp({
+        ...userMockData,
+        password: "Abc123!!!",
+      });
+      users[0].uid = user.uid;
+
+      expect(user.coins).toBe(0);
+      expect(user.uid).toBe(userMockData.uid);
+      expect(user.name).toBe(userMockData.name);
+      expect(user.email).toBe(userMockData.email);
+    });
+
+    it("Creating a duplicate user should return error message", async () => {
+      const userMockData = users[0];
+
+      await expect(
+        controller.signUp({ ...userMockData, password: "Abc123!!!" }),
+      ).rejects.toEqual(
+        new Error("The email address is already in use by another account."),
+      );
+    });
   });
 
   describe("getUser", () => {
@@ -49,33 +75,6 @@ describe("AuthController", () => {
       await expect(controller.getUser(firebaseUser)).rejects.toEqual(
         new NotFoundException("User with given id not found"),
       );
-    });
-  });
-
-  describe("signUp", () => {
-    it("Creating new valid user Should return a valid user object", async () => {
-      const userMockData = users[0];
-
-      const user = await controller.signUp({
-        ...userMockData,
-        password: "Abc123!!!",
-      });
-      users[0].uid = user.uid;
-
-      expect(user.coins).toBe(0);
-      expect(user.uid).toBe(userMockData.uid);
-      expect(user.name).toBe(userMockData.name);
-      expect(user.email).toBe(userMockData.email);
-    });
-
-    it("Creating a duplicate user should return error message", async () => {
-      const userMockData = users[0];
-      const firebaseUser: IFirebaseUser = { uid: userMockData.uid };
-      setTimeout(async () => {
-        await expect(
-          controller.signUp({ ...userMockData, password: "Abc123!!!" }),
-        ).not.toBeInstanceOf(Promise);
-      }, 500);
     });
   });
 });
