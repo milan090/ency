@@ -46,12 +46,7 @@ jobs:
           node-version: '15.x'
 
       - name: Run tests
-        script: |
-          cd ency-backend
-          yarn install --frozen-lockfile
-          yarn prisma
-          yarn prisma migrate dev
-          yarn run test
+        run: cn ency-backend & yarn install --frozen-lockfile & yarn prisma migrate dev & yarn run test
       
 
   # deploy:
