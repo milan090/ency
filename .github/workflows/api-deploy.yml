@@ -1,0 +1,70 @@
+name: CI CD
+
+on:
+  push:
+    paths:
+      - 'ency-backend/**'
+    branches:
+      - 'develop'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres?schema=public
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '15.x'
+
+      - run: cd ency-backend
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Run migrations
+        run: yarn prisma migrate dev
+
+      - name: Run tests
+        run: yarn run test
+      
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Ency API
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.SSH_HOST}}
+          key: ${{secrets.SSH_KEY}}
+          username: ${{secrets.SSH_USERNAME}}
+
+          script: |
+            cd ~/ency/ency-backend
+            git pull origin develop
+            docker-compose up -d --build
+            

@@ -1,0 +1,34 @@
+{
+  "projects": [
+    {
+      "title": "Hello world",
+      "isPublic": false,
+      "userUid": "abc",
+      "description": "Mock description",
+      "tags": ["tag"]
+    },
+    {
+      "title": "Hello world",
+      "isPublic": true,
+      "userUid": "abc",
+      "description": "Mock description",
+      "tags": ["hello"]
+    }
+  ],
+  "users": [
+    {
+      "uid": "abc",
+      "coins": 0,
+      "description": "Mock description",
+      "email": "mock-email@gmail.com",
+      "name": "mock-user-abc"
+    },
+    {
+      "uid": "xyz",
+      "coins": 0,
+      "description": "Mock description",
+      "email": "mock-email-xyz@gmail.com",
+      "name": "mock-user-xyz"
+    }
+  ]
+}

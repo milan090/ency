@@ -1,0 +1,78 @@
+version: "3.9"
+
+services:
+  nest-api:
+    container_name: nest-api
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env.prod
+    depends_on:
+      - postgres
+    networks: 
+      - app-network
+
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    restart: unless-stopped
+    env_file:
+      - .env.prod
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data/
+    networks:
+      - app-network
+
+  webserver:
+    image: nginx:mainline-alpine
+    container_name: webserver
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - web-root:/var/www/html
+      - ./nginx-conf:/etc/nginx/conf.d
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - dhparam:/etc/ssl/certs
+    depends_on:
+      - nest-api
+    networks:
+      - app-network
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - web-root:/var/www/html
+    depends_on:
+      - webserver
+    command: certonly --webroot --webroot-path=/var/www/html --email milanmuhammed1@gmail.com --agree-tos --no-eff-email --force-renewal -d dev-api.ency.live  -d www.dev-api.ency.live
+
+volumes:
+  certbot-etc:
+  certbot-var:
+  web-root:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/ubuntu/ency/ency-backend/views/ # Make empty dir called views
+      o: bind
+  dhparam:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/ubuntu/ency/ency-backend/dhparam/
+      o: bind
+  postgres-data:
+
+networks:
+  app-network:
+    driver: bridge
