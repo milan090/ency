@@ -42,10 +42,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Setup and Run tests
+      - name: Use NodeJS
         uses: actions/setup-node@v1
         with:
           node-version: '15.x'
+      
+      - name: Setup and Run tests
         working-directory: ency-backend
         run: |
           yarn install --frozen-lockfile
