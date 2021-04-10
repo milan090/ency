@@ -54,7 +54,7 @@ jobs:
         run: |
           yarn install --frozen-lockfile
           yarn prisma migrate dev
-          yarn run test --detectOpenHandles
+          yarn run test --detectOpenHandles --verbose
       
 
   # deploy:
