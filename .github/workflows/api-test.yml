@@ -1,4 +1,4 @@
-name: CI CD
+name: Test API
 
 on:
   push:
@@ -46,7 +46,7 @@ jobs:
           node-version: '15.x'
 
       - name: Install dependencies
-        run: cd ency-backend & yarn --frozen-lockfile
+        run: cd ency-backend & yarn
 
       - name: Run migrations
         run: cd ency-backend && yarn prisma migrate dev
@@ -55,18 +55,18 @@ jobs:
         run: cd ency-backend && yarn run test
       
 
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy Ency API
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{secrets.SSH_HOST}}
-          key: ${{secrets.SSH_KEY}}
-          username: ${{secrets.SSH_USERNAME}}
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Deploy Ency API
+  #       uses: appleboy/ssh-action@master
+  #       with:
+  #         host: ${{secrets.SSH_HOST}}
+  #         key: ${{secrets.SSH_KEY}}
+  #         username: ${{secrets.SSH_USERNAME}}
 
-          script: |
-            cd ~/ency/ency-backend
-            git pull origin develop
-            docker-compose up -d --build
+  #         script: |
+  #           cd ~/ency/ency-backend
+  #           git pull origin develop
+  #           docker-compose up -d --build
             
