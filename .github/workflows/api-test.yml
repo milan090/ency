@@ -48,12 +48,13 @@ jobs:
         working-directory: ency-backend
         env:
           FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_PRIVATE_KEY }}
           FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
-          FIREBASE_PRIVATE_KEY: "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDgPUTEte6HFh+M\nXWvsWjHKslqrIb6UQZinvg6rTychqQ0QnHHvZuEmUKsiQHnupKstceYXIfoD5Rzj\n9TnWgWc9IbIscDPEm+/tG1diNclxaR4JbFOtyQQEyoeqIN6comYxnHaOPrEg7Ugs\nKZ3siIhEcaBqG71igQwbYI6qy+VPcPLwbBCFOF+pUNPkIEE4B/Lvu1ntDqIOB1zL\nXx0GNnIFP8A0B+gTfsD71ljg/iUEey5Rfz3jUmZOQykhycEgdisZnZi1HwnkDpDN\nJKTsudxorV9rVuDsguUSK/qZ3H68V73iNqPSEFXjcroHPYlR7K77y2T59ti6TdAT\nEYdiA5trAgMBAAECggEABt2JWfZx/5vLSnpfwARA6wJL6VpmodZiTJxyiYcqXQr2\ndfA8QsalFQ26N5m+wfIztXf7wfCN3YmpuUb8Rtd+aC48bMTgqN/XWCySn9SivsCn\npUU2SKdTYqwqvCg2eJg2RcWTEabUuHvbTlLV3XSOq33JGgaQZVArJTlvFMaaVjTB\n54oFvVamVLnIZfVRGKmj5fhTmoTTRiKWLRbhjkvjmuIEhNqK6rCo/as7A0VZEI3g\n4FdU+47MZBuEwVDVAlYlZgDz16bkGEejd0xYNYCgweCT3UbtZ5d3CuI5j/wCq1dB\n2Z2JqXUw1D9Ew+vnYuZPFjGmBhbhz4l7qB2ifl5YHQKBgQDwLprwVJIGvja93cYi\nu/nU7oSc1hcqkxRQ25dIZ4WhD4Ic58uveS3PMoXBV/D2FliCmAVmk+x4NmJAA8Kl\nylslcW+Luwv+ttZb9o4AI2rg+IIqtKJcK+nJLhe+jLBicQs8Pd0rwWlpsUnPywp0\njnEMuX0P/DwlRWRNnkSp/X5vNQKBgQDvAd/DMrSNLjKAuB1hqTCvX8onc6qfe7uS\nMqDFWc03cKdSriYtmcvJPG6tzH+FUWdyusn8tOuVDPtGRpa595vac0BAUQ7NRqSf\nYUxCsVfhSFHFCADrQ8W/J9tGS520pmd3YztCetJkhE/0WptoGham2gnrIPRyNQSp\nGh0aH3QUHwKBgE+rdfOgaevYrrneVbnx1pZeJBkOHxMdRJDptk3rIPVi+oryDKuB\nK8PeA2Y18JUApo1zNd9n0/mwOHj5hliOPhu2fATCn+D27zYEG+hJ10sWw768ulqO\nqnb0ViX77wpIayypbLL17iyEBXLq6+Xr1e4dnTFvPtgyI2pnxGkK0CS9AoGBAOx2\nNzLBDL6NESwme/MuV9t6ct+bYRiOayIWctctpIoQK4ryfxUojuTWpE3Q/+0ff7CT\nutkJCfaaNFPv7JmqrwhudAft6i4PkTmaIr/tAxwA192OsJISqCcaQKgIkcuzwrPs\neimoqFUITq5boltZTEXhfGSjYxVG/QhsrJQ2wDpTAoGAC/0khNTs+G0K4Mt5/T3B\n21XfLU5Slbm/Gg3VEh80JKVBrUIA8cq/YpOE/por/e1spQFcPIjrmFzICJ5lnvUr\nUmle6vaumvQ4LPz/SgVyTkUqS9sgUB99vaRuqcS5DE3xTuOW6tu42/dbJHGpYNkR\noQrjjMK+mZu7dw8S0Rho5uM=\n-----END PRIVATE KEY-----\n"
+
         run: |
           yarn install --frozen-lockfile
           yarn prisma migrate dev
-          yarn run test
+          yarn run test --detectOpenHandles
       
 
   # deploy:

@@ -26,7 +26,7 @@ describe("AuthController", () => {
   afterAll(async () => {
     await service.deleteUser(users[0].uid, true);
 
-    // await module.close();
+    await module.close();
   });
 
   describe("signUp", () => {
