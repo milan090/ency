@@ -2,8 +2,8 @@ name: Test API
 
 on:
   push:
-    paths:
-      - 'ency-backend/**'
+    # paths:
+    #   - 'ency-backend/**'
     branches:
       - 'develop'
       - 'main'
@@ -37,7 +37,6 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
