@@ -31,8 +31,23 @@ export class AuthController {
 
   @Get()
   async getUser(@FirebaseUser() user: IFirebaseUser): Promise<User> {
-    const userData = await this.authService.getUser(user.uid);
-    if (!userData) throw new NotFoundException("User with given id not found");
+    let userData = await this.authService.getUser(user.uid);
+    if (!userData) {
+      // If user exists in firebase but not in DB
+      // Create a new user in DB (all stats are reset)
+      const { email, displayName } = await this.authService.getFirebaseUser(
+        user.uid,
+      );
+      if (!email) {
+        throw new Error("User doesnt have an email");
+      }
+
+      userData = await this.authService.createUser(
+        user.uid,
+        displayName || email,
+        email,
+      );
+    }
     return userData;
   }
 }

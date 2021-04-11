@@ -1,0 +1,14 @@
+{
+  "folders": [
+    {
+      "path": "ency-backend"
+    },
+    {
+      "path": "client"
+    }
+  ],
+  "settings": {
+    "jest.disabledWorkspaceFolders": ["client"],
+		"jest.autoRun": { "watch": true }
+  }
+}

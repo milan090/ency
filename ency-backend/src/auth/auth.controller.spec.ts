@@ -5,12 +5,15 @@ import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
 import { IFirebaseUser } from "./interfaces/user.interface";
 import { users } from "../../prisma/mock-data.json";
-import { NotFoundException } from "@nestjs/common";
 
 describe("AuthController", () => {
   let controller: AuthController;
   let service: AuthService;
   let module: TestingModule;
+  const notRegisteredInDbUser = {
+    email: "not-registered-in-db@gmail.com",
+    uid: "",
+  };
 
   beforeAll(async () => {
     module = await Test.createTestingModule({
@@ -24,8 +27,8 @@ describe("AuthController", () => {
   });
 
   afterAll(async () => {
-    await service.deleteUser(users[0].uid, true);
-
+    await service.deleteUser(users[0].uid);
+    await service.deleteUser(notRegisteredInDbUser.uid);
     await module.close();
   });
 
@@ -72,9 +75,20 @@ describe("AuthController", () => {
         uid: "some-users-uid-not-registered-in-database",
       };
 
-      await expect(controller.getUser(firebaseUser)).rejects.toEqual(
-        new NotFoundException("User with given id not found"),
+      await expect(controller.getUser(firebaseUser)).rejects.toThrow();
+    });
+
+    it("Should return valid response for firebase authenticated user not registered in db", async () => {
+      const newUser = await service.signUpEmailPass(
+        notRegisteredInDbUser.email,
+        "test1234",
       );
+      notRegisteredInDbUser.uid = newUser.uid;
+      const firebaseUser: IFirebaseUser = {
+        uid: newUser.uid,
+      };
+      const user = await controller.getUser(firebaseUser);
+      expect(user.email).toBe(notRegisteredInDbUser.email);
     });
   });
 });
