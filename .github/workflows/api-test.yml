@@ -2,8 +2,8 @@ name: Test API
 
 on:
   push:
-    # paths:
-    #   - 'ency-backend/**'
+    paths:
+      - 'ency-backend/**'
     branches:
       - 'develop'
       - 'main'

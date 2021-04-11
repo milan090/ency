@@ -41,7 +41,7 @@ export class AuthController {
       if (!email) {
         throw new Error("User doesnt have an email");
       }
-
+      console.log("Create user");
       userData = await this.authService.createUser(
         user.uid,
         displayName || email,
