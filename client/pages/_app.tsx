@@ -1,5 +1,6 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 import "../styles/tailwind.css";
 import "../styles/globals.css";
@@ -11,6 +12,8 @@ import { useAuth } from "hooks/auth.hook";
 import { axios } from "config/axios";
 import { UserEntity } from "types/auth.types";
 import shallow from "zustand/shallow";
+
+const queryClient = new QueryClient();
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const { setIsLoading, setUser, setToken } = useAuth(
@@ -24,7 +27,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   );
 
   useEffect(() => {
-    auth.onAuthStateChanged(async (user) => {
+    return auth.onAuthStateChanged(async (user) => {
       if (user) {
         try {
           const token = await user.getIdToken();
@@ -46,7 +49,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         setIsLoading(false);
       }
     });
-  }, []);
+  }, [setToken, setUser, setIsLoading]);
 
   return (
     <>
@@ -65,7 +68,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <meta property="og:image" content="/images/logo.png" />
         <meta property="og:url" content={`https://${domain}`} />
       </Head>
-      <Component {...pageProps} />
+      <QueryClientProvider client={queryClient}>
+        <Component {...pageProps} />
+      </QueryClientProvider>
     </>
   );
 }

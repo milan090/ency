@@ -1,21 +1,23 @@
 import React from "react";
 import { Search } from "react-feather";
 import { ProjectPreview, ProjectTag } from "types/project.types";
+import { useDashboardHomeTabs } from "hooks/dashboard-home.hook";
 
 import styles from "./dashboard-home.styles.module.css";
 
 import Image from "next/image";
+import { TabName } from "types/dahboard-home.types";
 
 export const DashboardHome: React.FC = () => {
+  const { activeTab } = useDashboardHomeTabs();
+
   return (
     <main className="bg-gray-100 w-full min-h-screen px-16 pt-12">
-      <DashboardNavbar activeTab="all" />
+      <DashboardNavbar activeTab={activeTab} />
       <ProjectsPreview />
     </main>
   );
 };
-
-type TabName = "recent" | "all" | "archived" | "bin";
 
 type DashboardNavbarProps = {
   activeTab: TabName;
@@ -32,8 +34,8 @@ const navLinks: INavlink[] = [
     tabName: "recent",
   },
   {
-    tabName: "all",
     value: "All Projects",
+    tabName: "all",
   },
   {
     value: "Archived",
@@ -45,11 +47,11 @@ const navLinks: INavlink[] = [
   },
 ];
 
-const DashboardNavbar: React.FC<DashboardNavbarProps> = ({ activeTab = "all" }) => {
+const DashboardNavbar: React.FC<DashboardNavbarProps> = () => {
   return (
     <nav className="rounded-full bg-white w-full pl-12 flex items-center overflow-hidden">
       {navLinks.map(({ tabName, value }, i) => (
-        <Navlink isActive={tabName === activeTab} value={value} key={i} />
+        <Navlink tabName={tabName} value={value} key={i} />
       ))}
       <span className="ml-auto">
         <SearchInput />
@@ -59,14 +61,16 @@ const DashboardNavbar: React.FC<DashboardNavbarProps> = ({ activeTab = "all" }) 
 };
 
 type NavlinkProps = {
-  isActive: boolean;
-  // tabName: TabName;
+  tabName: TabName;
   value: string;
 };
 
-const Navlink: React.FC<NavlinkProps> = ({ isActive, value }) => {
+const Navlink: React.FC<NavlinkProps> = ({ value, tabName }) => {
+  const { activeTab, setTabName } = useDashboardHomeTabs();
+  const isActive = activeTab === tabName;
   return (
     <button
+      onClick={() => setTabName(tabName)}
       className={`py-3.5 mr-10 text-gray-500 border-b-3 border-transparent ${
         isActive && "text-black border-black"
       }`}

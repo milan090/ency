@@ -32,7 +32,7 @@ export const FormInput: React.FC<Props> = ({
         ref={fref}
         className="w-full border-2 border-gray-300 bg-white px-4 py-2 rounded-base outline-none"
       />
-      <p className="text-xs text-red-400 ml-0.5 mb-4">{error}</p>
+      <p className="text-sm text-red-600 ml-0.5 mb-4">{error}</p>
     </>
   );
 };
@@ -86,7 +86,7 @@ export const FormPasswordInput: React.FC<Props> = ({
           )}
         </button>
       </div>
-      <p className="text-xs text-red-400 ml-0.5 mb-4">{error}</p>
+      <p className="text-sm text-red-600 ml-0.5 mb-4">{error}</p>
     </>
   );
 };

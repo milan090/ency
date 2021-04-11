@@ -14,7 +14,7 @@ type FormInputs = {
 };
 
 export const LoginLayout: React.FC = () => {
-  const { register, handleSubmit, errors } = useForm<FormInputs>();
+  const { register, handleSubmit, errors, setError } = useForm<FormInputs>();
   const [isLoading, setIsLoading] = useState(false);
   const authLoading = useAuth((state) => state.isLoading);
   const user = useAuth((state) => state.user);
@@ -26,7 +26,15 @@ export const LoginLayout: React.FC = () => {
     try {
       await loginWithEmailAndPassword(email, password);
     } catch (error) {
-      console.log(error);
+      console.log(error.code);
+      switch (error.code) {
+        case "auth/user-not-found":
+        case "auth/wrong-password":
+          setError("password", { message: "User with given email and password does not exist" });
+          break;
+        default:
+          break;
+      }
     } finally {
       setIsLoading(false);
     }
@@ -36,7 +44,7 @@ export const LoginLayout: React.FC = () => {
     if (!authLoading && user.uid) {
       router.push("/dashboard");
     }
-  }, [user, authLoading]);
+  }, [user, authLoading, router]);
 
   return (
     <div className="flex justify-center mt-10">
@@ -77,10 +85,6 @@ export const LoginLayout: React.FC = () => {
                 required: {
                   value: true,
                   message: "This field is required",
-                },
-                minLength: {
-                  value: 6,
-                  message: "Password should be atleast 6 characters long",
                 },
               })}
             />
