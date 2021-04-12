@@ -26,4 +26,8 @@ export class CreateProjectDto {
   @IsBoolean()
   @IsOptional()
   isPublic?: boolean;
+
+  @IsString()
+  @IsOptional()
+  color!: string;
 }

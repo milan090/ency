@@ -3,6 +3,7 @@
 exports[`ProjectController Get() findAll Should return array of projects for valid user: mock-projects-data 1`] = `
 Array [
   Object {
+    "color": "#ff7777",
     "description": "Mock description",
     "iconSrc": null,
     "id": 1,
@@ -15,6 +16,7 @@ Array [
     "userUid": "abc",
   },
   Object {
+    "color": "#ff7777",
     "description": "Mock description",
     "iconSrc": null,
     "id": 2,
@@ -27,6 +29,7 @@ Array [
     "userUid": "abc",
   },
   Object {
+    "color": "#ff7777",
     "description": "Mock description",
     "iconSrc": null,
     "id": 3,
@@ -43,6 +46,7 @@ Array [
 
 exports[`ProjectController Get(:id) findOne Should return valid Project data with not user authenticated: mock-project-isPublic-data 1`] = `
 Object {
+  "color": "#ff7777",
   "description": "Mock description",
   "iconSrc": null,
   "id": 5,
@@ -58,6 +62,7 @@ Object {
 
 exports[`ProjectController Get(:id) findOne Should return valid Project data: mock-project-0-data 1`] = `
 Object {
+  "color": "#ff7777",
   "description": "Mock description",
   "iconSrc": null,
   "id": 4,
@@ -73,6 +78,7 @@ Object {
 
 exports[`ProjectController Put(:id) update Should return valid response on valid user and data: mock-project-updated 1`] = `
 Object {
+  "color": "#ffffff",
   "description": "Some new description",
   "iconSrc": null,
   "id": 7,

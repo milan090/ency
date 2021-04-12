@@ -152,6 +152,7 @@ describe("ProjectController", () => {
         description: "Some new description",
         tags: ["updated"],
         isPublic: false,
+        color: "#ffffff",
       });
       expect(projectRes).toMatchSnapshot("mock-project-updated");
     });

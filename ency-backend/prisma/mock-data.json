@@ -5,14 +5,16 @@
       "isPublic": false,
       "userUid": "abc",
       "description": "Mock description",
-      "tags": ["tag"]
+      "tags": ["tag"],
+      "color": "#ff7777"
     },
     {
       "title": "Hello world",
       "isPublic": true,
       "userUid": "abc",
       "description": "Mock description",
-      "tags": ["hello"]
+      "tags": ["hello"],
+      "color": "#ff7777"
     }
   ],
   "users": [

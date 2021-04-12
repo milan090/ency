@@ -1,9 +1,9 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
-import Request from 'supertest';
-import { ProjectModule } from './project.module';
+import { Test, TestingModule } from "@nestjs/testing";
+import { INestApplication } from "@nestjs/common";
+import Request from "supertest";
+import { ProjectModule } from "./project.module";
 
-describe('ProjectController (e2e)', () => {
+describe("ProjectController (e2e)", () => {
   let app: INestApplication;
 
   beforeEach(async () => {
@@ -15,10 +15,12 @@ describe('ProjectController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return Request(app.getHttpServer())
-    // TODO
-      .get('/')
-      .expect(404)
+  it("/ (GET)", () => {
+    return (
+      Request(app.getHttpServer())
+        // TODO
+        .get("/")
+        .expect(404)
+    );
   });
 });
