@@ -4,8 +4,7 @@ import React from "react";
 export const GoogleSigninButton: React.FC = () => {
   const handleClick = async (): Promise<void> => {
     try {
-      const res = await auth.signInWithPopup(googleAuthProvider);
-      console.log(res);
+      await auth.signInWithPopup(googleAuthProvider);
     } catch (error) {
       console.log(error);
     }

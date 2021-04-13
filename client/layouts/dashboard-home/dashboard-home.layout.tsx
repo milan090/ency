@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Search } from "react-feather";
-import { ProjectPreview, ProjectTag } from "types/project.types";
+import { ProjectPreview } from "types/project.types";
 import { useDashboardHomeTabs } from "hooks/dashboard-home.hook";
 
 import styles from "./dashboard-home.styles.module.css";
 
 import Image from "next/image";
 import { TabName } from "types/dahboard-home.types";
+import { axios } from "config/axios";
+import { useQuery } from "react-query";
+import { useAuth } from "hooks/auth.hook";
+import { hexToSixDigit, stringToBrightHexColor } from "utils/string-to-hex-color";
 
 export const DashboardHome: React.FC = () => {
   const { activeTab } = useDashboardHomeTabs();
@@ -90,77 +94,29 @@ const SearchInput: React.FC = () => {
 };
 
 // Projects View
-const tmpProjects: ProjectCardProps[] = [
-  {
-    color: "FDF1C7",
-    fileCount: 3,
-    iconSrc: "/images/tmp/noto_rocket.png",
-    tags: [
-      {
-        value: "school",
-        color: "FFE3E3",
-      },
-      {
-        value: "Physics",
-        color: "FDF1C7",
-      },
-    ],
-    title: "Rocket Science School Assignment",
-  },
-  {
-    color: "FDF1C7",
-    fileCount: 3,
-    iconSrc: "/images/tmp/noto_rocket.png",
-    tags: [
-      {
-        value: "school",
-        color: "FFE3E3",
-      },
-      {
-        value: "Physics",
-        color: "FDF1C7",
-      },
-    ],
-    title: "Rocket Science School Assignment",
-  },
-  {
-    color: "FDF1C7",
-    fileCount: 3,
-    iconSrc: "/images/tmp/noto_rocket.png",
-    tags: [
-      {
-        value: "school",
-        color: "FFE3E3",
-      },
-      {
-        value: "Physics",
-        color: "FDF1C7",
-      },
-    ],
-    title: "Rocket Science School Assignment",
-  },
-  {
-    color: "FDF1C7",
-    fileCount: 3,
-    iconSrc: "/images/tmp/noto_rocket.png",
-    tags: [
-      {
-        value: "school",
-        color: "FFE3E3",
-      },
-      {
-        value: "Physics",
-        color: "FDF1C7",
-      },
-    ],
-    title: "Rocket Science School Assignment",
-  },
-];
-
 const ProjectsPreview: React.FC = () => {
+  const { activeTab } = useDashboardHomeTabs();
+  const getProjects = async () => {
+    const res = await axios.get("/projects");
+    return res.data;
+  };
+  const { user } = useAuth();
+
+  const { data: projects, refetch } = useQuery<ProjectCardProps[]>(
+    ["projects", activeTab],
+    getProjects,
+    {
+      enabled: false,
+    }
+  );
+
+  useEffect(() => {
+    if (user.uid) refetch();
+  }, [user, refetch]);
+
   return (
     <div className="transition-all duration-700 grid lg:grid-cols-2 xl:grid-cols-3  grid-flow-row mt-10 gap-x-8 gap-y-5">
-      {tmpProjects.map((props, i) => (
+      {projects?.map((props, i) => (
         <ProjectCard {...props} key={i} />
       ))}
     </div>
@@ -169,13 +125,19 @@ const ProjectsPreview: React.FC = () => {
 
 type ProjectCardProps = ProjectPreview;
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ title, iconSrc, fileCount, tags, color }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({
+  title,
+  iconSrc = "/images/tmp/noto_rocket.png",
+  pageCount,
+  tags,
+  color,
+}) => {
   return (
     <div className="bg-white rounded-base shadow-sm">
       {/* Top Bar */}
       <div
         style={{
-          background: `linear-gradient(to bottom, #${color}73 50%, transparent 50%`,
+          background: `linear-gradient(to bottom, #${hexToSixDigit(color)}99 50%, transparent 50%`,
         }}
         className="px-4 pt-4"
       >
@@ -183,7 +145,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, iconSrc, fileCount, ta
           className="rounded-full w-20 h-20 flex items-center justify-center border-4 border-white"
           style={{ background: "#" + color }}
         >
-          <Image src={iconSrc} alt={title} width={45} height={45} />
+          <Image
+            src={iconSrc || "/images/tmp/noto_rocket.png"}
+            alt={title}
+            width={45}
+            height={45}
+          />
         </div>
       </div>
 
@@ -192,24 +159,27 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, iconSrc, fileCount, ta
         <h4 className="font-bold text-xl">{title}</h4>
         {/* Tags */}
         <div className="flex flex-grow mt-6">
-          {tags.map((props, i) => (
-            <ProjectPreviewTag {...props} key={i} />
+          {tags.map((tag, i) => (
+            <ProjectPreviewTag value={tag} key={i} />
           ))}
         </div>
 
         {/* Bottom */}
         <div className="mt-8 flex justify-between items-center">
           <div></div>
-          <p className="text-xs">{fileCount} files</p>
+          <p className="text-xs">{pageCount} files</p>
         </div>
       </div>
     </div>
   );
 };
 
-const ProjectPreviewTag: React.FC<ProjectTag> = ({ color, value }) => {
+const ProjectPreviewTag: React.FC<{ value: string }> = ({ value }) => {
   return (
-    <div className="px-4 py-1 mr-2 rounded-3xl text-sm" style={{ background: `#${color}` }}>
+    <div
+      className="px-4 py-1 mr-2 rounded-3xl text-sm"
+      style={{ background: `${stringToBrightHexColor(value)}` }}
+    >
       {value}
     </div>
   );
