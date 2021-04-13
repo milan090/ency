@@ -16,9 +16,9 @@ ENV API_PORT ${API_PORT}
 
 COPY package*.json ./
 COPY yarn.lock ./
-COPY prisma ./prisma/
-
 RUN yarn install --only=production
+
+COPY prisma ./prisma/
 RUN yarn prisma generate
 
 COPY . .
