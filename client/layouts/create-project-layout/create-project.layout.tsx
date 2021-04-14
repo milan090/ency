@@ -1,5 +1,4 @@
-import { ModalContainer } from "components/modal-container/modal-container.components";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { useMutation } from "react-query";
 import { axios } from "config/axios";
@@ -7,18 +6,13 @@ import { randomColor } from "utils/string-to-hex-color";
 
 type Props = {
   onClose: () => void;
+  handleStartWithency: () => void;
 };
 
-export const CreateProject: React.FC<Props> = ({ onClose }) => {
-  const [showStartWithEncyModal, setShowStartWithEncyModal] = useState(false);
-
+export const CreateProject: React.FC<Props> = ({ onClose, handleStartWithency }) => {
   const startFromScratch = useMutation(() =>
     axios.post("/projects", { title: "Untitled", color: randomColor() })
   );
-
-  const onStartWithEncyModalClose = useCallback(() => {
-    setShowStartWithEncyModal(true);
-  }, []);
 
   useEffect(() => {
     if (startFromScratch.isSuccess) {
@@ -44,7 +38,10 @@ export const CreateProject: React.FC<Props> = ({ onClose }) => {
             </p>
           </button>
           {/* Start with Ency Card */}
-          <div className="p-4 pb-6 shadow-md hover:shadow-lg transition-shadow duration-150 cursor-pointer">
+          <button
+            className="p-4 pb-6 shadow-md hover:shadow-lg transition-shadow duration-150 cursor-pointer"
+            onClick={handleStartWithency}
+          >
             <img src="/images/create-project/start-wtih-ency.svg" alt="" />
             <div className="flex items-center mt-4 mb-2">
               <h4 className="pr-1.5 font-raleway font-semibold">Start with</h4>
@@ -60,7 +57,7 @@ export const CreateProject: React.FC<Props> = ({ onClose }) => {
               Feeling lazy? Ency will help you give a headstart by using her powerful Summariser
               Tool.
             </p>
-          </div>
+          </button>
         </div>
         <div className="w-full flex">
           <button className="font-raleway mx-auto border-gray-400 border rounded-base w-full py-2 hover:border-gray-700 transition-colors duration-150 text-center ">
@@ -69,24 +66,6 @@ export const CreateProject: React.FC<Props> = ({ onClose }) => {
           </button>
         </div>
       </div>
-      <ModalContainer
-        show={showStartWithEncyModal}
-        onClose={onStartWithEncyModalClose}
-        title="Start with Ency"
-      >
-        <StartWithEncy />
-      </ModalContainer>
     </>
-  );
-};
-
-const StartWithEncy: React.FC = () => {
-  return (
-    <div>
-      <p>
-        Have an article you found out for your project, but lazy to summarize it? Well Ency is here
-        to help you
-      </p>
-    </div>
   );
 };

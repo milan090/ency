@@ -133,7 +133,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   color,
 }) => {
   return (
-    <div className="bg-white rounded-base shadow-sm">
+    <div className="bg-white rounded-base shadow-sm flex flex-col">
       {/* Top Bar */}
       <div
         style={{
@@ -141,7 +141,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             color.slice(1)
           )}99 50%, transparent 50%`,
         }}
-        className="px-4 pt-4"
+        className="px-4 pt-4 flex-initial"
       >
         <div
           className="rounded-full w-20 h-20 flex items-center justify-center border-4 border-white"
@@ -157,17 +157,17 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       </div>
 
       {/* Actual Body */}
-      <div className="px-8 pt-4 pb-6">
+      <div className="px-8 pt-4 pb-6 flex flex-col flex-auto">
         <h4 className="font-bold text-xl">{title}</h4>
         {/* Tags */}
-        <div className="flex flex-grow mt-6">
+        <div className="flex flex-grow mt-6 mb-6">
           {tags.map((tag, i) => (
             <ProjectPreviewTag value={tag} key={i} />
           ))}
         </div>
 
         {/* Bottom */}
-        <div className="mt-8 flex justify-between items-center">
+        <div className="mt-auto flex justify-between items-center">
           <div></div>
           <p className="text-xs">{pageCount} files</p>
         </div>

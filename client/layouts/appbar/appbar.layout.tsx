@@ -6,6 +6,7 @@ import { useRouter } from "next/dist/client/router";
 import { logout } from "utils/auth.utils";
 import { ModalContainer } from "components/modal-container/modal-container.components";
 import { CreateProject } from "layouts/create-project-layout/create-project.layout";
+import { StartWithEncy } from "layouts/create-project-layout/start-with-ency.layout";
 
 type AppbarLinkProps = {
   href: string;
@@ -49,14 +50,26 @@ const appbarLinks: AppbarLinkProps[] = [
 
 export const Appbar: React.FC = () => {
   const [showCreateProjectModal, setShowCreateProjectModal] = useState(false);
+  const [showStartWithEncyModal, setShowStartWithEncyModal] = useState(false);
+
+  const onStartWithEncyModalClose = useCallback(() => {
+    setShowStartWithEncyModal(false);
+  }, []);
 
   const onCreateProjectModalClose = useCallback(() => {
     setShowCreateProjectModal(false);
   }, []);
 
-  const handleClickCreateProjectBtn = () => {
+  const handleStartWithency = useCallback(() => {
+    // hide create project modal and show the other modal
+    setShowCreateProjectModal(false);
+
+    setShowStartWithEncyModal(true);
+  }, []);
+
+  const handleClickCreateProjectBtn = useCallback(() => {
     setShowCreateProjectModal(true);
-  };
+  }, []);
 
   const handleLogout = useCallback(async (): Promise<void> => {
     try {
@@ -90,7 +103,17 @@ export const Appbar: React.FC = () => {
           show={showCreateProjectModal}
           onClose={onCreateProjectModalClose}
         >
-          <CreateProject onClose={onCreateProjectModalClose} />
+          <CreateProject
+            onClose={onCreateProjectModalClose}
+            handleStartWithency={handleStartWithency}
+          />
+        </ModalContainer>
+        <ModalContainer
+          show={showStartWithEncyModal}
+          onClose={onStartWithEncyModalClose}
+          title="Start with Ency"
+        >
+          <StartWithEncy />
         </ModalContainer>
       </div>
 
