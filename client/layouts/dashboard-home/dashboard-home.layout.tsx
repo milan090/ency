@@ -137,13 +137,15 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       {/* Top Bar */}
       <div
         style={{
-          background: `linear-gradient(to bottom, #${hexToSixDigit(color)}99 50%, transparent 50%`,
+          background: `linear-gradient(to bottom, #${hexToSixDigit(
+            color.slice(1)
+          )}99 50%, transparent 50%`,
         }}
         className="px-4 pt-4"
       >
         <div
           className="rounded-full w-20 h-20 flex items-center justify-center border-4 border-white"
-          style={{ background: "#" + color }}
+          style={{ background: color }}
         >
           <Image
             src={iconSrc || "/images/tmp/noto_rocket.png"}

@@ -12,7 +12,11 @@ const hashCode = (str: string): number => {
 //   return "00000".substring(0, 6 - c.length) + c;
 // }
 
-const colors = ["#F4D6FF", "#D6DDFF", "#D4EDED", "#D5F6BF", "#FDF1C7", "#FFE3E3"];
+export const colors = ["#F4D6FF", "#D6DDFF", "#D4EDED", "#D5F6BF", "#FDF1C7", "#FFE3E3"];
+
+export const randomColor = (): string => {
+  return colors[Math.floor(Math.random() * colors.length)];
+};
 
 export const stringToBrightHexColor = (str: string): string => {
   const num = Math.abs(hashCode(str)) % colors.length;

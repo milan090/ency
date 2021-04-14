@@ -5,6 +5,7 @@ import { DollarSign, Globe, Home, IconProps, LogOut, Plus, Settings, User } from
 import { useRouter } from "next/dist/client/router";
 import { logout } from "utils/auth.utils";
 import { ModalContainer } from "components/modal-container/modal-container.components";
+import { CreateProject } from "layouts/create-project-layout/create-project.layout";
 
 type AppbarLinkProps = {
   href: string;
@@ -89,7 +90,7 @@ export const Appbar: React.FC = () => {
           show={showCreateProjectModal}
           onClose={onCreateProjectModalClose}
         >
-          You are making a project
+          <CreateProject onClose={onCreateProjectModalClose} />
         </ModalContainer>
       </div>
 

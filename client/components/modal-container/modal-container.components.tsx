@@ -27,12 +27,12 @@ export const ModalContainer: React.FC<Props> = ({ show, onClose, children, title
       show ? (
         <div className="top-0 left-0 absolute flex items-center justify-center w-full h-full bg-black bg-opacity-50">
           {/* Modal Body */}
-          <div className="bg-white flex flex-col w-7/12 rounded-lg">
+          <div className="bg-white flex flex-col min-w-min rounded-lg">
             <OutsideClickHandler onOutsideClick={onClose}>
               <div className="px-14 pt-8  pb-8">
                 {/* Modal Header */}
-                <div className="flex justify-center relative mb-6">
-                  <h2 className="font-bold text-lg text-center">{title}</h2>
+                <div className="flex justify-center relative mb-4">
+                  <h2 className="font-bold text-lg text-center px-16">{title}</h2>
                   <button onClick={handleCloseClick} className="absolute right-0">
                     <X />
                   </button>

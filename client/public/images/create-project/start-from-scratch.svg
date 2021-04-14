@@ -1,0 +1,24 @@
+<svg width="280" height="255" viewBox="0 0 280 255" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0)">
+<rect x="0.956482" y="0.569336" width="279" height="254" rx="8" fill="#6398FF"/>
+<path opacity="0.15" d="M79.1167 288.754L28.2234 89.9347L253.608 60.8386L296.019 160.248V284.509L79.1167 288.754Z" fill="#505050"/>
+<rect width="128.41" height="154.088" rx="8" transform="matrix(0.965918 0.258849 -0.258789 0.965934 131.127 24.6956)" fill="white"/>
+<rect width="81.3439" height="4.41129" rx="2.20564" transform="matrix(0.965918 0.258849 -0.258789 0.965934 148.687 50.0941)" fill="#777777"/>
+<rect width="81.3439" height="4.41128" rx="2.20564" transform="matrix(0.965896 0.258932 -0.258706 0.965956 128.914 123.921)" fill="#C9CBCC"/>
+<rect width="81.3439" height="4.41128" rx="2.20564" transform="matrix(0.965896 0.258932 -0.258706 0.965956 126.161 134.202)" fill="#C9CBCC"/>
+<rect width="81.3439" height="4.41129" rx="2.20564" transform="matrix(0.965895 0.258932 -0.258706 0.965956 123.407 144.483)" fill="#C9CBCC"/>
+<rect opacity="0.38" width="80.2083" height="48.6245" rx="4" transform="matrix(0.965896 0.258932 -0.258706 0.965956 145.329 62.6325)" fill="#C9CBCC"/>
+<path opacity="0.16" fill-rule="evenodd" clip-rule="evenodd" d="M224.303 173.021L217.363 198.934C216.22 203.202 211.834 205.735 207.566 204.591L98.9904 175.484C94.7228 174.34 92.1898 169.953 93.3329 165.685L124.514 49.2613L136.827 41.9138C140.621 39.6498 145.531 40.8908 147.793 44.6859L224.303 173.021Z" fill="#505050"/>
+<rect width="128.412" height="161.871" rx="8" transform="matrix(0.946953 -0.321372 0.321102 0.947045 24.1345 78.1861)" fill="white"/>
+<rect width="81.3453" height="4.63411" rx="2.31706" transform="matrix(0.946953 -0.321372 0.321102 0.947045 53.161 90.5062)" fill="#777777"/>
+<rect width="81.3453" height="4.63411" rx="2.31706" transform="matrix(0.946953 -0.321372 0.321102 0.947045 78.9416 166.544)" fill="#C9CBCC"/>
+<rect width="81.3453" height="4.63411" rx="2.31706" transform="matrix(0.946953 -0.321372 0.321102 0.947045 82.532 177.133)" fill="#C9CBCC"/>
+<rect width="81.3453" height="4.63411" rx="2.31705" transform="matrix(0.946953 -0.321372 0.321102 0.947045 86.1223 187.722)" fill="#C9CBCC"/>
+<rect opacity="0.38" width="80.2097" height="51.0807" rx="4" transform="matrix(0.946953 -0.321372 0.321102 0.947045 57.5392 103.42)" fill="#C9CBCC"/>
+</g>
+<defs>
+<clipPath id="clip0">
+<rect x="0.956482" y="0.569336" width="279" height="254" rx="8" fill="white"/>
+</clipPath>
+</defs>
+</svg>
