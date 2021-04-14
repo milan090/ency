@@ -28,6 +28,6 @@ export class CreateProjectDto {
   isPublic?: boolean;
 
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   color!: string;
 }
