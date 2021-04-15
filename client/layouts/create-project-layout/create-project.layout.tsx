@@ -22,8 +22,8 @@ export const CreateProject: React.FC<Props> = ({ onClose, handleStartWithency })
 
   return (
     <>
-      <div className="max-w-xl w-max">
-        <div className="grid grid-cols-2 gap-x-6 mb-6">
+      <div className="max-w-xl">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-6 mb-6">
           {/* Start from Scratch Card */}
           <button
             className={`p-4 pb-6 shadow-md hover:shadow-lg cursor-pointer transition-shadow duration-150 ${
@@ -31,7 +31,12 @@ export const CreateProject: React.FC<Props> = ({ onClose, handleStartWithency })
             }`}
             onClick={() => startFromScratch.mutate()}
           >
-            <img src="/images/create-project/start-from-scratch.svg" alt="scratch illustration" />
+            <Image
+              src="/images/create-project/start-from-scratch.svg"
+              alt="scratch illustration"
+              height="222"
+              width="244"
+            />
             <h4 className="font-raleway font-semibold mt-4 mb-2">Start from Scratch</h4>
             <p className="font-light text-sm">
               Start with a clean workspace and work your way towards finishing your project.
@@ -42,7 +47,12 @@ export const CreateProject: React.FC<Props> = ({ onClose, handleStartWithency })
             className="p-4 pb-6 shadow-md hover:shadow-lg transition-shadow duration-150 cursor-pointer"
             onClick={handleStartWithency}
           >
-            <img src="/images/create-project/start-wtih-ency.svg" alt="" />
+            <Image
+              src="/images/create-project/start-wtih-ency.svg"
+              alt="start with ency illustration"
+              width="244"
+              height="222"
+            />
             <div className="flex items-center mt-4 mb-2">
               <h4 className="pr-1.5 font-raleway font-semibold">Start with</h4>
               <Image
