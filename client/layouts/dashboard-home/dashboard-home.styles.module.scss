@@ -1,0 +1,17 @@
+.searchInput {
+  box-shadow: -2px 0px 16px rgba(0, 0, 0, 0.08);
+  border-radius: 2rem;
+
+  input {
+    width: 5rem;
+    transition: width 500ms ease-out;
+    /* transition: width 300ms ease-in; */
+
+    /* If focused or placeholder not being shown (has a value) */
+    &:focus,
+    .searchInput input:not(:placeholder-shown) {
+      width: 15rem;
+      transition: width 300ms ease-in-out;
+    }
+  }
+}

@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
-import { Search } from "react-feather";
+import React, { useEffect, useState } from "react";
+import { ChevronDown, Search } from "react-feather";
 import { ProjectPreview } from "types/project.types";
 import { useDashboardHomeTabs } from "hooks/dashboard-home.hook";
+import OutsideClickHandler from "react-outside-click-handler";
 
-import styles from "./dashboard-home.styles.module.css";
+import styles from "./dashboard-home.styles.module.scss";
 
 import Image from "next/image";
 import { TabName } from "types/dahboard-home.types";
@@ -131,6 +132,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   pageCount,
   tags,
   color,
+  id,
 }) => {
   return (
     <div className="bg-white rounded-base shadow-sm flex flex-col">
@@ -141,8 +143,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             color.slice(1)
           )}99 50%, transparent 50%`,
         }}
-        className="px-4 pt-4 flex-initial"
+        className="px-4 pt-4 flex-initial flex justify-between items-start"
       >
+        {/* Project Icon */}
         <div
           className="rounded-full w-20 h-20 flex items-center justify-center border-4 border-white"
           style={{ background: color }}
@@ -154,6 +157,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             height={45}
           />
         </div>
+        <ProjecCardOptionsButton projectId={id} />
       </div>
 
       {/* Actual Body */}
@@ -176,10 +180,56 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   );
 };
 
+const ProjecCardOptionsButton: React.FC<{ projectId: number }> = () => {
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const openDropdown = (): void => {
+    setShowDropdown(true);
+  };
+
+  const closeDropdown = (): void => {
+    setShowDropdown(false);
+  };
+
+  return (
+    <div className="relative">
+      <button onClick={openDropdown}>
+        <ChevronDown size="20" color="#333333" />
+      </button>
+      {/* Dropdown */}
+      {showDropdown && (
+        <OutsideClickHandler onOutsideClick={closeDropdown}>
+          <ul className="bg-white rounded-base shadow-xl absolute -top-1 -left-4 min-w-max z-10 pl-4 pr-6 pt-3 pb-4 flex flex-col gap-y-3">
+            <ProjectCardOptionItem>Open Project</ProjectCardOptionItem>
+            <ProjectCardOptionItem>Edit Details</ProjectCardOptionItem>
+            <ProjectCardOptionItem>Archive</ProjectCardOptionItem>
+            <ProjectCardOptionItem>
+              <span className="text-red-600">Delete</span>
+            </ProjectCardOptionItem>
+          </ul>
+        </OutsideClickHandler>
+      )}
+    </div>
+  );
+};
+
+type ProjectCardOptionItemProps = {
+  children: React.ReactNode;
+  onClick?: () => void;
+};
+
+const ProjectCardOptionItem: React.FC<ProjectCardOptionItemProps> = ({ children, onClick }) => {
+  return (
+    <li className="cursor-pointer opacity-80 hover:opacity-100 transition-opacity duration-200">
+      <button onClick={onClick}>{children}</button>
+    </li>
+  );
+};
+
 const ProjectPreviewTag: React.FC<{ value: string }> = ({ value }) => {
   return (
     <div
-      className="px-4 py-1 mr-2 rounded-3xl text-sm"
+      className="px-4 py-1 mr-2 h-7 rounded-3xl text-sm"
       style={{ background: `${stringToBrightHexColor(value)}` }}
     >
       {value}
