@@ -12,6 +12,7 @@ import { axios } from "config/axios";
 import { useQuery } from "react-query";
 import { useAuth } from "hooks/auth.hook";
 import { hexToSixDigit, stringToBrightHexColor } from "utils/string-to-hex-color";
+import { Dropdown, DropdownItem } from "components/dropdown/dropdown.component";
 
 export const DashboardHome: React.FC = () => {
   const { activeTab } = useDashboardHomeTabs();
@@ -199,30 +200,17 @@ const ProjecCardOptionsButton: React.FC<{ projectId: number }> = () => {
       {/* Dropdown */}
       {showDropdown && (
         <OutsideClickHandler onOutsideClick={closeDropdown}>
-          <ul className="bg-white rounded-base shadow-xl absolute -top-1 -left-4 min-w-max z-10 pl-4 pr-6 pt-3 pb-4 flex flex-col gap-y-3">
-            <ProjectCardOptionItem>Open Project</ProjectCardOptionItem>
-            <ProjectCardOptionItem>Edit Details</ProjectCardOptionItem>
-            <ProjectCardOptionItem>Archive</ProjectCardOptionItem>
-            <ProjectCardOptionItem>
+          <Dropdown>
+            <DropdownItem>Open Project</DropdownItem>
+            <DropdownItem>Edit Details</DropdownItem>
+            <DropdownItem>Archive</DropdownItem>
+            <DropdownItem>
               <span className="text-red-600">Delete</span>
-            </ProjectCardOptionItem>
-          </ul>
+            </DropdownItem>
+          </Dropdown>
         </OutsideClickHandler>
       )}
     </div>
-  );
-};
-
-type ProjectCardOptionItemProps = {
-  children: React.ReactNode;
-  onClick?: () => void;
-};
-
-const ProjectCardOptionItem: React.FC<ProjectCardOptionItemProps> = ({ children, onClick }) => {
-  return (
-    <li className="cursor-pointer opacity-80 hover:opacity-100 transition-opacity duration-200">
-      <button onClick={onClick}>{children}</button>
-    </li>
   );
 };
 
