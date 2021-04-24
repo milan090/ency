@@ -1,8 +1,8 @@
 {
   "name": "ency-backend",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "",
-  "author": "",
+  "author": "milan090",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -29,13 +29,13 @@
     "@nestjs/platform-express": "^7.5.1",
     "@nestjs/platform-fastify": "^7.6.13",
     "@nestjs/swagger": "^4.7.15",
-    "@prisma/client": "^2.18.0",
+    "@prisma/client": "^2.20.1",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "fastify-swagger": "^4.4.0",
     "firebase-admin": "^9.5.0",
     "morgan": "^1.10.0",
-    "prisma": "^2.18.0",
+    "prisma": "^2.20.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.3"

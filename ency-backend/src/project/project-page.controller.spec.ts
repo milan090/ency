@@ -8,6 +8,7 @@ import { ProjectController } from "./project.controller";
 import { users, projects } from "../../prisma/mock-data.json";
 import { IFirebaseUser } from "../auth/interfaces/user.interface";
 import { ProjectService } from "./project.service";
+import { NotFoundException } from "@nestjs/common";
 
 //TODO findAll()
 
@@ -16,7 +17,7 @@ describe("ProjectPageController", () => {
   let controller: ProjectPageController;
   let module: TestingModule;
 
-  const mockData = {pageId: 0, projectId: 0}
+  const mockData = { pageId: 0, projectId: 0 }; // Temp values
 
   let newProjectId: number;
   const mockUserData = users[0];
@@ -53,14 +54,15 @@ describe("ProjectPageController", () => {
       mockData.projectId = newProjectPage.projectId;
       expect(newProjectPage).toMatchSnapshot("new-project-page");
     });
-// checked
+    // checked
     it("With invalid input, it should return an error", async () => {
-      await expect(controller.create(user, {projectId: 7835})).toThrowError; //user
+      await expect(controller.create(user, { projectId: 7835 })).toThrowError; //user
     });
 
     it("Creating a duplicate should return error", async () => {
-      await expect(controller.create(user, {projectId: newProjectId})).toThrowError;
-    })
+      await expect(controller.create(user, { projectId: newProjectId }))
+        .toThrowError;
+    });
   });
 
   describe("Get(:id/page/:pageId) read", () => {
@@ -73,32 +75,45 @@ describe("ProjectPageController", () => {
     });
 
     it("With invalid input, it should return an error", async () => {
-      setTimeout(async () => {
-        await expect(controller.findOne(user, 0)).toThrowError;   
-      }, 500); 
+      const invalidProjectPageId = 0;
+      await expect(
+        controller.findOne(user, invalidProjectPageId),
+      ).rejects.toThrowError(
+        new NotFoundException(
+          `Project Page with given id not found: ${invalidProjectPageId}`,
+        ),
+      );
     });
   });
 
   describe("Update(:id/page/:pageId) put", () => {
-    it("With valid input, Should return valid Response, (update)", async () => { 
-      const update_data = {name: "updated project page", data: "updated data here"};
-      const res = await controller.update(user, 2, update_data); // user 
+    const updateData = {
+      name: "updated project page",
+      data: "updated data here",
+    };
+    it("With valid input, Should return valid Response, (update)", async () => {
+      const res = await controller.update(user, mockData.projectId, updateData); // user
+      expect(res).toMatchSnapshot();
     });
 
     it("With invalid input, it should return an error", async () => {
-      const update_data = {name: "updated project page", data: "updated data here"};
-      await expect(controller.update(user, 7835, update_data));
+      await expect(
+        controller.update(user, 7835, updateData),
+      ).rejects.toThrowError(
+        new NotFoundException("Page with given id does not exist"),
+      );
     });
   });
 
   describe("Delete(:id/page/:pageId) delete", () => {
     it("With valid input, Should return valid Response (delete)", async () => {
-      await expect(controller.remove(user, 12));//mockData.pageId));
+      await expect(controller.remove(user, mockData.pageId)).toMatchSnapshot();
     });
 
     it("With invalid input, it should return an error", async () => {
-      await expect(controller.remove(user, 7835)).toThrowError;
+      await expect(controller.remove(user, 7835)).rejects.toThrowError(
+        new NotFoundException("Page with given id does not exist"),
+      );
     });
   });
-
 });

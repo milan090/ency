@@ -3,14 +3,17 @@ import { AppModule } from "src/app.module";
 import { PrismaModule } from "src/prisma/prisma.module";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
-import { IFirebaseUser } from "./interfaces/user.interface";
+//import { IFirebaseUser } from "./interfaces/user.interface";
 import { users } from "../../prisma/mock-data.json";
-import { NotFoundException } from "@nestjs/common";
 
 describe("AuthController", () => {
   let controller: AuthController;
-  let service: AuthService
+  let service: AuthService;
   let module: TestingModule;
+  const notRegisteredInDbUser = {
+    email: "not-registered-in-db@gmail.com",
+    uid: "",
+  };
 
   beforeAll(async () => {
     module = await Test.createTestingModule({
@@ -24,61 +27,68 @@ describe("AuthController", () => {
   });
 
   afterAll(async () => {
-    setTimeout(async () => {
-    await service.deleteUser(users[0].uid, true)
-    }, 800);
+    //await service.deleteUser(users[0].uid);
+    //await service.deleteUser(notRegisteredInDbUser.uid);
     await module.close();
   });
 
-  describe("getUser", () => {
-    it("Should return a valid user object", async () => {
-      const userMockData = users[0]
+  // describe("signUp", () => {
+  //   it("Creating new valid user Should return a valid user object", async () => {
+  //     const userMockData = users[0];
 
-      const firebaseUser: IFirebaseUser = {
-        uid: users[0].uid,
-      };
-      const user = await controller.getUser(firebaseUser);
-      expect(user.email).toBe(userMockData.email);
-    });
+  //     const user = await controller.signUp({
+  //       ...userMockData,
+  //       password: "Abc123!!!",
+  //     });
+  //     users[0].uid = user.uid;
 
-    it("Should throw error user object", async () => {
-      const firebaseUser: IFirebaseUser = {
-        uid: "some-users-uid-not-registered-in-database",
-      };
+  //     expect(user.coins).toBe(0);
+  //     expect(user.uid).toBe(userMockData.uid);
+  //     expect(user.name).toBe(userMockData.name);
+  //     expect(user.email).toBe(userMockData.email);
+  //   });
 
-      await expect(controller.getUser(firebaseUser)).rejects.toEqual(
-        new NotFoundException("User with given id not found"),
-      );
-    });
-  });
+  //   it("Creating a duplicate user should return error message", async () => {
+  //     const userMockData = users[0];
 
-  describe("signUp", () => {
-    it("Creating new valid user Should return a valid user object", async () => {
-      const userMockData = users[0];
-      
-      const firebaseUser: IFirebaseUser = {
-        uid: userMockData.uid,
-      };
+  //     await expect(
+  //       controller.signUp({ ...userMockData, password: "Abc123!!!" }),
+  //     ).rejects.toEqual(
+  //       new Error("The email address is already in use by another account."),
+  //     );
+  //   });
+  // });
 
-      const user = await controller.signUp(
-        {...userMockData, password: "Abc123!!!"}
-    );
-      users[0].uid = user.uid;
-      //console.log(userMockData.uid)
-      expect(user.coins).toBe(0);
-      expect(user.uid).toBe(userMockData.uid);
-      expect(user.name).toBe(userMockData.name)
-      expect(user.email).toBe(userMockData.email);
-    });
+  // describe("getUser", () => {
+  //   it("Should return a valid user object", async () => {
+  //     const userMockData = users[0];
 
-    it("Creating a duplicate user should return error message", async () => {
-      const userMockData = users[0]
-      const firebaseUser: IFirebaseUser = { uid: userMockData.uid };
-      setTimeout(async () => {   
-      await expect(controller.signUp(
-        {...userMockData, password: "Abc123!!!"})).not.toBeInstanceOf(Promise);
-      }, 500); 
-    })
-  });
+  //     const firebaseUser: IFirebaseUser = {
+  //       uid: users[0].uid,
+  //     };
+  //     const user = await controller.getUser(firebaseUser);
+  //     expect(user.email).toBe(userMockData.email);
+  //   });
+
+  //   it("Should throw error user object", async () => {
+  //     const firebaseUser: IFirebaseUser = {
+  //       uid: "some-users-uid-not-registered-in-database",
+  //     };
+
+  //     await expect(controller.getUser(firebaseUser)).rejects.toThrow();
+  //   });
+
+  //   it("Should return valid response for firebase authenticated user not registered in db", async () => {
+  //     const newUser = await service.signUpEmailPass(
+  //       notRegisteredInDbUser.email,
+  //       "test1234",
+  //     );
+  //     notRegisteredInDbUser.uid = newUser.uid;
+  //     const firebaseUser: IFirebaseUser = {
+  //       uid: newUser.uid,
+  //     };
+  //     const user = await controller.getUser(firebaseUser);
+  //     expect(user.email).toBe(notRegisteredInDbUser.email);
+  //   });
+  // });
 });
-

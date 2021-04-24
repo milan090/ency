@@ -3,7 +3,6 @@ import {
   Injectable,
   NotFoundException,
 } from "@nestjs/common";
-import { ProjectPage } from "@prisma/client";
 import { IFirebaseUser } from "../auth/interfaces/user.interface";
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateProjectPageDto } from "./dto/create-project-page.dto";
@@ -91,7 +90,9 @@ export class ProjectPageService {
     });
 
     if (!projectPage) {
-      throw new NotFoundException("Project with given id not found");
+      throw new NotFoundException(
+        `Project Page with given id not found: ${pageId}`,
+      );
     }
 
     return projectPage;
@@ -109,7 +110,7 @@ export class ProjectPageService {
       select: {
         project: true,
       },
-    });    
+    });
 
     if (!projectPage) {
       throw new NotFoundException("Page with given id does not exist");
@@ -119,7 +120,7 @@ export class ProjectPageService {
         "You are not authorized to perform this action",
       );
 
-    return this.prisma.projectPage.update({
+    return await this.prisma.projectPage.update({
       where: {
         id: pageId,
       },
@@ -145,7 +146,8 @@ export class ProjectPageService {
     if (!projectPage) {
       throw new NotFoundException("Page with given id does not exist");
     }
-    if (projectPage?.project.userUid != user.uid){ //userUid === user.uid) 
+    if (projectPage?.project.userUid != user.uid) {
+      //userUid === user.uid)
       throw new BadRequestException(
         "You are not authorized to perform this action",
       );
