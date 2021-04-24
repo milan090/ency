@@ -17,6 +17,10 @@ module.exports = {
       borderRadius: {
         base: "0.25rem",
       },
+      fontFamily: {
+        raleway: ["Raleway", "sans-serif"],
+        inter: ["Inter", "sans-serif"]
+      }
     },
     stroke: (theme) => ({
       "dark-blue": theme("colors.dark-blue"),

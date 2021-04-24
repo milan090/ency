@@ -33,9 +33,9 @@ describe("AuthController", () => {
   });
 
   describe("todo", () => {
-    it("", () => {
-      const test = 2;
-      expect(test).toBe(2);
+    it("todo", () => {
+      const smth = 1;
+      expect(smth).toBe(1);
     })
   })
 

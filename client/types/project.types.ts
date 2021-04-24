@@ -1,12 +1,10 @@
 export interface ProjectPreview {
+  id: number;
+  userUid: string;
   title: string;
-  tags: ProjectTag[];
-  fileCount: number;
+  tags: string[];
+  description: string;
+  pageCount: number;
   iconSrc: string;
-  color: string;
-}
-
-export interface ProjectTag {
-  value: string;
   color: string;
 }

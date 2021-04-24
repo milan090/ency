@@ -22,5 +22,5 @@ export const auth = firebase.auth();
 export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 // googleAuthProvider.setCustomParameters
 if (process.env.NODE_ENV === "development") {
-  console.info(app.name ? "Firebase Mode Activated!" : "Firebase not working :(");
+  console.info(app.name ? "Firebase Activated!" : "Firebase not working :(");
 }

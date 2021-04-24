@@ -10,7 +10,7 @@ import { useRouter } from "next/dist/client/router";
 
 type FormInputs = {
   email: string;
-  fname: string;
+  fname: string; // Full Name
   password: string;
 };
 

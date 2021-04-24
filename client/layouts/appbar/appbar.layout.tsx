@@ -1,9 +1,12 @@
 import { BlackBorderWhiteBGButton } from "components/CustomButtons/whitebg-button.component";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { DollarSign, Globe, Home, IconProps, LogOut, Plus, Settings, User } from "react-feather";
 import { useRouter } from "next/dist/client/router";
 import { logout } from "utils/auth.utils";
+import { ModalContainer } from "components/modal-container/modal-container.components";
+import { CreateProject } from "layouts/create-project-layout/create-project.layout";
+import { StartWithEncy } from "layouts/create-project-layout/start-with-ency.layout";
 
 type AppbarLinkProps = {
   href: string;
@@ -46,14 +49,36 @@ const appbarLinks: AppbarLinkProps[] = [
 ];
 
 export const Appbar: React.FC = () => {
-  const handleLogout = async (): Promise<void> => {
+  const [showCreateProjectModal, setShowCreateProjectModal] = useState(false);
+  const [showStartWithEncyModal, setShowStartWithEncyModal] = useState(false);
+
+  const onStartWithEncyModalClose = useCallback(() => {
+    setShowStartWithEncyModal(false);
+  }, []);
+
+  const onCreateProjectModalClose = useCallback(() => {
+    setShowCreateProjectModal(false);
+  }, []);
+
+  const handleStartWithency = useCallback(() => {
+    // hide create project modal and show the other modal
+    setShowCreateProjectModal(false);
+
+    setShowStartWithEncyModal(true);
+  }, []);
+
+  const handleClickCreateProjectBtn = useCallback(() => {
+    setShowCreateProjectModal(true);
+  }, []);
+
+  const handleLogout = useCallback(async (): Promise<void> => {
     try {
       await logout();
       // Setting user state to empty and redirecting to login page will happen in _app.tsx
     } catch (error) {
       console.log(error);
     }
-  };
+  }, []);
 
   return (
     <nav className="md:w-72 xl:w-80 flex flex-col max-h-screen h-screen pt-12 pb-8">
@@ -65,7 +90,7 @@ export const Appbar: React.FC = () => {
 
       {/* Create Project Button */}
       <div className="mt-16 pl-8">
-        <BlackBorderWhiteBGButton>
+        <BlackBorderWhiteBGButton handleClick={handleClickCreateProjectBtn}>
           <div className="flex text-sm items-center">
             <span className="mr-2">
               <Plus size={16} />
@@ -73,6 +98,23 @@ export const Appbar: React.FC = () => {
             <span className="font-semibold">Create Project</span>
           </div>
         </BlackBorderWhiteBGButton>
+        <ModalContainer
+          title="Create New Project"
+          show={showCreateProjectModal}
+          onClose={onCreateProjectModalClose}
+        >
+          <CreateProject
+            onClose={onCreateProjectModalClose}
+            handleStartWithency={handleStartWithency}
+          />
+        </ModalContainer>
+        <ModalContainer
+          show={showStartWithEncyModal}
+          onClose={onStartWithEncyModalClose}
+          title="Start with Ency"
+        >
+          <StartWithEncy />
+        </ModalContainer>
       </div>
 
       {/* Appbar Links */}

@@ -37,5 +37,5 @@ export const loginWithEmailAndPassword = (
   email: string,
   password: string
 ): Promise<void | firebase.auth.UserCredential> => {
-  return auth.signInWithEmailAndPassword(email, password).catch(console.log);
+  return auth.signInWithEmailAndPassword(email, password);
 };

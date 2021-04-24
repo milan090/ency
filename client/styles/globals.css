@@ -18,7 +18,11 @@ button, button:focus, input, input:focus  {
   outline: none
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Raleway:wght@400;700;800&display=swap');
+button {
+  text-align: left;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Raleway:wght@300;400;600;700&display=swap');
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Raleway', sans-serif;

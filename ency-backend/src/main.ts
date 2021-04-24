@@ -9,7 +9,7 @@ import { AppModule } from "./app.module";
 import { LoggerService } from "./logger.service";
 import morgan from "morgan";
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.API_PORT || 8080;
 const ORIGIN_URL = process.env.ORIGIN_URL || "http://localhost:3000";
 
 async function bootstrap() {

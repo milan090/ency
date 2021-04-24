@@ -11,4 +11,5 @@ export class ProjectEntity implements Project {
   iconSrc!: string | null;
   description!: string | null;
   pageCount?: number;
+  color!: string;
 }
