@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ChevronDown, Search } from "react-feather";
 import { ProjectPreview } from "types/project.types";
 import { useDashboardHomeTabs } from "hooks/dashboard-home.hook";
