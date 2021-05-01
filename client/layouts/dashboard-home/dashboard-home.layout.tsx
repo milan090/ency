@@ -10,9 +10,9 @@ import Image from "next/image";
 import { TabName } from "types/dahboard-home.types";
 import { axios } from "config/axios";
 import { useQuery } from "react-query";
-import { useAuth } from "hooks/auth.hook";
 import { hexToSixDigit, stringToBrightHexColor } from "utils/string-to-hex-color";
 import { Dropdown, DropdownItem } from "components/dropdown/dropdown.component";
+import { useRouter } from "next/dist/client/router";
 
 export const DashboardHome: React.FC = () => {
   const { activeTab } = useDashboardHomeTabs();
@@ -102,19 +102,14 @@ const ProjectsPreview: React.FC = () => {
     const res = await axios.get("/projects");
     return res.data;
   };
-  const { user } = useAuth();
 
-  const { data: projects, refetch } = useQuery<ProjectCardProps[]>(
-    ["projects", activeTab],
-    getProjects,
-    {
-      enabled: false,
-    }
-  );
+  const { data: projects } = useQuery<ProjectCardProps[]>(["projects", activeTab], getProjects, {
+    enabled: false,
+  });
 
-  useEffect(() => {
-    if (user.uid) refetch();
-  }, [user, refetch]);
+  // useEffect(() => {
+  //   if (user.uid) refetch();
+  // }, [user, refetch]);
 
   return (
     <div className="transition-all duration-700 grid lg:grid-cols-2 xl:grid-cols-3  grid-flow-row mt-10 gap-x-8 gap-y-5">
@@ -181,8 +176,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   );
 };
 
-const ProjecCardOptionsButton: React.FC<{ projectId: number }> = () => {
+const ProjecCardOptionsButton: React.FC<{ projectId: number }> = ({ projectId }) => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const router = useRouter();
 
   const openDropdown = (): void => {
     setShowDropdown(true);
@@ -190,6 +186,10 @@ const ProjecCardOptionsButton: React.FC<{ projectId: number }> = () => {
 
   const closeDropdown = (): void => {
     setShowDropdown(false);
+  };
+
+  const openProject = (): void => {
+    router.push(`/project/${projectId}`);
   };
 
   return (
@@ -201,7 +201,7 @@ const ProjecCardOptionsButton: React.FC<{ projectId: number }> = () => {
       {showDropdown && (
         <OutsideClickHandler onOutsideClick={closeDropdown}>
           <Dropdown>
-            <DropdownItem>Open Project</DropdownItem>
+            <DropdownItem onClick={openProject}>Open Project</DropdownItem>
             <DropdownItem>Edit Details</DropdownItem>
             <DropdownItem>Archive</DropdownItem>
             <DropdownItem>

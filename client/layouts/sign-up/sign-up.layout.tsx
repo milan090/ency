@@ -4,9 +4,8 @@ import { FormInput, FormPasswordInput } from "components/form-input/form-input.c
 import { useForm } from "react-hook-form";
 import { BlueBGButtonWide } from "components/CustomButtons/bluebg-button.component";
 import { GoogleSigninButton } from "components/google-signin-button/google-signin-button.component";
-import { signUpWithEmailAndPassword } from "utils/auth.utils";
-import { useAuth } from "hooks/auth.hook";
 import { useRouter } from "next/dist/client/router";
+import { signIn, useSession } from "next-auth/client";
 
 type FormInputs = {
   email: string;
@@ -16,29 +15,24 @@ type FormInputs = {
 
 export const SignUpLayout: React.FC = () => {
   const { register, handleSubmit, errors } = useForm<FormInputs>();
-  const setUser = useAuth((state) => state.setUser);
-  const user = useAuth((state) => state.user);
+  const [session] = useSession();
 
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    if (user.uid) {
+    if (session?.user) {
       router.push("/dashboard");
     }
-  }, [user]);
+  }, [session, router]);
 
   const onFormSubmit = async ({ fname, email, password }: FormInputs): Promise<void> => {
-    if (isLoading) return;
     setIsLoading(true);
     try {
-      const data = await signUpWithEmailAndPassword(fname, email, password);
-      {
-        const { email, uid, name } = data;
-        setUser({ email, uid, name });
-      }
+      const res = signIn("credentials", { email, name: fname, password, type: "SIGN_UP" });
+      console.log("res", res);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setIsLoading(false);
     }

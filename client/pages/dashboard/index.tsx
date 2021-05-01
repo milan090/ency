@@ -1,6 +1,6 @@
-import { useAuth } from "hooks/auth.hook";
 import { Appbar } from "layouts/appbar/appbar.layout";
 import { DashboardHome } from "layouts/dashboard-home/dashboard-home.layout";
+import { useSession } from "next-auth/client";
 import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
 import { useEffect } from "react";
@@ -8,16 +8,13 @@ import { useEffect } from "react";
 export default function DashboardPage(): JSX.Element {
   const router = useRouter();
 
-  const { user, isLoading } = useAuth((state) => ({
-    isLoading: state.isLoading,
-    user: state.user,
-  }));
+  const [session, loading] = useSession();
 
   useEffect(() => {
-    if (!isLoading && !user.uid) {
+    if (!loading && !session) {
       router.push("/login");
     }
-  }, [isLoading, user]);
+  }, [loading, router, session]);
 
   return (
     <div>

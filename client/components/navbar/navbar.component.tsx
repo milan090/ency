@@ -4,8 +4,7 @@ import Image from "next/image";
 import { BlueBorderWhiteBGButton } from "components/CustomButtons/whitebg-button.component";
 
 import styles from "./navbar.styles.module.scss";
-import { useAuth } from "hooks/auth.hook";
-import { IUser } from "types/auth.types";
+import { useSession } from "next-auth/client";
 
 const NavLinks: { value: string; href: string }[] = [
   {
@@ -27,7 +26,7 @@ const NavLinks: { value: string; href: string }[] = [
 ];
 
 export const Navbar: React.FC = () => {
-  const user: IUser = useAuth((state) => state.user);
+  const [session] = useSession();
 
   return (
     <nav className="flex justify-center items-center h-20">
@@ -50,7 +49,7 @@ export const Navbar: React.FC = () => {
           ))}
         </ul>
 
-        {!user.uid ? (
+        {!session?.user ? (
           <div>
             <NavLink value="Log In" href="/login" />
             <Link href="/sign-up">

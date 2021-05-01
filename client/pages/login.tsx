@@ -2,19 +2,18 @@ import { Navbar } from "components/navbar/navbar.component";
 import Head from "next/head";
 import { LoginLayout } from "layouts/login/login.layout";
 import { useRouter } from "next/dist/client/router";
-import { useAuth } from "hooks/auth.hook";
 import { useEffect } from "react";
+import { useSession } from "next-auth/client";
 
 export default function Login(): JSX.Element {
   const router = useRouter();
-
-  const user = useAuth((state) => state.user);
+  const [session] = useSession();
 
   useEffect(() => {
-    if (user.uid) {
+    if (session) {
       router.push("/dashboard");
     }
-  }, [user]);
+  }, [session, router]);
 
   return (
     <div>

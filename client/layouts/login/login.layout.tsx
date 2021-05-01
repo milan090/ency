@@ -4,9 +4,9 @@ import { FormInput, FormPasswordInput } from "components/form-input/form-input.c
 import { useForm } from "react-hook-form";
 import { BlueBGButtonWide } from "components/CustomButtons/bluebg-button.component";
 import { GoogleSigninButton } from "components/google-signin-button/google-signin-button.component";
-import { loginWithEmailAndPassword } from "utils/auth.utils";
-import { useAuth } from "hooks/auth.hook";
 import { useRouter } from "next/dist/client/router";
+import { signIn, useSession } from "next-auth/client";
+import { AuthErrorCode } from "types/errors/auth.errors";
 
 type FormInputs = {
   email: string;
@@ -16,21 +16,20 @@ type FormInputs = {
 export const LoginLayout: React.FC = () => {
   const { register, handleSubmit, errors, setError } = useForm<FormInputs>();
   const [isLoading, setIsLoading] = useState(false);
-  const authLoading = useAuth((state) => state.isLoading);
-  const user = useAuth((state) => state.user);
   const router = useRouter();
+  const [session, loading] = useSession();
 
   const onFormSubmit = async ({ email, password }: FormInputs): Promise<void> => {
     if (isLoading) return;
     setIsLoading(true);
     try {
-      await loginWithEmailAndPassword(email, password);
+      const res = await signIn("credentials", { type: "LOGIN", email, password, redirect: false });
+      if (res?.error) throw new Error(res.error);
     } catch (error) {
-      console.log(error.code);
-      switch (error.code) {
-        case "auth/user-not-found":
-        case "auth/wrong-password":
-          setError("password", { message: "User with given email and password does not exist" });
+      const code = error.message as AuthErrorCode;
+      switch (code) {
+        case "email/pass":
+          setError("password", { message: "Invalid email/password entered" });
           break;
         default:
           break;
@@ -41,16 +40,16 @@ export const LoginLayout: React.FC = () => {
   };
 
   useEffect(() => {
-    if (!authLoading && user.uid) {
+    if (!loading && session?.user) {
       router.push("/dashboard");
     }
-  }, [user, authLoading, router]);
+  }, [session, loading, router]);
 
   return (
     <div className="flex justify-center mt-10">
       <div className="w-2/3 flex">
         <section>
-          <h1 className="font-extrabold text-4xl mb-4">Sign Up To Ency</h1>
+          <h1 className="font-extrabold text-4xl mb-4">Login</h1>
           <p className="text-sm text-gray-500">
             Don&apos;t have an account?{" "}
             <Link href="/sign-up">
