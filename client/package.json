@@ -13,13 +13,17 @@
     "@editorjs/editorjs": "^2.20.2",
     "@prisma/client": "^2.21.2",
     "@tailwindui/react": "^0.1.1",
+    "apollo-server-micro": "^2.24.0",
     "autoprefixer": "^10.2.1",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "firebase": "^8.2.3",
+    "graphql": "^15.5.0",
     "js-file-download": "^0.4.12",
     "next": "10.0.5",
     "next-auth": "^3.19.3",
+    "next-connect": "^0.10.1",
+    "nexus": "^1.0.0",
     "nexus-plugin-prisma": "^0.34.1",
     "nookies": "^2.5.2",
     "postcss": "^8.2.4",
@@ -77,5 +81,8 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "prisma": {
+    "schema": "src/server/prisma/schema.prisma"
   }
 }

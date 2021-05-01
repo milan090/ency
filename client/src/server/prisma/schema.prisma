@@ -13,7 +13,6 @@ generator client {
 model Account {
   id                 Int       @id @default(autoincrement())
   compoundId         String    @unique @map(name: "compound_id")
-  userId             Int       @map(name: "user_id")
   providerType       String    @map(name: "provider_type")
   providerId         String    @map(name: "provider_id")
   providerAccountId  String    @map(name: "provider_account_id")
@@ -23,6 +22,8 @@ model Account {
   createdAt          DateTime  @default(now()) @map(name: "created_at")
   updatedAt          DateTime  @default(now()) @map(name: "updated_at")
 
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @map(name: "user_id")
 
   @@index([providerAccountId], name: "providerAccountId")
   @@index([providerId], name: "providerId")
@@ -32,18 +33,20 @@ model Account {
 
 model Session {
   id           Int      @id @default(autoincrement())
-  userId       Int      @map(name: "user_id")
   expires      DateTime
   sessionToken String   @unique @map(name: "session_token")
   accessToken  String   @unique @map(name: "access_token")
   createdAt    DateTime @default(now()) @map(name: "created_at")
   updatedAt    DateTime @default(now()) @map(name: "updated_at")
 
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @map(name: "user_id")
+
   @@map(name: "sessions")
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
+  id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
   passwordHash  String?
@@ -51,6 +54,9 @@ model User {
   image         String?
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @default(now()) @map(name: "updated_at")
+
+  accounts Account[]
+  sessions Session[]
 
   @@map(name: "users")
 }

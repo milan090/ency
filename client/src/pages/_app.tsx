@@ -2,8 +2,8 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { QueryClient, QueryClientProvider } from "react-query";
 
-import "../styles/tailwind.css";
-import "../styles/globals.css";
+import "src/client/styles/tailwind.css";
+import "src/client/styles/globals.css";
 
 import { domain } from "src/utils/domain";
 import { Provider } from "next-auth/client";

@@ -1,4 +1,4 @@
-import { PrismaClient, Prisma } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 // Make global.cachedPrisma work with TypeScript
 declare global {
@@ -25,4 +25,4 @@ if (process.env.NODE_ENV === "production") {
   prisma = global.cachedPrisma;
 }
 
-export { prisma };
+export default prisma;

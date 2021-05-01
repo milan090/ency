@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import Adapters from "next-auth/adapters";
 import Providers from "next-auth/providers";
-import { prisma } from "src/config/prisma";
+import prisma from "src/server/prisma/prisma";
 import bcrypt from "bcryptjs";
 import { AuthError } from "src/types/errors/auth.errors";
 
@@ -28,7 +28,7 @@ type Credentials = {
 };
 
 type IUser = {
-  id: number;
+  id: string;
   email: string;
   name: string;
 };
@@ -90,12 +90,21 @@ export default NextAuth({
     }),
     // ...add more providers here
   ],
+  callbacks: {
+    async session(session, token) {
+      session.user.id = token.sub as string;
+      return session;
+    },
+  },
   session: {
     jwt: true,
     // Seconds - How long until an idle session expires and is no longer valid.
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
-  secret: process.env.JWT_SIGNING_PRIVATE_KEY,
+  jwt: {
+    signingKey: process.env.JWT_SIGNING_PRIVATE_KEY,
+  },
+  // secret: process.env.JWT_SIGNING_PRIVATE_KEY,
   // A database is optional, but required to persist accounts in a database
   adapter: Adapters.Prisma.Adapter({ prisma }),
 });
