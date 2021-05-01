@@ -6,6 +6,7 @@ import { BlueBGButtonWide } from "components/CustomButtons/bluebg-button.compone
 import { GoogleSigninButton } from "components/google-signin-button/google-signin-button.component";
 import { useRouter } from "next/dist/client/router";
 import { signIn, useSession } from "next-auth/client";
+import { AuthErrorCode } from "types/errors/auth.errors";
 
 type FormInputs = {
   email: string;
@@ -14,7 +15,7 @@ type FormInputs = {
 };
 
 export const SignUpLayout: React.FC = () => {
-  const { register, handleSubmit, errors } = useForm<FormInputs>();
+  const { register, handleSubmit, errors, setError } = useForm<FormInputs>();
   const [session] = useSession();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -29,10 +30,23 @@ export const SignUpLayout: React.FC = () => {
   const onFormSubmit = async ({ fname, email, password }: FormInputs): Promise<void> => {
     setIsLoading(true);
     try {
-      const res = signIn("credentials", { email, name: fname, password, type: "SIGN_UP" });
-      console.log("res", res);
+      const res = await signIn("credentials", {
+        email,
+        name: fname,
+        password,
+        type: "SIGN_UP",
+        redirect: false,
+      });
+      if (res?.error) throw new Error(res.error);
     } catch (error) {
-      console.error(error);
+      const code = error.message as AuthErrorCode;
+      switch (code) {
+        case "USER_ALREADY_EXISTS":
+          setError("email", { message: "Account with this email already exists" });
+          break;
+        default:
+          break;
+      }
     } finally {
       setIsLoading(false);
     }

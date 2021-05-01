@@ -60,21 +60,28 @@ export default NextAuth({
               credentials.password,
               userAccount.passwordHash
             );
-            if (!isAuthorized) return Promise.reject(new AuthError("email/pass"));
+            if (!isAuthorized) return Promise.reject(new AuthError("EMAIL_PASSWORD_DOESNT_EXIST"));
             const { id, name, email } = userAccount;
             return { id, name: name as string, email: email as string };
           }
           case "SIGN_UP": {
             const passwordHash = await bcrypt.hash(credentials.password, SALT_ROUNDS);
-            const userAccount = await prisma.user.create({
-              data: {
-                email: credentials.email,
-                passwordHash,
-                name: credentials.name,
-              },
-            });
-            const { id, name, email } = userAccount;
-            return { id, name: name as string, email: email as string };
+            try {
+              const userAccount = await prisma.user.create({
+                data: {
+                  email: credentials.email,
+                  passwordHash,
+                  name: credentials.name,
+                },
+              });
+              const { id, name, email } = userAccount;
+              return { id, name: name as string, email: email as string };
+            } catch (error) {
+              if (error.code === "P2002") {
+                return Promise.reject(new AuthError("USER_ALREADY_EXISTS"));
+              }
+              return null;
+            }
           }
           default:
             return null;

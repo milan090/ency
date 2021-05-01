@@ -28,7 +28,7 @@ export const LoginLayout: React.FC = () => {
     } catch (error) {
       const code = error.message as AuthErrorCode;
       switch (code) {
-        case "email/pass":
+        case "EMAIL_PASSWORD_DOESNT_EXIST":
           setError("password", { message: "Invalid email/password entered" });
           break;
         default:
