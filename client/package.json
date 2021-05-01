@@ -20,6 +20,7 @@
     "js-file-download": "^0.4.12",
     "next": "10.0.5",
     "next-auth": "^3.19.3",
+    "nexus-plugin-prisma": "^0.34.1",
     "nookies": "^2.5.2",
     "postcss": "^8.2.4",
     "react": "17.0.1",
