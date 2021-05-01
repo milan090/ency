@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import Adapters from "next-auth/adapters";
 import Providers from "next-auth/providers";
 import { prisma } from "config/prisma";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { AuthError } from "types/errors/auth.errors";
 
 if (!process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID) {
