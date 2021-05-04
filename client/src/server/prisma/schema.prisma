@@ -12,23 +12,23 @@ generator client {
 
 model Account {
   id                 Int       @id @default(autoincrement())
-  compoundId         String    @unique @map(name: "compound_id")
-  providerType       String    @map(name: "provider_type")
-  providerId         String    @map(name: "provider_id")
-  providerAccountId  String    @map(name: "provider_account_id")
-  refreshToken       String?   @map(name: "refresh_token")
-  accessToken        String?   @map(name: "access_token")
-  accessTokenExpires DateTime? @map(name: "access_token_expires")
-  createdAt          DateTime  @default(now()) @map(name: "created_at")
-  updatedAt          DateTime  @default(now()) @map(name: "updated_at")
+  compoundId         String    @unique
+  providerType       String   
+  providerId         String   
+  providerAccountId  String   
+  refreshToken       String?   
+  accessToken        String?   
+  accessTokenExpires DateTime? 
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @default(now())
 
+  userId String
   user   User   @relation(fields: [userId], references: [id])
-  userId String @map(name: "user_id")
 
   @@index([providerAccountId], name: "providerAccountId")
   @@index([providerId], name: "providerId")
   @@index([userId], name: "userId")
-  @@map(name: "accounts")
+  @@map("accounts")
 }
 
 model Session {
@@ -39,26 +39,32 @@ model Session {
   createdAt    DateTime @default(now()) @map(name: "created_at")
   updatedAt    DateTime @default(now()) @map(name: "updated_at")
 
-  user   User   @relation(fields: [userId], references: [id])
   userId String @map(name: "user_id")
+  user   User   @relation(fields: [userId], references: [id])
 
-  @@map(name: "sessions")
+  @@map("sessions")
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
+  id    String  @id @default(cuid())
+  name  String
+  email String  @unique
+  coins Int     @default(0)
+  bio   String?
+  image String?
+
   passwordHash  String?
   emailVerified DateTime? @map(name: "email_verified")
-  image         String?
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @default(now()) @map(name: "updated_at")
 
   accounts Account[]
   sessions Session[]
+  projects Project[]
+  likes    Like[]
+  comments Comment[]
 
-  @@map(name: "users")
+  @@map("users")
 }
 
 model VerificationRequest {
@@ -70,4 +76,55 @@ model VerificationRequest {
   updatedAt  DateTime @default(now()) @map(name: "updated_at")
 
   @@map(name: "verification_requests")
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  title       String
+  iconSrc     String?
+  description String?
+  tags        String[]
+  isPublic    Boolean  @default(false)
+  color       String
+
+  userId   String
+  user     User          @relation(fields: [userId], references: [id])
+  pages    ProjectPage[]
+  likes    Like[]
+  comments Comment[]
+
+  @@unique([id, userId])
+  @@map("projects")
+}
+
+model ProjectPage {
+  id        Int     @id @default(autoincrement())
+  name      String
+  data      Json
+  projectId Int
+  project   Project @relation(fields: [projectId], references: [id])
+
+  @@map("project_pages")
+}
+
+model Like {
+  id        Int     @id @default(autoincrement())
+  userId    String
+  user      User    @relation(fields: [userId], references: [id])
+  projectId Int
+  project   Project @relation(fields: [projectId], references: [id])
+
+  @@map("likes")
+}
+
+model Comment {
+  id          Int      @id @default(autoincrement())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  content     String
+  createdDate DateTime
+  projectId   Int
+  project     Project  @relation(fields: [projectId], references: [id])
+
+  @@map("comments")
 }

@@ -1,29 +1,23 @@
-import { makeSchema, extendType } from "nexus";
+import { makeSchema } from "nexus";
 import { nexusPrisma } from "nexus-plugin-prisma";
 import path from "path";
+import User from "./User";
+import Comment from "./Comment";
+import Like from "./Like";
+import Project from "./Project";
+import ProjectPage from "./ProjectPage";
 
 const shouldGenerateArtifacts = process.env.NODE_ENV === "development" || !!process.env.GENERATE;
 
-const Query = extendType({
-  type: "Query",
-  definition(t) {
-    t.string("hello", {
-      resolve: () => {
-        return "World";
-      },
-    });
-  },
-});
-
 export const schema = makeSchema({
-  types: [Query],
+  types: [User, Comment, Like, Project, ProjectPage],
   plugins: [
     nexusPrisma({
       shouldGenerateArtifacts,
     }),
   ],
   contextType: {
-    module: path.join(process.cwd(), "src/server/graphql/context.ts"),
+    module: path.join(process.cwd(), "src/pages/api/graphql.ts"),
     export: "GraphQLContext",
   },
   // Generate the files

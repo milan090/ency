@@ -65,6 +65,7 @@ export default NextAuth({
             return { id, name: name as string, email: email as string };
           }
           case "SIGN_UP": {
+            if (!credentials.name) return Promise.reject(new AuthError("INVALID_NAME"));
             const passwordHash = await bcrypt.hash(credentials.password, SALT_ROUNDS);
             try {
               const userAccount = await prisma.user.create({

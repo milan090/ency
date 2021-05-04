@@ -1,7 +1,7 @@
-export interface IUser {
-  name?: string;
-  email?: string;
-  uid?: string;
+export interface User {
+  id: string;
+  email: string;
+  name: string;
 }
 
 export type UserEntity = {

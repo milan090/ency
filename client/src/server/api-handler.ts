@@ -2,15 +2,23 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/client";
 import nc from "next-connect";
 import { error } from "next/dist/build/output/log";
+import { User } from "src/types/auth.types";
 
-interface Request extends NextApiRequest {
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Express {
+    interface User {
+      id: string;
+      email: string;
+      provider: string;
+      redirect?: string;
+    }
+  }
+}
+
+export interface Request extends NextApiRequest {
   // Passport adds these to the request object
-  logout: () => void;
-  user?: {
-    name: string;
-    email: string;
-    id: string;
-  };
+  user?: User;
 }
 
 export function handler() {
@@ -25,9 +33,9 @@ export function handler() {
     if (session?.user) {
       const { user } = session;
       req.user = {
-        name: user.name,
-        email: user.email,
         id: user.id,
+        email: user.email,
+        name: user.name,
       };
     }
     next();
