@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "predev": "yarn generate",
     "dev": "next dev",
     "dev:watch": "concurrently --kill-others --names \"NEXT,NEXUS,GQL\" -c \"blue,green,magenta\" \"yarn dev\" \"yarn generate:nexus:watch\" \"yarn graphql-codegen --watch\"",
-    "prodev": "generate",
+    "prebuild": "yarn generate",
     "build": "next build",
     "start": "next start",
     "generate": "yarn run generate:prisma && yarn run generate:nexus",
@@ -18,7 +19,7 @@
   },
   "dependencies": {
     "@editorjs/editorjs": "^2.20.2",
-    "@prisma/client": "^2.21.2",
+    "@prisma/client": "^2.22.0",
     "@tailwindui/react": "^0.1.1",
     "apollo-server-micro": "^2.24.0",
     "autoprefixer": "^10.2.1",
@@ -43,6 +44,7 @@
     "react-editor-js": "^1.9.0",
     "react-feather": "^2.0.9",
     "react-hook-form": "^6.14.1",
+    "react-hot-toast": "^1.0.2",
     "react-is": "^17.0.2",
     "react-outside-click-handler": "^1.3.0",
     "react-query": "^3.13.6",
@@ -96,7 +98,7 @@
     "husky": "^4.3.7",
     "lint-staged": "^10.5.3",
     "prettier": "^2.2.1",
-    "prisma": "^2.21.2",
+    "prisma": "^2.22.0",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^4.1.3",
     "vercel": "^21.2.3"

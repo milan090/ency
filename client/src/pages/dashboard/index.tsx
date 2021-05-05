@@ -4,6 +4,9 @@ import { useSession } from "next-auth/client";
 import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
 import { useEffect } from "react";
+import { authRequired } from "src/utils/authRequired";
+
+export const getServerSideProps = authRequired();
 
 export default function DashboardPage(): JSX.Element {
   const router = useRouter();

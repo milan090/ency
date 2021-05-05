@@ -1,5 +1,5 @@
 import { withUrqlClient } from "next-urql";
-import { getAPIURl } from "src/server/getAPIURL";
+import { getAPIURl } from "src/server/getURL";
 import fetch from "isomorphic-unfetch";
 
 const GRAPHQL_ENDPOINT = `${getAPIURl()}/graphql`;

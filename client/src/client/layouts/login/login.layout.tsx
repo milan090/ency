@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import {
   FormInput,
@@ -7,8 +7,7 @@ import {
 import { useForm } from "react-hook-form";
 import { BlueBGButtonWide } from "src/client/components/CustomButtons/bluebg-button.component";
 import { GoogleSigninButton } from "src/client/components/google-signin-button/google-signin-button.component";
-import { useRouter } from "next/dist/client/router";
-import { signIn, useSession } from "next-auth/client";
+import { signIn } from "next-auth/client";
 import { AuthErrorCode } from "src/types/errors/auth.errors";
 
 type FormInputs = {
@@ -19,8 +18,6 @@ type FormInputs = {
 export const LoginLayout: React.FC = () => {
   const { register, handleSubmit, errors, setError } = useForm<FormInputs>();
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-  const [session, loading] = useSession();
 
   const onFormSubmit = async ({ email, password }: FormInputs): Promise<void> => {
     if (isLoading) return;
@@ -41,12 +38,6 @@ export const LoginLayout: React.FC = () => {
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    if (!loading && session?.user) {
-      router.push("/dashboard");
-    }
-  }, [session, loading, router]);
 
   return (
     <div className="flex justify-center mt-10">

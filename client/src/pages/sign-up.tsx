@@ -1,20 +1,25 @@
 import Head from "next/head";
 import { Navbar } from "src/client/components/navbar/navbar.component";
 import { SignUpLayout } from "src/client/layouts/sign-up/sign-up.layout";
-import { useRouter } from "next/dist/client/router";
-import { useSession } from "next-auth/client";
-import { useEffect } from "react";
+import { getSession } from "next-auth/client";
+import { GetServerSideProps } from "next";
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const session = await getSession({ req });
+  if (session?.user.id) {
+    return {
+      redirect: {
+        destination: "/dashboard",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+};
 
 export default function SignUpPage(): JSX.Element {
-  const router = useRouter();
-  const [session] = useSession();
-
-  useEffect(() => {
-    if (session) {
-      router.push("/dashboard");
-    }
-  }, [session, router]);
-
   return (
     <div
       className="min-h-screen"
