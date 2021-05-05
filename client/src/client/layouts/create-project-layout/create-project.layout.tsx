@@ -1,8 +1,13 @@
 import React, { useEffect } from "react";
 import Image from "next/image";
-import { useMutation } from "react-query";
-import { axios } from "src/config/client-axios";
+import { useMutation } from "urql";
+import {
+  CreateProjectDocument,
+  CreateProjectMutation,
+  CreateProjectMutationVariables,
+} from "./createProject.generated";
 import { randomColor } from "src/utils/string-to-hex-color";
+import { useRouter } from "next/dist/client/router";
 
 type Props = {
   onClose: () => void;
@@ -10,15 +15,29 @@ type Props = {
 };
 
 export const CreateProject: React.FC<Props> = ({ onClose, handleStartWithency }) => {
-  const startFromScratch = useMutation(() =>
-    axios.post("/projects", { title: "Untitled", color: randomColor() })
+  const [{ fetching, data }, createProject] = useMutation<CreateProjectMutation>(
+    CreateProjectDocument
   );
+  const router = useRouter();
 
   useEffect(() => {
-    if (startFromScratch.isSuccess) {
+    if (data) {
       onClose();
     }
-  }, [startFromScratch.isSuccess, onClose]);
+  }, [data, onClose]);
+
+  const handleSubmit = async (): Promise<void> => {
+    try {
+      const data: CreateProjectMutationVariables = {
+        title: "Untitled Project",
+        color: randomColor(),
+      };
+      const project = await createProject(data);
+      router.push(`project/${project.data?.createProject?.id}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -27,9 +46,9 @@ export const CreateProject: React.FC<Props> = ({ onClose, handleStartWithency })
           {/* Start from Scratch Card */}
           <button
             className={`p-4 pb-6 shadow-md hover:shadow-lg cursor-pointer transition-shadow duration-150 ${
-              startFromScratch.isLoading && "animate-pulse"
+              fetching && "animate-pulse"
             }`}
-            onClick={() => startFromScratch.mutate()}
+            onClick={() => handleSubmit()}
           >
             <Image
               src="/images/create-project/start-from-scratch.svg"

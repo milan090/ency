@@ -1,6 +1,6 @@
 export interface ProjectPreview {
   id: number;
-  userUid: string;
+  userId: string;
   title: string;
   tags: string[];
   description: string;
@@ -11,7 +11,7 @@ export interface ProjectPreview {
 
 export interface ProjectData {
   id: number;
-  userUid: string;
+  userId: string;
 
   title: string;
   tags: string[];

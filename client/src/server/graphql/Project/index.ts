@@ -16,6 +16,35 @@ const Project = objectType({
     t.model.likes();
     t.model.user();
     t.model.userId();
+
+    t.nonNull.int("pageCount");
+  },
+});
+
+const ProjectQueries = extendType({
+  type: "Query",
+  definition(t) {
+    t.list.field("myProjects", {
+      type: "Project",
+      resolve: async (_root, args, ctx) => {
+        if (!ctx.user) return null;
+        const projects = await ctx.prisma.project.findMany({
+          where: { userId: ctx.user.id },
+          include: {
+            _count: {
+              select: {
+                pages: true,
+              },
+            },
+          },
+        });
+
+        return projects.map((project) => ({
+          ...project,
+          pageCount: project._count?.pages || 0,
+        }));
+      },
+    });
   },
 });
 
@@ -26,11 +55,11 @@ const ProjectMutation = extendType({
       type: Project,
       args: {
         title: nonNull(stringArg()),
+        color: nonNull(stringArg()),
       },
       resolve: async (_root, args, ctx) => {
         if (!ctx.user) return null;
-
-        return await ctx.prisma.project.create({
+        const project = await ctx.prisma.project.create({
           data: {
             user: {
               connect: {
@@ -38,13 +67,17 @@ const ProjectMutation = extendType({
               },
             },
             title: args.title,
-            color: "",
+            color: args.color,
             isPublic: false,
           },
         });
+        return {
+          ...project,
+          pageCount: 0,
+        };
       },
     });
   },
 });
 
-export default [Project, ProjectMutation];
+export default [Project, ProjectQueries, ProjectMutation];

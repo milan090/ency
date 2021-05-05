@@ -1,15 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronDown, Search } from "react-feather";
-import { ProjectPreview } from "src/types/project.types";
 import { useDashboardHomeTabs } from "src/client/hooks/dashboard-home.hook";
 import OutsideClickHandler from "react-outside-click-handler";
-
+import { useGetProjectsQuery } from "./getProjects.generated";
 import styles from "./dashboard-home.styles.module.scss";
 
 import Image from "next/image";
 import { TabName } from "src/types/dahboard-home.types";
-import { axios } from "src/config/client-axios";
-import { useQuery } from "react-query";
 import { hexToSixDigit, stringToBrightHexColor } from "src/utils/string-to-hex-color";
 import { Dropdown, DropdownItem } from "src/client/components/dropdown/dropdown.component";
 import { useRouter } from "next/dist/client/router";
@@ -97,30 +94,38 @@ const SearchInput: React.FC = () => {
 
 // Projects View
 const ProjectsPreview: React.FC = () => {
-  const { activeTab } = useDashboardHomeTabs();
-  const getProjects = async () => {
-    const res = await axios.get("/projects");
-    return res.data;
-  };
+  // const { activeTab } = useDashboardHomeTabs();
+  const [{ data, fetching, error }] = useGetProjectsQuery();
+  const projects = data?.myProjects;
 
-  const { data: projects } = useQuery<ProjectCardProps[]>(["projects", activeTab], getProjects, {
-    enabled: false,
-  });
+  useEffect(() => {
+    console.log("Projects", data);
+    if (error) console.error(error);
+  }, [data, error]);
 
-  // useEffect(() => {
-  //   if (user.uid) refetch();
-  // }, [user, refetch]);
+  if (!projects) {
+    if (fetching) return <span>Loading...</span>;
+
+    return <span>Error</span>;
+  }
 
   return (
     <div className="transition-all duration-700 grid lg:grid-cols-2 xl:grid-cols-3  grid-flow-row mt-10 gap-x-8 gap-y-5">
-      {projects?.map((props, i) => (
-        <ProjectCard {...props} key={i} />
+      {projects.map(({ ...props }) => (
+        <ProjectCard {...props} key={props.id} />
       ))}
     </div>
   );
 };
 
-type ProjectCardProps = ProjectPreview;
+type ProjectCardProps = {
+  id: number;
+  title: string;
+  tags: string[];
+  pageCount?: number;
+  iconSrc?: string;
+  color: string;
+};
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
   title,

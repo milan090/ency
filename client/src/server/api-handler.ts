@@ -21,6 +21,12 @@ export interface Request extends NextApiRequest {
   user?: User;
 }
 
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
 export function handler() {
   return nc<Request, NextApiResponse>({
     onError: (err, _, res) => {

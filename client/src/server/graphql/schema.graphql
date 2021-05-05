@@ -30,7 +30,7 @@ input LikeWhereUniqueInput {
 }
 
 type Mutation {
-  createProject(title: String!): Project
+  createProject(color: String!, title: String!): Project
 }
 
 type Project {
@@ -41,6 +41,7 @@ type Project {
   id: Int!
   isPublic: Boolean!
   likes(after: LikeWhereUniqueInput, before: LikeWhereUniqueInput, first: Int, last: Int): [Like!]!
+  pageCount: Int!
   pages(after: ProjectPageWhereUniqueInput, before: ProjectPageWhereUniqueInput, first: Int, last: Int): [ProjectPage!]!
   tags: [String!]!
   title: String!
@@ -71,6 +72,7 @@ input ProjectWhereUniqueInput {
 
 type Query {
   currentUser: User
+  myProjects: [Project]
 }
 
 type User {

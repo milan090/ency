@@ -1,16 +1,18 @@
-import type { AppProps } from "next/app";
 import Head from "next/head";
+import NextApp, { AppProps } from "next/app";
 import { QueryClient, QueryClientProvider } from "react-query";
-
-import "src/client/styles/tailwind.css";
-import "src/client/styles/globals.css";
-
-import { domain } from "src/utils/domain";
+import { NextUrqlAppContext } from "next-urql";
 import { Provider } from "next-auth/client";
+import { domain } from "process";
+import React from "react";
+
+import "src/client/styles/globals.css";
+import "src/client/styles/tailwind.css";
+import { graphqlClient } from "src/client/graphql/client";
 
 const queryClient = new QueryClient();
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps): React.ReactNode => {
   return (
     <Provider session={pageProps.session}>
       <Head>
@@ -33,4 +35,14 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       </QueryClientProvider>
     </Provider>
   );
-}
+};
+
+App.getInitialProps = async (ctx: NextUrqlAppContext) => {
+  const appProps = await NextApp.getInitialProps(ctx as any);
+  return { ...appProps };
+};
+export default graphqlClient(
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  App
+);
