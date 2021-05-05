@@ -9,7 +9,7 @@
     "prebuild": "yarn generate",
     "build": "next build",
     "start": "next start",
-    "generate": "yarn run generate:prisma && yarn run generate:nexus",
+    "generate": "yarn run generate:prisma && yarn run generate:nexus && yarn graphql-codegen",
     "generate:prisma": "prisma generate",
     "generate:nexus": "cross-env GENERATE=true cross-env DOTENV_CONFIG_PATH=.env ts-node -r dotenv/config -r tsconfig-paths/register --transpile-only -P nexus.tsconfig.json src/server/graphql/schema.ts",
     "generate:watch": "yarn run generate:prisma && yarn run generate:nexus:watch",
