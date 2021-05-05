@@ -15,4 +15,9 @@ generates:
       - "typescript-operations"
       - "typescript-urql"
     config:
+      # withComponent: false # we'll use Urql client with hooks instead
+      # withHooks: true
       maybeValue: "T"
+    hooks:
+      afterOneFileWrite:
+        - prettier --write
