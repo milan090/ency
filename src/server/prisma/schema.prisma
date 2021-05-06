@@ -1,0 +1,131 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["selectRelationCount"]
+}
+
+model Account {
+  id                 Int       @id @default(autoincrement())
+  compoundId         String    @unique
+  providerType       String   
+  providerId         String   
+  providerAccountId  String   
+  refreshToken       String?   
+  accessToken        String?   
+  accessTokenExpires DateTime? 
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@index([providerAccountId], name: "providerAccountId")
+  @@index([providerId], name: "providerId")
+  @@index([userId], name: "userId")
+  @@map("accounts")
+}
+
+model Session {
+  id           Int      @id @default(autoincrement())
+  expires      DateTime
+  sessionToken String   @unique
+  accessToken  String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@map("sessions")
+}
+
+model User {
+  id    String  @id @default(cuid())
+  name  String
+  email String  @unique
+  coins Int     @default(0)
+  bio   String?
+  image String?
+
+  passwordHash  String?
+  emailVerified DateTime?
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @default(now()) @map(name: "updated_at")
+
+  accounts Account[]
+  sessions Session[]
+  projects Project[]
+  likes    Like[]
+  comments Comment[]
+
+  @@map("users")
+}
+
+model VerificationRequest {
+  id         Int      @id @default(autoincrement())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+
+  @@map(name: "verification_requests")
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  title       String
+  iconSrc     String?
+  description String?
+  tags        String[]
+  isPublic    Boolean  @default(false)
+  color       String
+
+  userId   String
+  user     User          @relation(fields: [userId], references: [id])
+  pages    ProjectPage[]
+  likes    Like[]
+  comments Comment[]
+
+  @@unique([id, userId])
+  @@map("projects")
+}
+
+model ProjectPage {
+  id        Int     @id @default(autoincrement())
+  name      String
+  data      Json
+  projectId Int
+  project   Project @relation(fields: [projectId], references: [id])
+
+  @@map("project_pages")
+}
+
+model Like {
+  id        Int     @id @default(autoincrement())
+  userId    String
+  user      User    @relation(fields: [userId], references: [id])
+  projectId Int
+  project   Project @relation(fields: [projectId], references: [id])
+
+  @@map("likes")
+}
+
+model Comment {
+  id          Int      @id @default(autoincrement())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  content     String
+  createdDate DateTime
+  projectId   Int
+  project     Project  @relation(fields: [projectId], references: [id])
+
+  @@map("comments")
+}

@@ -1,0 +1,11 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "jest.disabledWorkspaceFolders": ["."],
+    "jest.autoRun": { "watch": true }
+  }
+}
