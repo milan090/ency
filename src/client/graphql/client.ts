@@ -1,14 +1,34 @@
-import { withUrqlClient } from "next-urql";
 import { getAPIURl } from "src/server/getURL";
 import fetch from "isomorphic-unfetch";
+import { dedupExchange, cacheExchange, fetchExchange, ssrExchange, createClient } from "@urql/core";
+import { devtoolsExchange } from "@urql/devtools";
 
-const GRAPHQL_ENDPOINT = `${getAPIURl()}/graphql`;
+export const GRAPHQL_ENDPOINT = `${getAPIURl()}/graphql`;
 
-export const graphqlClient = withUrqlClient(() => ({
-  url: GRAPHQL_ENDPOINT,
-  fetch,
-  fetchOptions: {
-    credentials: "include",
-  },
-  requestPolicy: `cache-and-network`,
-}));
+const isServerSide = typeof window === "undefined";
+
+// The `ssrExchange` must be initialized with `isClient` and `initialState`
+export const ssrCache = ssrExchange({
+  isClient: !isServerSide,
+});
+
+export const urqlExchanges = [
+  devtoolsExchange,
+  dedupExchange,
+  cacheExchange,
+  ssrCache,
+  fetchExchange,
+];
+
+export const graphqlClient = createClient(
+  {
+    exchanges: urqlExchanges,
+    url: GRAPHQL_ENDPOINT,
+    fetch,
+    fetchOptions: {
+      credentials: "include",
+    },
+    requestPolicy: `cache-and-network`,
+  }
+  // { ssr: false } // Important so we don't wrap our component in getInitialProps
+);

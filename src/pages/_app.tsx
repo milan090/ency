@@ -4,12 +4,13 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "next-auth/client";
 import React from "react";
 import { Toaster } from "react-hot-toast";
-import { graphqlClient } from "src/client/graphql/client";
 import { TOAST_OPTIONS } from "src/config/toaster";
 import { getURL } from "src/server/getURL";
+import { GRAPHQL_ENDPOINT } from "src/client/graphql/client";
 
 import "src/client/styles/globals.css";
 import "src/client/styles/tailwind.css";
+import { withUrqlClient } from "next-urql";
 
 const App = ({ Component, pageProps }: AppProps): React.ReactNode => {
   const queryClient = new QueryClient();
@@ -38,13 +39,10 @@ const App = ({ Component, pageProps }: AppProps): React.ReactNode => {
   );
 };
 
-// App.getInitialProps = async (ctx: NextUrqlAppContext) => {
-//   const appProps = await NextApp.getInitialProps(ctx as any);
-//   return { ...appProps };
-// };
-
-export default graphqlClient(
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  App
-);
+export default withUrqlClient(
+  () => ({
+    url: GRAPHQL_ENDPOINT,
+    // Dont pass in ssrCache exchange here
+  }),
+  { ssr: false }
+)(App as any);

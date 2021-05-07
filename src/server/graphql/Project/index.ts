@@ -45,6 +45,35 @@ const ProjectQueries = extendType({
         }));
       },
     });
+
+    t.field("project", {
+      type: "Project",
+      args: {
+        id: nonNull(stringArg()),
+      },
+      resolve: async (_root, args, ctx) => {
+        const project = await ctx.prisma.project.findUnique({
+          where: {
+            id: args.id,
+          },
+          include: {
+            _count: {
+              select: {
+                pages: true,
+              },
+            },
+          },
+        });
+        if (!project) return null;
+
+        if (!project?.isPublic && ctx.user?.id !== project?.userId) return null;
+
+        return {
+          ...project,
+          pageCount: project?._count?.pages || 0,
+        };
+      },
+    });
   },
 });
 
