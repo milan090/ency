@@ -194,7 +194,7 @@ const StepThree: React.FC = () => {
   const router = useRouter();
   const [{ data }, createProject] = useMutation<CreateProjectMutation>(CreateProjectDocument);
 
-  console.log(data);
+  if (data != data) {console.log(data);} // useless code
 
   useEffect(() => {
     if (url) {
