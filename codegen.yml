@@ -1,0 +1,23 @@
+overwrite: true
+schema: "./src/server/graphql/schema.graphql" # GraphQL endpoint via the nexus dev server
+documents: "src/client/**/*.graphql" # parse graphql operations in matching files
+generates:
+  src/client/graphql/types.generated.ts:
+    plugins:
+      - "typescript" # location for generated types, hooks and components
+    config:
+      maybeValue: "T"
+  ./:
+    preset: near-operation-file
+    presetConfig:
+      baseTypesPath: src/client/graphql/types.generated.ts
+    plugins:
+      - "typescript-operations"
+      - "typescript-urql"
+    config:
+      # withComponent: false # we'll use Urql client with hooks instead
+      # withHooks: true
+      maybeValue: "T"
+    hooks:
+      afterOneFileWrite:
+        - prettier --write

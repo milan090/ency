@@ -1,0 +1,10 @@
+query GetProjects {
+  myProjects {
+    title
+    iconSrc
+    pageCount
+    tags
+    color
+    id
+  }
+}
