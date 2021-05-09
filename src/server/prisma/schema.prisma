@@ -12,7 +12,7 @@ generator client {
 }
 
 model Account {
-  id                 Int       @id @default(autoincrement())
+  id                 String       @id @default(cuid())
   compoundId         String    @unique
   providerType       String   
   providerId         String   
@@ -33,7 +33,7 @@ model Account {
 }
 
 model Session {
-  id           Int      @id @default(autoincrement())
+  id           String      @id @default(cuid())
   expires      DateTime
   sessionToken String   @unique
   accessToken  String   @unique
@@ -69,7 +69,7 @@ model User {
 }
 
 model VerificationRequest {
-  id         Int      @id @default(autoincrement())
+  id         String      @id @default(cuid())
   identifier String
   token      String   @unique
   expires    DateTime
@@ -80,7 +80,7 @@ model VerificationRequest {
 }
 
 model Project {
-  id          Int      @id @default(autoincrement())
+  id          String      @id @default(cuid())
   title       String
   iconSrc     String?
   description String?
@@ -99,32 +99,32 @@ model Project {
 }
 
 model ProjectPage {
-  id        Int     @id @default(autoincrement())
+  id        String     @id @default(cuid())
   name      String
   data      Json
-  projectId Int
+  projectId String
   project   Project @relation(fields: [projectId], references: [id])
 
   @@map("project_pages")
 }
 
 model Like {
-  id        Int     @id @default(autoincrement())
+  id        String     @id @default(cuid())
   userId    String
   user      User    @relation(fields: [userId], references: [id])
-  projectId Int
+  projectId String
   project   Project @relation(fields: [projectId], references: [id])
 
   @@map("likes")
 }
 
 model Comment {
-  id          Int      @id @default(autoincrement())
+  id          String      @id @default(cuid())
   user        User     @relation(fields: [userId], references: [id])
   userId      String
   content     String
   createdDate DateTime
-  projectId   Int
+  projectId   String
   project     Project  @relation(fields: [projectId], references: [id])
 
   @@map("comments")

@@ -111,7 +111,7 @@ const ProjectsPreview: React.FC = () => {
 
   return (
     <div className="transition-all duration-700 grid lg:grid-cols-2 xl:grid-cols-3  grid-flow-row mt-10 gap-x-8 gap-y-5">
-      {projects.map(({ ...props }) => (
+      {projects.map(({ __typename, ...props }) => (
         <ProjectCard {...props} key={props.id} />
       ))}
     </div>
@@ -119,7 +119,7 @@ const ProjectsPreview: React.FC = () => {
 };
 
 type ProjectCardProps = {
-  id: number;
+  id: string;
   title: string;
   tags: string[];
   pageCount?: number;
@@ -181,7 +181,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   );
 };
 
-const ProjecCardOptionsButton: React.FC<{ projectId: number }> = ({ projectId }) => {
+const ProjecCardOptionsButton: React.FC<{ projectId: string }> = ({ projectId }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const router = useRouter();
 

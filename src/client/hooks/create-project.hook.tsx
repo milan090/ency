@@ -8,7 +8,7 @@ type UseCreateProject = {
   title: string;
   setTitle: (title: string) => void;
   sentenceLimit: number;
-  setSentenceLimit: (SentenceLimit: number) => void;
+  setSentenceLimit: (wordLimit: number) => void;
   step: Step;
   setStep: (step: Step) => void;
   reset: () => void;
@@ -21,7 +21,7 @@ export const useCreateProject = create<UseCreateProject>((set) => ({
   title: "",
   // Reset URL when setting title
   setTitle: (title: string) => set(() => ({ title: title, url: "" })),
-  sentenceLimit: 8,
+  sentenceLimit: 25,
   setSentenceLimit: (sentenceLimit: number) => set(() => ({ sentenceLimit: sentenceLimit })),
   step: "ONE",
   setStep: (step: Step) => set(() => ({ step: step })),

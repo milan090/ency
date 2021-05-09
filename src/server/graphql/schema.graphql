@@ -5,28 +5,28 @@
 type Comment {
   content: String!
   createdDate: DateTime!
-  id: Int!
-  projectId: Int!
+  id: String!
+  projectId: String!
   user: User!
   userId: String!
 }
 
 input CommentWhereUniqueInput {
-  id: Int
+  id: String
 }
 
 scalar DateTime
 
 type Like {
-  id: Int!
+  id: String!
   project: Project!
-  projectId: Int!
+  projectId: String!
   user: User!
   userId: String!
 }
 
 input LikeWhereUniqueInput {
-  id: Int
+  id: String
 }
 
 type Mutation {
@@ -38,7 +38,7 @@ type Project {
   comments(after: CommentWhereUniqueInput, before: CommentWhereUniqueInput, first: Int, last: Int): [Comment!]!
   description: String
   iconSrc: String
-  id: Int!
+  id: String!
   isPublic: Boolean!
   likes(after: LikeWhereUniqueInput, before: LikeWhereUniqueInput, first: Int, last: Int): [Like!]!
   pageCount: Int!
@@ -50,29 +50,30 @@ type Project {
 }
 
 input ProjectIdUserIdCompoundUniqueInput {
-  id: Int!
+  id: String!
   userId: String!
 }
 
 type ProjectPage {
-  id: Int!
+  id: String!
   name: String!
   project: Project!
-  projectId: Int!
+  projectId: String!
 }
 
 input ProjectPageWhereUniqueInput {
-  id: Int
+  id: String
 }
 
 input ProjectWhereUniqueInput {
-  id: Int
+  id: String
   id_userId: ProjectIdUserIdCompoundUniqueInput
 }
 
 type Query {
   currentUser: User
   myProjects: [Project]
+  project(id: String!): Project
 }
 
 type User {

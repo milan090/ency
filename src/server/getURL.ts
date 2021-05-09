@@ -1,3 +1,7 @@
+/**
+ * Example output: https://ency.live
+ * @returns string
+ */
 export const getURL = (): string => {
   // Infer the deploy URL if we're in production
   // VERCEL_URL = Vercel, DEPLOY_URL = Netlify

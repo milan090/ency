@@ -1,0 +1,11 @@
+query GetProject($id: String!) {
+  project(id: $id) {
+    id
+    title
+    description
+    color
+    pageCount
+    iconSrc
+    userId
+  }
+}
