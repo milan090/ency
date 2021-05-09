@@ -3,6 +3,15 @@ import { useCreateProject } from "src/client/hooks/create-project.hook";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { URL_REGEX } from "src/utils/validation.utils";
+import { axios } from "src/config/client-axios";
+import {
+  CreateProjectMutationVariables,
+  CreateProjectDocument,
+  CreateProjectMutation,
+} from "./createProject.generated";
+import { useRouter } from "next/dist/client/router";
+import { randomColor } from "src/utils/string-to-hex-color";
+import { useMutation } from "urql";
 
 export const StartWithEncy: React.FC = () => {
   const { step, reset } = useCreateProject();
@@ -117,7 +126,7 @@ const StepOne: React.FC = () => {
 };
 
 const StepTwo: React.FC = () => {
-  const { wordLimit, setWordLimit, setStep } = useCreateProject();
+  const { sentenceLimit, setSentenceLimit, setStep } = useCreateProject();
 
   const handleNext = (): void => {
     setStep("THREE");
@@ -129,10 +138,10 @@ const StepTwo: React.FC = () => {
         <LoadingImage />
       </div>
       <p className="font-light text-sm">
-        What’s the prefered word limit of your summarised project:
+        What’s the prefered sentence limit of your summarised project:
       </p>
       <div className="my-8">
-        <WordCountSlider value={wordLimit} onChange={(value) => setWordLimit(value)} />
+        <WordCountSlider value={sentenceLimit} onChange={(value) => setSentenceLimit(value)} />
       </div>
       <button
         className="px-8 py-2 bg-blue-400 text-sm rounded-full text-white ml-auto"
@@ -154,16 +163,16 @@ const LoadingImage: React.FC = () => (
   </div>
 );
 
-type WordCountSliderProps = {
+type SentenceCountSliderProps = {
   value: number;
   onChange: (newValue: number) => void;
 };
 
-const WordCountSlider: React.FC<WordCountSliderProps> = ({ value, onChange }) => {
+const WordCountSlider: React.FC<SentenceCountSliderProps> = ({ value, onChange }) => {
   return (
     <div className="flex">
       <div className="flex-auto">
-        <RangeSlider value={value} onChange={onChange} step={25} min={25} max={250} />
+        <RangeSlider value={value} onChange={onChange} step={3} min={4} max={25} />
       </div>
       <div className="flex flex-col items-center ml-4">
         <input
@@ -172,21 +181,94 @@ const WordCountSlider: React.FC<WordCountSliderProps> = ({ value, onChange }) =>
           onChange={(e) => onChange(parseInt(e.target.value))}
           className="px-0.5 py-1 border border-gray-400 rounded-md w-10 text-sm text-gray-600 text-center"
         />
-        <span className="text-gray-800 text-xs font-light mt-2">Words</span>
+        <span className="text-gray-800 text-xs font-light mt-2">Sentences</span>
       </div>
     </div>
   );
 };
 
 const StepThree: React.FC = () => {
+  const api_url = process.env.NEXT_PUBLIC_API_URL;
+  const api_key = process.env.NEXT_PUBLIC_API_KEY;
+  const { sentenceLimit, url, title } = useCreateProject();
+  const router = useRouter();
+  const [{ data }, createProject] = useMutation<CreateProjectMutation>(CreateProjectDocument);
+
+  console.log(data);
+
+  useEffect(() => {
+    if (url) {
+      //useEffect(() => {
+      axios
+        .post(`${api_url}/summarize-url`, {
+          url: url,
+          length: sentenceLimit,
+          keywords: true,
+          api_key: api_key,
+        })
+        .then((EncyData) => {
+          console.log(EncyData.data.output);
+          if (!EncyData.data) {
+            console.log("Something went wrong");
+          }
+          try {
+            //create project
+            const data: CreateProjectMutationVariables = {
+              title: "Untitled Project",
+              color: randomColor(),
+            };
+            createProject(data).then((project) => {
+              router.push(`project/${project.data?.createProject?.id}`);
+            });
+          } catch (error) {
+            console.log(error);
+          }
+        });
+      //}, []);
+    }
+
+    if (title) {
+      //useEffect(() => {
+      axios.post(`${api_url}/ai-tips`, { word: title, api_key: api_key }).then((res1) => {
+        console.log(res1.data);
+        if (!res1.data) {
+          console.log("Something went wrong");
+        }
+        console.log(res1.data.recommended_articles[0]);
+
+        axios
+          .post(`${api_url}/summarize-url`, {
+            url: res1.data.recommended_articles[0],
+            length: sentenceLimit,
+            keywords: true,
+            api_key: api_key,
+          })
+          .then((EncyData) => {
+            // create project with the ai data
+            if (!EncyData) {
+              console.log("Something went wrong");
+            }
+            try {
+              //create project
+              const data: CreateProjectMutationVariables = {
+                title: "Untitled Project",
+                color: randomColor(),
+              };
+              createProject(data).then((project) => {
+                router.push(`project/${project.data?.createProject?.id}`);
+              });
+            } catch (error) {
+              console.log(error);
+            }
+          });
+      });
+      //}, [])
+    }
+  }, []);
   return (
     <div className="max-w-sm">
       <LoadingImage />
-      <p className="mt-8 text-sm font-light text-center">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus corrupti similique saepe,
-        sapiente tenetur repudiandae dolores voluptatibus harum. Maxime necessitatibus obcaecati
-        illo quod inventore. Culpa quas fuga sunt modi vitae.
-      </p>
+      <p className="mt-8 text-sm font-light text-center">Lorem ipsum bs here</p>
     </div>
   );
 };
