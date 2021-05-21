@@ -8,7 +8,7 @@ on:
 
 jobs:
   production:
-    name: Production
+    name: DB Migrate Prod
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
