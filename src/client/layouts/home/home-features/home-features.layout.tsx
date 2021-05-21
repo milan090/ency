@@ -28,8 +28,8 @@ export const HomeFeatures: React.FC = () => {
             </h2>
             <p className="text-primary-600 leading-relaxed w-10/12">
               Been wanting a robot that writes your assignments? Well it’s right here! With tools
-              like the Summariser and Paraphraser, Ency will read, write and re-write your papers
-              for you.!
+              like the Summarizer and Paraphraser, Ency will read, write and re-write your papers
+              for you!
             </p>
           </div>
           <div className="ml-auto">
@@ -114,7 +114,7 @@ export const HomeFeatures: React.FC = () => {
             {/* Card Robot */}
             <FeatureCard imageSrc="/images/home/icons/noto_robot.png" color="bg-pastel-yellow">
               <p>
-                An AI-Powered <br /> Summariser
+                An AI-Powered <br /> Summarizer
               </p>
             </FeatureCard>
             <FeatureCard
@@ -141,7 +141,7 @@ export const HomeFeatures: React.FC = () => {
             {/* purgecss: bg-pastel-violet */}
             <FeatureCard imageSrc="/images/home/icons/noto_rocket.png" color="bg-pastel-violet">
               <p>
-                Powerful Grammer <br /> & Spell Checker
+                Powerful Grammar <br /> & Spell Checker
               </p>
             </FeatureCard>
             <FeatureCard imageSrc="/images/home/icons/noto_heart-suit.png" color="bg-pastel-red">
