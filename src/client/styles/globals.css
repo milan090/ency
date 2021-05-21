@@ -2,7 +2,6 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Inter', sans-serif;
 }
 
 a {
@@ -14,18 +13,26 @@ a {
   box-sizing: border-box;
 }
 
-button, button:focus, input, input:focus  {
-  outline: none
+button,
+button:focus,
+input,
+input:focus {
+  outline: none;
 }
 
 button {
   text-align: left;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Raleway:wght@300;400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Raleway:wght@300;400;600;700&display=swap");
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Raleway', sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Raleway", sans-serif;
 }
 
 /* width */
@@ -48,7 +55,6 @@ h1, h2, h3, h4, h5, h6 {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
-  
 }
 
 .tooltip {
@@ -67,7 +73,7 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
   padding: 5px 0;
   border-radius: 6px;
- 
+
   /* Position the tooltip text - see examples below! */
   position: absolute;
   left: 55px;

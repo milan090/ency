@@ -10,7 +10,7 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head />
-        <body>
+        <body className="font-inter">
           <Main />
           <NextScript />
           <div id="modal-root"></div>

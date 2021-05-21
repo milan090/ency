@@ -1,13 +1,13 @@
 // Reference: CSS Of https://xstate.js.org/
 
-.nav-links {
+.navLinks {
   color: black;
 
-  .nav-link {
+  .navLink {
     transition: all 0.3s cubic-bezier(.5, 0, .5, 1);
   }
 
-  &:hover .nav-link:not(:hover) {
+  &:hover .navLink:not(:hover) {
     opacity: 0.5;
   }
 }

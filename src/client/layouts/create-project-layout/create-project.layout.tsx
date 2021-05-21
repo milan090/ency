@@ -83,7 +83,7 @@ export const CreateProject: React.FC<Props> = ({ onClose, handleStartWithency })
               />
             </div>
             <p className="font-light text-sm">
-              Feeling lazy? Ency will help you give a headstart by using her powerful Summariser
+              Feeling lazy? Ency will help you give a headstart by using her powerful Summarizer
               Tool.
             </p>
           </button>
