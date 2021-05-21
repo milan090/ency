@@ -1,8 +1,28 @@
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
+import { handlePreLaunchEmailSubmit } from "src/client/services/api/handle-email.submit";
+import toast from "react-hot-toast";
 
 export const Footer: React.FC = () => {
+  const [email, setEmail] = useState("");
+
+  const handleNotifyMe = (): void => {
+    if (!email) {
+      toast.error("No email entered");
+      return;
+    }
+    toast.promise(
+      handlePreLaunchEmailSubmit(email),
+      {
+        loading: "Submitting...",
+        success: <b>Success! We will notify you once we are out for beta!</b>,
+        error: <b>Oops! Something went wrong</b>,
+      },
+      { duration: 5000 }
+    );
+  };
+
   return (
     <footer className="text-white grid grid-cols-3">
       <div className="bg-accent-lblue col-span-2 flex flex-col items-start px-24 py-28">
@@ -14,8 +34,17 @@ export const Footer: React.FC = () => {
 
         {/* Input */}
         <div className="rounded-full bg-white flex justify-between h-16 overflow-hidden mt-10">
-          <input className="ml-7" type="text" placeholder="Enter your Email" autoComplete="email" />
-          <button className="bg-blue-500 border border-accent-lblue text-white rounded-l-full px-7">
+          <input
+            className="ml-7"
+            type="text"
+            placeholder="Enter your Email"
+            autoComplete="email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <button
+            className="bg-blue-500 border border-accent-lblue text-white rounded-l-full px-7"
+            onClick={handleNotifyMe}
+          >
             Get Notified
           </button>
         </div>

@@ -50,7 +50,7 @@ const App = ({ Component, pageProps }: AppProps): React.ReactNode => {
           ]}
         />
         <Component {...pageProps} />
-        <Toaster position="bottom-right" toastOptions={TOAST_OPTIONS} />
+        <Toaster position="top-right" toastOptions={TOAST_OPTIONS} />
       </QueryClientProvider>
     </Provider>
   );

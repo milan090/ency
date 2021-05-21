@@ -7,19 +7,19 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["selectRelationCount"]
 }
 
 model Account {
-  id                 String       @id @default(cuid())
+  id                 String    @id @default(cuid())
   compoundId         String    @unique
-  providerType       String   
-  providerId         String   
-  providerAccountId  String   
-  refreshToken       String?   
-  accessToken        String?   
-  accessTokenExpires DateTime? 
+  providerType       String
+  providerId         String
+  providerAccountId  String
+  refreshToken       String?
+  accessToken        String?
+  accessTokenExpires DateTime?
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @default(now())
 
@@ -33,7 +33,7 @@ model Account {
 }
 
 model Session {
-  id           String      @id @default(cuid())
+  id           String   @id @default(cuid())
   expires      DateTime
   sessionToken String   @unique
   accessToken  String   @unique
@@ -69,7 +69,7 @@ model User {
 }
 
 model VerificationRequest {
-  id         String      @id @default(cuid())
+  id         String   @id @default(cuid())
   identifier String
   token      String   @unique
   expires    DateTime
@@ -80,7 +80,7 @@ model VerificationRequest {
 }
 
 model Project {
-  id          String      @id @default(cuid())
+  id          String   @id @default(cuid())
   title       String
   iconSrc     String?
   description String?
@@ -99,7 +99,7 @@ model Project {
 }
 
 model ProjectPage {
-  id        String     @id @default(cuid())
+  id        String  @id @default(cuid())
   name      String
   data      Json
   projectId String
@@ -109,7 +109,7 @@ model ProjectPage {
 }
 
 model Like {
-  id        String     @id @default(cuid())
+  id        String  @id @default(cuid())
   userId    String
   user      User    @relation(fields: [userId], references: [id])
   projectId String
@@ -119,7 +119,7 @@ model Like {
 }
 
 model Comment {
-  id          String      @id @default(cuid())
+  id          String   @id @default(cuid())
   user        User     @relation(fields: [userId], references: [id])
   userId      String
   content     String
@@ -128,4 +128,10 @@ model Comment {
   project     Project  @relation(fields: [projectId], references: [id])
 
   @@map("comments")
+}
+
+model PreLaunchEmail {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  createdData DateTime @default(now())
 }

@@ -1,7 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
+import toast from "react-hot-toast";
+import { handlePreLaunchEmailSubmit } from "src/client/services/api/handle-email.submit";
 
 export const HomeHeroLayout: React.FC = () => {
+  const [email, setEmail] = useState("");
+
+  const handleNotifyMe = (): void => {
+    if (!email) {
+      toast.error("No email entered");
+      return;
+    }
+    toast.promise(
+      handlePreLaunchEmailSubmit(email),
+      {
+        loading: "Submitting...",
+        success: <b>Success! We will notify you once we are out for beta!</b>,
+        error: <b>Oops! Something went wrong</b>,
+      },
+      { duration: 5000 }
+    );
+  };
+
   return (
     <section className="flex items-center min-h-screen mb-40 relative">
       <div className="max-w-xl">
@@ -22,8 +42,12 @@ export const HomeHeroLayout: React.FC = () => {
               type="text"
               placeholder="Enter your Email"
               autoComplete="email"
+              onChange={(e) => setEmail(e.target.value)}
             />
-            <button className="bg-accent-lblue border border-accent-lblue text-white rounded-l-full px-7">
+            <button
+              className="bg-accent-lblue border border-accent-lblue text-white rounded-l-full px-7"
+              onClick={() => handleNotifyMe()}
+            >
               Get Notified
             </button>
           </div>
