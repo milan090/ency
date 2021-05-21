@@ -1,7 +1,8 @@
 import Head from "next/head";
-import { HomeFeatures } from "src/client/layouts/home-features/home-features.layout";
-import { HomeHeroLayout } from "src/client/layouts/home-hero/home-hero.layout";
+import { HomeFeatures } from "src/client/layouts/home/home-features/home-features.layout";
+import { HomeHeroLayout } from "src/client/layouts/home/home-hero/home-hero.layout";
 import { Navbar } from "src/client/components/navbar/navbar.component";
+import { Footer } from "src/client/layouts/home/footer/footer.layout";
 
 export default function HomePage(): JSX.Element {
   return (
@@ -11,14 +12,8 @@ export default function HomePage(): JSX.Element {
       </Head>
       <Navbar />
       <HomeHeroLayout />
-      <div className="mt-16">
-        <img
-          src="/images/home/website-preview-tablets.png"
-          alt="Website preview on tablets"
-          width="100%"
-        />
-      </div>
       <HomeFeatures />
+      <Footer />
     </div>
   );
 }
