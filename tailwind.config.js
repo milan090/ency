@@ -1,7 +1,6 @@
 module.exports = {
-  mode: "jit",
   purge: {
-    enabled: true,
+    enabled: process.env.NODE_ENV === "production",
     content: [
       "./src/pages/**/*.tsx",
       "./src/client/components/**/*.tsx",
@@ -9,9 +8,7 @@ module.exports = {
     ],
 
     // PurgeCSS options
-    options: {
-      safelist: ["bg-pastel-dblue", "bg-pastel-lblue"],
-    },
+    options: {},
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
@@ -72,14 +69,21 @@ module.exports = {
         19: "4.75rem",
         20: "5rem",
       },
+      screens: {
+        xs: "480px",
+      },
+      width: {
+        88: "22rem",
+        92: "23rem",
+      },
+      fontSize: {
+        "4.5xl": "2.75rem",
+      },
     },
     stroke: (theme) => ({
-      "dark-blue": theme("colors.dark-blue"),
+      "accent-lblue": theme("colors.accent-lblue"),
       white: theme("colors.white"),
       black: theme("colors.black"),
-      "blue-500": theme("colors.blue.500"),
-      "red-500": theme("colors.red.500"),
-      "gray-500": theme("colors.gray.500"),
     }),
   },
   variants: {
