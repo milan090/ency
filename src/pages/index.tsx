@@ -3,6 +3,17 @@ import { HomeFeatures } from "src/client/layouts/home/home-features/home-feature
 import { HomeHeroLayout } from "src/client/layouts/home/home-hero/home-hero.layout";
 import { Navbar } from "src/client/components/navbar/navbar.component";
 import { Footer } from "src/client/layouts/home/footer/footer.layout";
+import { GetStaticProps } from "next";
+
+export const getStaticProps: GetStaticProps = async () => {
+  return {
+    props: {
+      seo: {
+        title: "Home",
+      },
+    },
+  };
+};
 
 export default function HomePage(): JSX.Element {
   return (

@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "predev": "yarn generate",
     "dev": "next dev",
     "dev:watch": "concurrently --kill-others --names \"NEXT,NEXUS,GQL\" -c \"blue,green,magenta\" \"yarn dev\" \"yarn generate:nexus:watch\" \"yarn graphql-codegen --watch\"",
     "prebuild": "yarn generate",
@@ -27,6 +26,7 @@
     "autoprefixer": "^10.2.1",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
+    "classnames": "^2.3.1",
     "dotenv": "^8.2.0",
     "graphql": "^15.5.0",
     "isomorphic-unfetch": "^3.1.0",
@@ -74,6 +74,7 @@
     "@graphql-codegen/typescript-urql": "^2.0.6",
     "@prisma/studio": "^0.397.0",
     "@types/bcryptjs": "^2.4.2",
+    "@types/classnames": "^2.3.1",
     "@types/node": "^14.14.20",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.3",
