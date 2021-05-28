@@ -12,6 +12,14 @@ module.exports = {
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
+    screens: {
+      xs: "480px",
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      "xl": "1280px",
+      "2xl": "1536px"
+    },
     extend: {
       colors: {
         "dark-blue": "#675DD9",
@@ -68,9 +76,6 @@ module.exports = {
         18: "4.5rem",
         19: "4.75rem",
         20: "5rem",
-      },
-      screens: {
-        xs: "480px",
       },
       width: {
         88: "22rem",
