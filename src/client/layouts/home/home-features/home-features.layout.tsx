@@ -100,8 +100,8 @@ export const HomeFeatures: React.FC = () => {
       </section>
 
       <section className="w-full bg-primary-150 min-h-screen flex items-center justify-center flex-col pt-14 pb-20">
-        <h2 className="mx-6 text-3xl md:text-5xl font-semibold text-center leading-snug">
-          Ency{"'"}s what you have been waiting for, right from your childhood
+        <h2 className="mx-6 text-3xl md:text-5xl max-w-3xl font-semibold text-center leading-snug md:leading-snug">
+          Ency{"'"}s what you been waiting for, right from your childhood
         </h2>
 
         {/* Cards */}

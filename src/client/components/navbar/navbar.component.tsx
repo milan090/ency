@@ -25,8 +25,8 @@ export const Navbar: React.FC = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
 
   return (
-    <nav className="flex lg:absolute w-full z-10 mb-14">
-      <div className="flex justify-between items-center h-24 w-full mx-8 sm:mx-14">
+    <nav className="flex lg:absolute bg-primary-150 w-full z-10">
+      <div className="flex justify-between items-center h-24 w-full mx-8 md:mx-14">
         {/* Navbar Content Container */}
         <div className="flex items-center">
           <div>
@@ -41,11 +41,11 @@ export const Navbar: React.FC = () => {
           {/* Middle Nav Links */}
           <ul className={`hidden md:flex group mb-0.5 hover:text-primary-500 ${styles.navLinks}`}>
             {NavLinks.map((props, i) => (
-              <li key={i} className="mx-4">
+              <li key={i} className="px-4">
                 <NavLink {...props} />
               </li>
             ))}
-            <li className="border-l border-primary-400 mx-4">
+            <li className="border-l border-primary-400 px-4">
               <NavLink href="/" value="Get Notified" />
             </li>
           </ul>

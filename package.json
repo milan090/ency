@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "predev": "yarn generate",
     "dev": "next dev",
     "dev:watch": "concurrently --kill-others --names \"NEXT,NEXUS,GQL\" -c \"blue,green,magenta\" \"yarn dev\" \"yarn generate:nexus:watch\" \"yarn graphql-codegen --watch\"",
     "prebuild": "yarn generate",

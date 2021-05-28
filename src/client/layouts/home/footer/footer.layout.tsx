@@ -26,23 +26,23 @@ export const Footer: React.FC = () => {
   return (
     <footer className="text-white grid grid-cols-3 grid-flow-row">
       <div className="bg-accent-lblue col-span-3 md:col-span-2 flex flex-col items-start px-8 md:px-24 py-28">
-        <h2 className="text-5xl font-semibold">Wanna try out Ency first?</h2>
-        <p className="w-2/3 mt-4">
+        <h2 className="text-4xl sm:text-5xl font-semibold">Wanna try out Ency first?</h2>
+        <p className="w- mt-4">
           Enter your email to get notified when we’re open for beta-testing. <br /> We hate spams
           and promise to never post one in your inbox too!
         </p>
 
         {/* Input */}
-        <div className="rounded-full bg-white flex justify-between h-16 overflow-hidden mt-10">
+        <div className="rounded-full bg-white flex justify-between h-14 sm:h-16 overflow-hidden mt-10 w-full text-sm sm:text-base">
           <input
-            className="ml-7 w-52"
+            className="ml-7 min-w-0 text-black"
             type="text"
             placeholder="Enter your Email"
             autoComplete="email"
             onChange={(e) => setEmail(e.target.value)}
           />
           <button
-            className="bg-blue-500 border border-accent-lblue text-white rounded-l-full px-7"
+            className="bg-blue-500 border border-accent-lblue text-white rounded-l-full px-7 whitespace-nowrap"
             onClick={handleNotifyMe}
           >
             Get Notified
