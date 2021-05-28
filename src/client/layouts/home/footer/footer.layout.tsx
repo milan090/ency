@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 export const Footer: React.FC = () => {
   const [email, setEmail] = useState("");
 
-  const handleNotifyMe = (): void => {
+  const handleJoinBetaList = (): void => {
     if (!email) {
       toast.error("No email entered");
       return;
@@ -42,10 +42,10 @@ export const Footer: React.FC = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
           <button
-            className="bg-blue-500 border border-accent-lblue text-white rounded-l-full px-7 whitespace-nowrap"
-            onClick={handleNotifyMe}
+            className="bg-blue-500 border border-accent-lblue text-white rounded-l-full px-7 whitespace-nowrap font-bold"
+            onClick={handleJoinBetaList}
           >
-            Get Notified
+            Join Beta List
           </button>
         </div>
       </div>

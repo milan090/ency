@@ -50,7 +50,7 @@ export const HomeHeroLayout: React.FC = () => {
               className="bg-accent-lblue text-white rounded-l-full px-7 whitespace-nowrap font-bold"
               onClick={() => handleNotifyMe()}
             >
-              Get Notified
+              Join Beta List
             </button>
           </div>
         </div>
