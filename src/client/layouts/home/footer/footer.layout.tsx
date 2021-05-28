@@ -33,7 +33,7 @@ export const Footer: React.FC = () => {
         </p>
 
         {/* Input */}
-        <div className="rounded-full bg-white flex justify-between h-14 sm:h-16 overflow-hidden mt-10 w-full text-sm sm:text-base">
+        <div className="rounded-full bg-white flex justify-between h-14 sm:h-16 overflow-hidden mt-10 w-full max-w-md text-sm sm:text-base">
           <input
             className="ml-7 min-w-0 text-black"
             type="text"
@@ -74,9 +74,9 @@ export const Footer: React.FC = () => {
         </div>
         <div className="bg-blue-600 flex py-5">
           <div className=" flex gap-x-6 mx-auto md:mx-0 md:ml-20">
-            <Image src="/images/other/twitter.svg" width={25} height={25} />
-            <Image src="/images/other/instagram.svg" width={25} height={25} />
-            <Image src="/images/other/discord.svg" width={25} height={25} />
+            <Image src="/images/other/twitter.svg" width={25} height={25} alt="Twitter" />
+            <Image src="/images/other/instagram.svg" width={25} height={25} alt="Instagram" />
+            <Image src="/images/other/discord.svg" width={25} height={25} alt="Discord" />
           </div>
         </div>
       </div>

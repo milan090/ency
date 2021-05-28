@@ -47,7 +47,7 @@ export const HomeHeroLayout: React.FC = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
             <button
-              className="bg-accent-lblue text-white rounded-l-full px-7 whitespace-nowrap "
+              className="bg-accent-lblue text-white rounded-l-full px-7 whitespace-nowrap font-bold"
               onClick={() => handleNotifyMe()}
             >
               Get Notified
@@ -56,20 +56,20 @@ export const HomeHeroLayout: React.FC = () => {
         </div>
 
         <div className="absolute hidden lg:block">
-          <Image src="/images/home/section-1/arrow.svg" width={233} height={155} />
+          <Image src="/images/home/section-1/arrow.svg" width={233} height={155} alt="" />
         </div>
       </div>
       <div className="ml-10 sm:ml-auto sm:max-w-xl flex mt-10 relative">
         <div className="ml-auto">
-          <Image width={752} height={817} src="/images/home/section-1/circle.svg" />
+          <Image width={752} height={817} src="/images/home/section-1/circle.svg" alt="" />
         </div>
 
         {/* Hands */}
         <div className="absolute top-0 right-0 z-20">
-          <Image width={752} height={830} src="/images/home/section-1/blueHand.svg" />
+          <Image width={752} height={830} src="/images/home/section-1/blueHand.svg" alt="" />
         </div>
         <div className="absolute top-0 right-0 z-10">
-          <Image width={752} height={1010} src="/images/home/section-1/redHand.svg" />
+          <Image width={752} height={1010} src="/images/home/section-1/redHand.svg" alt="" />
         </div>
       </div>
     </section>

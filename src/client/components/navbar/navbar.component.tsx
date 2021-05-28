@@ -51,7 +51,11 @@ export const Navbar: React.FC = () => {
           </ul>
         </div>
 
-        <button className="md:hidden" onClick={() => setIsNavOpen(true)}>
+        <button
+          className="md:hidden"
+          aria-label="Menu Expand Button"
+          onClick={() => setIsNavOpen(true)}
+        >
           <Menu />
         </button>
       </div>

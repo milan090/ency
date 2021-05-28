@@ -15,10 +15,16 @@ export const HomeFeatures: React.FC = () => {
               width={678}
               height={479}
               className="absolute"
+              alt=""
             />
           </div>
           <div className="mx-10 md:mx-auto mt-14">
-            <Image src="/images/home/section-2/encySummariser.svg" width={678} height={501} />
+            <Image
+              src="/images/home/section-2/encySummariser.svg"
+              width={678}
+              height={501}
+              alt=""
+            />
           </div>
         </div>
         <div className="md:w-1/2 flex flex-col pb-20 relative">
@@ -31,7 +37,7 @@ export const HomeFeatures: React.FC = () => {
             </p>
           </div>
           <div className="ml-auto hidden md:block absolute right-0 -bottom-10">
-            <Image src="/images/home/section-2/arrow.svg" width={273} height={275} />
+            <Image src="/images/home/section-2/arrow.svg" width={273} height={275} alt="" />
           </div>
         </div>
       </section>
@@ -40,7 +46,7 @@ export const HomeFeatures: React.FC = () => {
       <section className="w-full md:flex items-center bg-primary-150 py-16 my-14 relative">
         <div className="md:w-1/2 flex">
           <div className="absolute top-10 hidden md:block">
-            <Image src="/images/home/section-3/arrow.svg" width={250} height={140} />
+            <Image src="/images/home/section-3/arrow.svg" width={250} height={140} alt="" />
           </div>
           <div className="md:w-9/12 lg:w-7/12 mx-14 md:mx-auto">
             <Title>An Editor that’s crafted for you</Title>
@@ -56,14 +62,14 @@ export const HomeFeatures: React.FC = () => {
         </div>
         <div className="md:w-1/2 relative">
           <div className="absolute right-0">
-            <Image src="/images/home/section-3/yellow.svg" width={708} height={486} />
+            <Image src="/images/home/section-3/yellow.svg" width={708} height={486} alt="" />
           </div>
           <div>
             <div className="absolute z-10 w-full">
-              <Image src="/images/home/section-3/extraBlock.svg" width={700} height={475} />
+              <Image src="/images/home/section-3/extraBlock.svg" width={700} height={475} alt="" />
             </div>
             <div className="mx-auto mt-14 flex justify-center">
-              <Image src="/images/home/section-3/editor.svg" width={708} height={508} />
+              <Image src="/images/home/section-3/editor.svg" width={708} height={508} alt="" />
             </div>
           </div>
         </div>
@@ -78,6 +84,7 @@ export const HomeFeatures: React.FC = () => {
               width={682}
               height={579}
               className="absolute"
+              alt=""
             />
           </div>
           <div className="mx-auto">
@@ -94,7 +101,7 @@ export const HomeFeatures: React.FC = () => {
             </p>
           </div>
           <div className="ml-auto mr-32 hidden lg:block">
-            <Image src="/images/home/section-4/arrow.svg" width={250} height={250} />
+            <Image src="/images/home/section-4/arrow.svg" width={250} height={250} alt="" />
           </div>
         </div>
       </section>
@@ -191,7 +198,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ imageSrc, color, children, cl
       <div
         className={`rounded-full w-16 sm:w-max p-4 mr-4 ${color} flex justify-center items-center`}
       >
-        <Image src={imageSrc} width={45} height={45} />
+        <Image src={imageSrc} width={45} height={45} alt="" />
       </div>
       <div className="px-3">{children}</div>
     </div>
