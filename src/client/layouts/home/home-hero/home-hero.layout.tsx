@@ -23,15 +23,15 @@ export const HomeHeroLayout: React.FC = () => {
   };
 
   return (
-    <section className="lg:flex lg:items-center min-h-screen pt-5 lg:pt-0 mb-40 relative bg-primary-150">
-      <div className="max-w-xl">
-        <div className="mx-6 md:ml-24 flex flex-col items-center">
+    <section className="lg:flex lg:items-center min-h-screen pt-5 lg:pt-0 mb-14 lg:mb-40 relative bg-primary-150">
+      <div className="max-w-2xl">
+        <div className="mx-6 md:ml-36 flex flex-col items-center">
           <div className="ml-2">
             <h1 className="font-extrabold text-4xl xs:text-4.5xl md:text-6xl mb-5 text-primary-600 leading-tighter">
               Get your Paper <br /> Done Without <br />{" "}
               <span className="text-accent-lblue">the Pain!</span>
             </h1>
-            <p className="text-primary-600 text-sm sm:text-base leading-6 sm:leading-7 mb-5">
+            <p className="text-primary-600 text-sm sm:text-base leading-6 sm:leading-7 mb-5 max-w-sm">
               With Ency’s AI-powered tools and our lovely community, you can get your assignments,
               reports, and articles done faster & easier.
             </p>
@@ -59,7 +59,7 @@ export const HomeHeroLayout: React.FC = () => {
           <Image src="/images/home/section-1/arrow.svg" width={233} height={155} alt="" />
         </div>
       </div>
-      <div className="ml-10 sm:ml-auto sm:max-w-xl flex mt-10 relative">
+      <div className="ml-10 sm:ml-auto sm:max-w-xl lg:max-w-3xl flex mt-10 relative">
         <div className="ml-auto">
           <Image width={752} height={817} src="/images/home/section-1/circle.svg" alt="" />
         </div>
