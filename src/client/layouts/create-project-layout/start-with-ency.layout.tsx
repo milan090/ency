@@ -3,7 +3,6 @@ import { useCreateProject } from "src/client/hooks/create-project.hook";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { URL_REGEX } from "src/utils/validation.utils";
-import { axios } from "src/config/client-axios";
 import {
   CreateProjectMutationVariables,
   CreateProjectDocument,
@@ -12,6 +11,7 @@ import {
 import { useRouter } from "next/dist/client/router";
 import { randomColor } from "src/utils/string-to-hex-color";
 import { useMutation } from "urql";
+import { ai_tips, summ_url } from "src/utils/ai-data-handler";
 
 export const StartWithEncy: React.FC = () => {
   const { step, reset } = useCreateProject();
@@ -188,29 +188,43 @@ const WordCountSlider: React.FC<SentenceCountSliderProps> = ({ value, onChange }
 };
 
 const StepThree: React.FC = () => {
-  const api_url = process.env.NEXT_PUBLIC_API_URL;
-  const api_key = process.env.NEXT_PUBLIC_API_KEY;
   const { sentenceLimit, url, title } = useCreateProject();
   const router = useRouter();
-  const [{ data }, createProject] = useMutation<CreateProjectMutation>(CreateProjectDocument);
-
-  console.log(data);
+  const [_, createProject] = useMutation<CreateProjectMutation>(CreateProjectDocument);
 
   useEffect(() => {
     if (url) {
-      //useEffect(() => {
-      axios
-        .post(`${api_url}/summarize-url`, {
-          url: url,
-          length: sentenceLimit,
-          keywords: true,
-          api_key: api_key,
-        })
-        .then((EncyData) => {
-          console.log(EncyData.data.output);
-          if (!EncyData.data) {
+      summ_url(sentenceLimit, url, true).then((data) => {
+        if (!data.data) {
+          console.log("Something went wrong");
+        }
+        //console.log(data.data);
+        try {
+          //create project
+          const data: CreateProjectMutationVariables = {
+            title: "Untitled Project",
+            color: randomColor(),
+          };
+          createProject(data).then((project) => {
+            router.push(`project/${project.data?.createProject?.id}`);
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      });
+    }
+
+    if (title) {
+      ai_tips(title, false).then((data) => {
+        if (!data.data) {
+          console.log("Something went wrong.");
+        }
+        //console.log("data is: ", data.data);
+        summ_url(sentenceLimit, data.data.recommended_articles[0], true).then((data2) => {
+          if (!data2.data) {
             console.log("Something went wrong");
           }
+          //console.log("data2 is: ", data2.data);
           try {
             //create project
             const data: CreateProjectMutationVariables = {
@@ -224,47 +238,10 @@ const StepThree: React.FC = () => {
             console.log(error);
           }
         });
-      //}, []);
-    }
-
-    if (title) {
-      //useEffect(() => {
-      axios.post(`${api_url}/ai-tips`, { word: title, api_key: api_key }).then((res1) => {
-        console.log(res1.data);
-        if (!res1.data) {
-          console.log("Something went wrong");
-        }
-        console.log(res1.data.recommended_articles[0]);
-
-        axios
-          .post(`${api_url}/summarize-url`, {
-            url: res1.data.recommended_articles[0],
-            length: sentenceLimit,
-            keywords: true,
-            api_key: api_key,
-          })
-          .then((EncyData) => {
-            // create project with the ai data
-            if (!EncyData) {
-              console.log("Something went wrong");
-            }
-            try {
-              //create project
-              const data: CreateProjectMutationVariables = {
-                title: "Untitled Project",
-                color: randomColor(),
-              };
-              createProject(data).then((project) => {
-                router.push(`project/${project.data?.createProject?.id}`);
-              });
-            } catch (error) {
-              console.log(error);
-            }
-          });
       });
-      //}, [])
     }
   }, []);
+  
   return (
     <div className="max-w-sm">
       <LoadingImage />
